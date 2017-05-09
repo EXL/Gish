@@ -81,4 +81,5 @@ target_link_libraries(${PROJECT_NAME}   ${SDL_LIBRARY}
                                         ${OPENAL_LIBRARY}
                                         ${OPENGL_LIBRARIES}
                                         ${Vorbis_LIBRARIES}
-                                        ${PNG_LIBRARIES})
+                                        ${PNG_LIBRARIES}
+                                        m)
