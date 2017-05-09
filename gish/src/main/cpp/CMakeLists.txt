@@ -8,14 +8,14 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../../../../assets_full/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 
-find_package(SDL REQUIRED)
+find_package(SDL2 REQUIRED)
 find_package(OpenAL REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(Vorbis REQUIRED)
 find_package(PNG REQUIRED)
 
 include_directories(${PROJECT_NAME}
-                    ${SDL_INCLUDE_DIR}
+                    ${SDL2_INCLUDE_DIR}
                     ${OPENAL_INCLUDE_DIR}
                     ${OPENGL_INCLUDE_DIR}
                     ${Vorbis_INCLUDE_DIR}
@@ -80,7 +80,7 @@ set(GISH_SOURCES    ${PROJECT_NAME}/audio/audio.c
                     ${PROJECT_NAME}/main.c)
 
 add_executable(${PROJECT_NAME} ${GISH_SOURCES})
-target_link_libraries(${PROJECT_NAME}   ${SDL_LIBRARY}
+target_link_libraries(${PROJECT_NAME}   ${SDL2_LIBRARY}
                                         ${OPENAL_LIBRARY}
                                         ${OPENGL_LIBRARIES}
                                         ${Vorbis_LIBRARIES}
