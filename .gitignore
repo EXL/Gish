@@ -177,3 +177,6 @@ cmake-build-debug/
 # Qt Creator builds
 build-*
 *.user*
+
+# Gish Assets data
+assets_full/

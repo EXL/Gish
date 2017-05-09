@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 3.4.1)
 project(Gish)
 
+# Set CMake-modules directory
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-# Copy Assets.......
+
+# Deploy Game Files and Executable.
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../../../../assets_full/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 
 find_package(SDL REQUIRED)
@@ -83,3 +86,9 @@ target_link_libraries(${PROJECT_NAME}   ${SDL_LIBRARY}
                                         ${Vorbis_LIBRARIES}
                                         ${PNG_LIBRARIES}
                                         m)
+
+# Show final message when build done.
+add_custom_target(finalMessage ALL
+    ${CMAKE_COMMAND} -E cmake_echo_color --green "Output directory: ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}, executable: ${PROJECT_NAME}."
+    COMMENT "Final Message")
+add_dependencies(finalMessage ${PROJECT_NAME})
