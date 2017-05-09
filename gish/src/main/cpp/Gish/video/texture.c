@@ -95,27 +95,27 @@ int loadtexturepng(int texturenum, char *filename, int mipmap, int wraps, int wr
 	png_read_info(png_ptr, info_ptr);
 	
 	/* expand paletted colors into true rgb */
-	if (info_ptr->color_type == PNG_COLOR_TYPE_PALETTE)
+	if (png_get_color_type(png_ptr, info_ptr) == PNG_COLOR_TYPE_PALETTE)
 		png_set_expand(png_ptr);
 
 	/* expand grayscale images to the full 8 bits */
-	if (info_ptr->color_type == PNG_COLOR_TYPE_GRAY && info_ptr->bit_depth < 8)
+	if (png_get_color_type(png_ptr, info_ptr) == PNG_COLOR_TYPE_GRAY && png_get_bit_depth(png_ptr, info_ptr) < 8)
 		png_set_expand(png_ptr);
 
 	/* expand images with transparency to full alpha channels */
-	if (info_ptr->valid & PNG_INFO_tRNS)
+	if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS))
 		png_set_expand(png_ptr);
 		
 	/* tell libpng to strip 16 bit depth files down to 8 bits */
-	if (info_ptr->bit_depth == 16)
+	if (png_get_bit_depth(png_ptr, info_ptr) == 16)
 		png_set_strip_16(png_ptr);
 		
 	/* fill upto 4 byte RGBA - we always want an alpha channel*/
-	if (info_ptr->bit_depth == 8 && info_ptr->color_type == PNG_COLOR_TYPE_RGB)
+	if (png_get_bit_depth(png_ptr, info_ptr) == 8 && png_get_color_type(png_ptr, info_ptr) == PNG_COLOR_TYPE_RGB)
 		png_set_filler(png_ptr, 0xff, PNG_FILLER_AFTER);
 	
 	// XXX: is this required? we're not handling interlaced PNGs ...
-	if (info_ptr->interlace_type)
+	if (png_get_interlace_type(png_ptr, info_ptr))
 		number_passes = png_set_interlace_handling(png_ptr);
 	else
 		number_passes = 1;
@@ -123,18 +123,18 @@ int loadtexturepng(int texturenum, char *filename, int mipmap, int wraps, int wr
 	png_start_read_image(png_ptr);
 	png_read_update_info(png_ptr, info_ptr);
 	
-	tex = &texture[texturenum];	
-	tex->sizex=info_ptr->width;
-	tex->sizey=info_ptr->height;
-  tex->mipmaplevels=1;
-  tex->format=GL_RGBA;
-  tex->alphamap=1;
-  tex->normalmap=0;
-  tex->glossmap=0;
-  tex->wraps=wraps;
-  tex->wrapt=wrapt;
-  tex->magfilter=magfilter;
-  tex->minfilter=minfilter;
+	tex = &texture[texturenum];
+	tex->sizex=png_get_image_width(png_ptr, info_ptr);
+	tex->sizey=png_get_image_height(png_ptr, info_ptr);
+	tex->mipmaplevels=1;
+	tex->format=GL_RGBA;
+	tex->alphamap=1;
+	tex->normalmap=0;
+	tex->glossmap=0;
+	tex->wraps=wraps;
+	tex->wrapt=wrapt;
+	tex->magfilter=magfilter;
+	tex->minfilter=minfilter;
 
 	if( setjmp(png_jmpbuf(png_ptr)) ) {
 			if(debug_texture_load) fprintf(stderr, "Error during read_image for %s (%d)\n", filename, texturenum);
