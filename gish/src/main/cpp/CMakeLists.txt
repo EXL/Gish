@@ -1,9 +1,9 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.4.1)
+project(Gish)
 
-project(Gish C)
-
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake-extras/;${CMAKE_MODULE_PATH}")
-set(EXECUTABLE_OUTPUT_PATH "${PROJECT_SOURCE_DIR}")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+# Copy Assets.......
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 
 find_package(SDL REQUIRED)
 find_package(OpenAL REQUIRED)
@@ -11,145 +11,74 @@ find_package(OpenGL REQUIRED)
 find_package(Vorbis REQUIRED)
 find_package(PNG REQUIRED)
 
+include_directories(${PROJECT_NAME}
+                    ${SDL_INCLUDE_DIR}
+                    ${OPENAL_INCLUDE_DIR}
+                    ${OPENGL_INCLUDE_DIR}
+                    ${Vorbis_INCLUDE_DIR}
+                    ${PNG_INCLUDE_DIR})
 
-include_directories(
-    ${SDL_INCLUDE_DIR}
-    ${OPENAL_INCLUDE_DIR}
-    ${OPENGL_INCLUDE_DIR}
-    ${Vorbis_INCLUDE_DIR}
-    ${PNG_INCLUDE_DIR}
-)
+set(GISH_SOURCES    ${PROJECT_NAME}/audio/audio.c
+                    ${PROJECT_NAME}/game/ai.c
+                    ${PROJECT_NAME}/game/animation.c
+                    ${PROJECT_NAME}/game/block.c
+                    ${PROJECT_NAME}/game/boss.c
+                    ${PROJECT_NAME}/game/config.c
+                    ${PROJECT_NAME}/game/credits.c
+                    ${PROJECT_NAME}/game/custom.c
+                    ${PROJECT_NAME}/game/damage.c
+                    ${PROJECT_NAME}/game/debug.c
+                    ${PROJECT_NAME}/game/editor.c
+                    ${PROJECT_NAME}/game/game.c
+                    ${PROJECT_NAME}/game/gameaudio.c
+                    ${PROJECT_NAME}/game/gamemenu.c
+                    ${PROJECT_NAME}/game/gameobject.c
+                    ${PROJECT_NAME}/game/gametexture.c
+                    ${PROJECT_NAME}/game/high.c
+                    ${PROJECT_NAME}/game/level.c
+                    ${PROJECT_NAME}/game/lighting.c
+                    ${PROJECT_NAME}/game/logic.c
+                    ${PROJECT_NAME}/game/mainmenu.c
+                    ${PROJECT_NAME}/game/mappack.c
+                    ${PROJECT_NAME}/game/music.c
+                    ${PROJECT_NAME}/game/objedit.c
+                    ${PROJECT_NAME}/game/objfunc.c
+                    ${PROJECT_NAME}/game/options.c
+                    ${PROJECT_NAME}/game/physics.c
+                    ${PROJECT_NAME}/game/player.c
+                    ${PROJECT_NAME}/game/prerender.c
+                    ${PROJECT_NAME}/game/random.c
+                    ${PROJECT_NAME}/game/record.c
+                    ${PROJECT_NAME}/game/render.c
+                    ${PROJECT_NAME}/game/replay.c
+                    ${PROJECT_NAME}/game/ropeedit.c
+                    ${PROJECT_NAME}/game/setup.c
+                    ${PROJECT_NAME}/game/socket.c
+                    ${PROJECT_NAME}/game/sprite.c
+                    ${PROJECT_NAME}/game/vsmode.c
+                    ${PROJECT_NAME}/input/joystick.c
+                    ${PROJECT_NAME}/input/keyboard.c
+                    ${PROJECT_NAME}/input/mouse.c
+                    ${PROJECT_NAME}/math/intersec.c
+                    ${PROJECT_NAME}/math/vector.c
+                    ${PROJECT_NAME}/menu/menu.c
+                    ${PROJECT_NAME}/parser/parser.c
+                    ${PROJECT_NAME}/physics/bond.c
+                    ${PROJECT_NAME}/physics/object.c
+                    ${PROJECT_NAME}/physics/particle.c
+                    ${PROJECT_NAME}/sdl/endian.c
+                    ${PROJECT_NAME}/sdl/event.c
+                    ${PROJECT_NAME}/sdl/file.c
+                    ${PROJECT_NAME}/sdl/video.c
+                    ${PROJECT_NAME}/video/glfunc.c
+                    ${PROJECT_NAME}/video/opengl.c
+                    ${PROJECT_NAME}/video/text.c
+                    ${PROJECT_NAME}/video/texture.c
+                    ${PROJECT_NAME}/main.c)
 
-set(GISH_SRCS
-    audio/audio.c
-    game/ai.c
-    game/animation.c
-    game/block.c
-    game/boss.c
-    game/config.c
-    game/credits.c
-    game/custom.c
-    game/damage.c
-    game/debug.c
-    game/editor.c
-    game/game.c
-    game/gameaudio.c
-    game/gamemenu.c
-    game/gameobject.c
-    game/gametexture.c
-    game/high.c
-    game/level.c
-    game/lighting.c
-    game/logic.c
-    game/mainmenu.c
-    game/mappack.c
-    game/music.c
-    game/objedit.c
-    game/objfunc.c
-    game/options.c
-    game/physics.c
-    game/player.c
-    game/prerender.c
-    game/random.c
-    game/record.c
-    game/render.c
-    game/replay.c
-    game/ropeedit.c
-    game/setup.c
-    game/socket.c
-    game/sprite.c
-    game/vsmode.c
-    input/joystick.c
-    input/keyboard.c
-    input/mouse.c
-    math/intersec.c
-    math/vector.c
-    menu/menu.c
-    parser/parser.c
-    physics/bond.c
-    physics/object.c
-    physics/particle.c
-    sdl/endian.c
-    sdl/event.c
-    sdl/file.c
-    sdl/video.c
-    video/glfunc.c
-    video/opengl.c
-    video/text.c
-    video/texture.c
-    main.c
-)
-
-set(GISH_H
-    audio/audio.h
-    game/ai.h
-    game/animation.h
-    game/block.h
-    game/boss.h
-    game/config.h
-    game/credits.h
-    game/custom.h
-    game/damage.h
-    game/debug.h
-    game/editor.h
-    game/english.h
-    game/game.h
-    game/gameaudio.h
-    game/gamemenu.h
-    game/gameobject.h
-    game/gametexture.h
-    game/high.h
-    game/level.h
-    game/lighting.h
-    game/logic.h
-    game/mainmenu.h
-    game/mappack.h
-    game/music.h
-    game/objedit.h
-    game/objfunc.h
-    game/options.h
-    game/physics.h
-    game/player.h
-    game/prerender.h
-    game/random.h
-    game/record.h
-    game/render.h
-    game/replay.h
-    game/ropeedit.h
-    game/setup.h
-    game/socket.h
-    game/sprite.h
-    game/vsmode.h
-    input/joystick.h
-    input/keyboard.h
-    input/mouse.h
-    math/intersec.h
-    math/math.h
-    math/vector.h
-    menu/menu.h
-    parser/parser.h
-    physics/bond.h
-    physics/object.h
-    physics/particle.h
-    sdl/endian.h
-    sdl/event.h
-    sdl/file.h
-    sdl/sdl.h
-    sdl/video.h
-    video/glext.h
-    video/glfunc.h
-    video/opengl.h
-    video/text.h
-    video/texture.h
-    config.h
-)
-
-add_executable(gish ${GISH_SRCS} ${GISH_H})
-
-target_link_libraries(gish
-    ${SDL_LIBRARY}
-    ${OPENAL_LIBRARY}
-    ${OPENGL_LIBRARIES}
-    ${Vorbis_LIBRARIES}
-    ${PNG_LIBRARIES}
-)
+add_executable(${PROJECT_NAME} ${GISH_SOURCES})
+target_link_libraries(${PROJECT_NAME}   ${SDL_LIBRARY}
+                                        ${OPENAL_LIBRARY}
+                                        ${OPENGL_LIBRARIES}
+                                        ${Vorbis_LIBRARIES}
+                                        ${PNG_LIBRARIES})
