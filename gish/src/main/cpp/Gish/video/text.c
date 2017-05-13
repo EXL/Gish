@@ -170,7 +170,7 @@ void drawtext(char *textstring,int x,int y,int textsize,float red,float green,fl
       vec[1]=(float)y;
       convertscreenvertex(vec,font.sizex,font.sizey);
       texcoord[0]=(float)(textstring2[count]&15)*16.0f+0.5f;
-      texcoord[1]=(float)(textstring2[count]>>4)*16.0f+0.5f;
+      texcoord[1]=(float)((unsigned char) textstring2[count]>>4)*16.0f+0.5f;
       texcoord[0]/=256.0f;
       texcoord[1]/=256.0f;
 #if defined(USE_GLES)
@@ -187,7 +187,7 @@ void drawtext(char *textstring,int x,int y,int textsize,float red,float green,fl
       vec[1]=(float)y;
       convertscreenvertex(vec,font.sizex,font.sizey);
       texcoord[0]=(float)(textstring2[count]&15)*16.0f+16.0f-0.5f;
-      texcoord[1]=(float)(textstring2[count]>>4)*16.0f+0.5f;
+      texcoord[1]=(float)((unsigned char) textstring2[count]>>4)*16.0f+0.5f;
       texcoord[0]/=256.0f;
       texcoord[1]/=256.0f;
   
@@ -205,7 +205,7 @@ void drawtext(char *textstring,int x,int y,int textsize,float red,float green,fl
       vec[1]=(float)y+(float)textsize;
       convertscreenvertex(vec,font.sizex,font.sizey);
       texcoord[0]=(float)(textstring2[count]&15)*16.0f+16.0f-0.5f;
-      texcoord[1]=(float)(textstring2[count]>>4)*16.0f+16.0f-0.5f;
+      texcoord[1]=(float)((unsigned char) textstring2[count]>>4)*16.0f+16.0f-0.5f;
       texcoord[0]/=256.0f;
       texcoord[1]/=256.0f;
   
@@ -223,7 +223,7 @@ void drawtext(char *textstring,int x,int y,int textsize,float red,float green,fl
       vec[1]=(float)y+(float)textsize;
       convertscreenvertex(vec,font.sizex,font.sizey);
       texcoord[0]=(float)(textstring2[count]&15)*16.0f+0.5f;
-      texcoord[1]=(float)(textstring2[count]>>4)*16.0f+16.0f-0.5f;
+      texcoord[1]=(float)((unsigned char) textstring2[count]>>4)*16.0f+16.0f-0.5f;
       texcoord[0]/=256.0f;
       texcoord[1]/=256.0f;
 #if defined(USE_GLES)

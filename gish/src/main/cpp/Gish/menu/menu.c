@@ -543,10 +543,10 @@ void setupmenuitems(void)
   strcpy(keyboardlabel[SCAN_9],"9");
   strcpy(keyboardlabel[SCAN_0],"0");
 #ifndef GERMAN
-  strcpy(keyboardlabel[SCAN_LEFT],"€");
-  strcpy(keyboardlabel[SCAN_RIGHT],"?");
-  strcpy(keyboardlabel[SCAN_UP],"ƒ");
-  strcpy(keyboardlabel[SCAN_DOWN],"‚");
+  strcpy(keyboardlabel[SCAN_LEFT],"\x80");
+  strcpy(keyboardlabel[SCAN_RIGHT],"\x81");
+  strcpy(keyboardlabel[SCAN_UP],"\x83");
+  strcpy(keyboardlabel[SCAN_DOWN],"\x82");
 #else
   strcpy(keyboardlabel[SCAN_LEFT],"{");
   strcpy(keyboardlabel[SCAN_RIGHT],"|");
