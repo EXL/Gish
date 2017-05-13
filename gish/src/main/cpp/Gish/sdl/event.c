@@ -36,13 +36,13 @@ void checksystemmessages(void)
   SDL_Event event;
 
   if (windowinfo.minimized)
-    SDL_Delay(20);
+    SDL_Delay(20); // TODO: Check this on Android.
 
   while (SDL_PollEvent(&event))
     {
     if (event.type==SDL_WINDOWEVENT)
       {
-      if (event.window.event == SDL_WINDOWEVENT_SHOWN)
+      if (event.window.event == SDL_WINDOWEVENT_RESTORED)
         {
 #if defined(USE_GLES)
     if (windowinfo.fullscreen)
@@ -50,14 +50,11 @@ void checksystemmessages(void)
     else
       SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_SWSURFACE);
 #else
-          // TODO: ???
           if (windowinfo.fullscreen) {
             SDL_SetWindowSize(globalwindow, windowinfo.resolutionx,windowinfo.resolutiony);
             SDL_SetWindowFullscreen(globalwindow, SDL_WINDOW_FULLSCREEN);
-            // SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_OPENGL|SDL_FULLSCREEN);
           } else {
             SDL_SetWindowSize(globalwindow, windowinfo.resolutionx,windowinfo.resolutiony);
-            // SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_OPENGL);
           }
 #endif
 
