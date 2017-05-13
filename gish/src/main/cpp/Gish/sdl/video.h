@@ -36,9 +36,6 @@ typedef struct
 extern int numofsdlvideomodes;
 extern _sdlvideomode sdlvideomode[4096];
 
-// TODO: RM
-// extern SDL_Surface* screen;
-
 extern SDL_Window *globalwindow;
 extern SDL_GLContext *glcontext;
 extern SDL_Surface *windowicon;

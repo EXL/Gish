@@ -46,43 +46,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define DATAPATH_STR DATAPATH_STR2(DATAPATH)
 #endif
 
-// TODO: Delete this
-//const SDL_VideoInfo *sdlvideoinfo;
-//SDL_PixelFormat *sdlpixelformat;
-//Uint8 iconmask[128]={
-//0x00,0x00,0x00,0x00,
-//0x00,0x00,0x00,0x00,
-//0x00,0x00,0x00,0x00,
-//0x00,0x00,0x00,0x00,
-//0x00,0x00,0x00,0x00,
-//0x00,0x00,0x00,0x00,
-//0x00,0x00,0x00,0x00,
-//0x00,0x00,0x00,0x00,
-//0x00,0x00,0x00,0x00,
-//0x00,0x00,0x00,0x00,
-//0x00,0x03,0xF0,0x00,
-//0x00,0x3F,0xFC,0x00,
-//0x00,0xFF,0xFF,0x00,
-//0x03,0xFF,0xFF,0x80,
-//0x07,0xFF,0xFF,0xC0,
-//0x0F,0xFF,0xFF,0xE0,
-//0x0F,0xFF,0xFF,0xF0,
-//0x1F,0xFF,0xFF,0xF8,
-//0x3F,0xFF,0xFF,0xFC,
-//0x3F,0xFF,0xFF,0xFC,
-//0x7F,0xFF,0xFF,0xFE,
-//0x7F,0xFF,0xFF,0xFE,
-//0xFF,0xFF,0xFF,0xFE,
-//0xFF,0xFF,0xFF,0xFE,
-//0xFF,0xFF,0xFF,0xFE,
-//0xFF,0xFF,0xFF,0xFE,
-//0x7F,0xFF,0xFF,0xFE,
-//0x3F,0xFF,0xFF,0xFE,
-//0x0F,0xFF,0xFF,0xFE,
-//0x03,0xFF,0xFF,0xFC,
-//0x00,0x7F,0xFF,0xF0,
-//0x00,0x00,0x00,0x00 };
-
 int main (int argc,char *argv[])
   {
   int count;
@@ -104,10 +67,6 @@ int main (int argc,char *argv[])
     flags|=SDL_INIT_JOYSTICK;
 
   SDL_Init(flags);
-
-  // TODO:
-  //sdlvideoinfo=SDL_GetVideoInfo();
-  //sdlpixelformat=sdlvideoinfo->vfmt;
 
   int display_count = 0, display_index = 0, mode_index = 0;
   SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
@@ -150,10 +109,6 @@ int main (int argc,char *argv[])
   listvideomodes();
 
 #if !defined(USE_GLES)
-  // TODO: RT
-  // SDL_WM_SetCaption("Gish","SDL");
-  // SDL_WM_SetIcon(SDL_LoadBMP("gish.bmp"),iconmask);
-
   if (windowinfo.bitsperpixel==16)
     {
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE,5);
@@ -181,12 +136,10 @@ int main (int argc,char *argv[])
     else
       screen = SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_SWSURFACE);
 #else
-  if (windowinfo.fullscreen)
-    globalwindow = SDL_CreateWindow("Gish", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowinfo.resolutionx, windowinfo.resolutiony, SDL_WINDOW_OPENGL|SDL_WINDOW_FULLSCREEN);
-    // screen = SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_OPENGL|SDL_FULLSCREEN);
-  else
-    globalwindow = SDL_CreateWindow("Gish", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowinfo.resolutionx, windowinfo.resolutiony, SDL_WINDOW_OPENGL);
-    // screen = SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_OPENGL);
+    globalwindow = SDL_CreateWindow("Gish", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                                    windowinfo.resolutionx, windowinfo.resolutiony,
+                                    (windowinfo.fullscreen) ? SDL_WINDOW_OPENGL|SDL_WINDOW_FULLSCREEN : SDL_WINDOW_OPENGL);
+    SDL_SetWindowDisplayMode(globalwindow, &mode);
 #endif
 
     if(globalwindow == NULL)

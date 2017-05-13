@@ -801,20 +801,11 @@ void videooptionsmenu(void)
     else
       screen = SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_SWSURFACE);
 #else
-    if (windowinfo.fullscreen)
-      globalwindow = SDL_CreateWindow("Gish", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowinfo.resolutionx, windowinfo.resolutiony, SDL_WINDOW_OPENGL|SDL_WINDOW_FULLSCREEN);
-      // screen = SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_OPENGL|SDL_FULLSCREEN);
-    else
-      globalwindow = SDL_CreateWindow("Gish", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowinfo.resolutionx, windowinfo.resolutiony, SDL_WINDOW_OPENGL);
-      // screen = SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_OPENGL);
+    SDL_DisplayMode mode = { (windowinfo.bitsperpixel==32) ? SDL_PIXELFORMAT_RGB888 : SDL_PIXELFORMAT_RGB565, windowinfo.resolutionx, windowinfo.resolutiony, 0, 0 };
+    SDL_SetWindowDisplayMode(globalwindow, &mode);
+    SDL_SetWindowSize(globalwindow, windowinfo.resolutionx, windowinfo.resolutiony);
+    (windowinfo.fullscreen) ? SDL_SetWindowFullscreen(globalwindow, SDL_WINDOW_FULLSCREEN) : SDL_SetWindowFullscreen(globalwindow, 0);
 #endif
-
-    if(globalwindow == NULL)
-    {
-        printf( "No SDL screen\n" );
-    }
-
-    glcontext = SDL_GL_CreateContext(globalwindow);
 
     for (count=0;count<2048;count++)
       if (texture[count].sizex!=0)
