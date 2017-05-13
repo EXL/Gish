@@ -245,8 +245,7 @@ int main (int argc,char *argv[])
     {
     notsupportedmenu();
 
-    // TODO:
-    // SDL_WM_IconifyWindow();
+    SDL_MinimizeWindow(globalwindow);
     SDL_Quit();
     return(0);
     }
@@ -266,8 +265,7 @@ int main (int argc,char *argv[])
 #if defined(USE_GLES)
     EGL_Close();
 #else
-  // TODO:
-  // SDL_WM_IconifyWindow();
+  SDL_MinimizeWindow(globalwindow);
 #endif
   SDL_Quit();
 
