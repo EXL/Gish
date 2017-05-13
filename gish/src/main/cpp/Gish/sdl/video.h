@@ -33,6 +33,10 @@ typedef struct
 extern int numofsdlvideomodes;
 extern _sdlvideomode sdlvideomode[4096];
 
-extern SDL_Surface* screen;
+// TODO: RM
+// extern SDL_Surface* screen;
+
+extern SDL_Window *globalwindow;
+extern SDL_GLContext *glcontext;
 
 #endif /* GISH_SDL_VIDEO_H */

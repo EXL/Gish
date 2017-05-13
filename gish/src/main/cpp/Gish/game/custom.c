@@ -48,6 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../sdl/event.h"
 #include "../sdl/file.h"
 #include "../video/text.h"
+#include "../sdl/video.h"
 
 char levellist[1024][32];
 _mappack mappack;
@@ -108,7 +109,7 @@ void custommenu(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
     if (menuitem[1].active)
@@ -235,7 +236,7 @@ void loadlevelmenu(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
     for (count=1;count<=24;count++)
@@ -339,7 +340,7 @@ void playcampaignmenu(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
     for (count=1;count<=24;count++)
@@ -410,7 +411,7 @@ void campaignmenu(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
     if (menuitem[1].active || menuitem[2].active)
@@ -653,7 +654,7 @@ void newmappackmenu(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
     if (menuitem[2].active)

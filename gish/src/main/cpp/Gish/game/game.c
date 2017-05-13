@@ -63,6 +63,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../video/glfunc.h"
 #include "../video/text.h"
 #include "../video/texture.h"
+#include "../sdl/video.h"
 
 _view view;
 _game game;
@@ -647,7 +648,7 @@ void gameloop(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
       for (count=0;count<20;count++)
@@ -666,7 +667,7 @@ void gameloop(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
     if ((SDL_GetTicks()-frametimer)!=0)

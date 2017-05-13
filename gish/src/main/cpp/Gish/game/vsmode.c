@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/menu.h"
 #include "../sdl/event.h"
 #include "../video/text.h"
+#include "../sdl/video.h"
 
 void versusmodemenu(int versusnum)
   {
@@ -126,7 +127,7 @@ void versusmodemenu(int versusnum)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
 	// Is item clicked?

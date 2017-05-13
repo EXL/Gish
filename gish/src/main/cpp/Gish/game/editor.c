@@ -47,6 +47,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../video/glfunc.h"
 #include "../video/text.h"
 #include "../video/texture.h"
+#include "../sdl/video.h"
 
 _editor editor;
 char currentTextureFilename[256];
@@ -245,7 +246,7 @@ void editlevel(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
     if (!menuinputkeyboard)
@@ -894,7 +895,7 @@ void editblock(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
     if (keyboard[SCAN_A] && !prevkeyboard[SCAN_A])

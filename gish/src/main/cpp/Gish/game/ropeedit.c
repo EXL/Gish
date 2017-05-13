@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../sdl/event.h"
 #include "../video/glfunc.h"
 #include "../video/text.h"
+#include "../sdl/video.h"
 
 _ropeedit ropeedit;
 
@@ -187,7 +188,7 @@ void editlevelrope(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
     vec[0]=view.position[0]+(float)(mouse.x-320)/32.0f;

@@ -78,7 +78,8 @@ void launchwebpage(char *webpagename)
 #ifdef LINUX
   char command[100] = "xdg-open http://";
   strcat(command, webpagename);
-  SDL_WM_IconifyWindow();
+  // TODO:
+  //SDL_WM_IconifyWindow();
   system((const char*)command);
 #endif
   }

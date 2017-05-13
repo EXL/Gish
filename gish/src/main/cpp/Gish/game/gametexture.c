@@ -46,6 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../sdl/file.h"
 #include "../video/text.h"
 #include "../video/texture.h"
+#include "../sdl/video.h"
 
 _textureedit textureedit;
 
@@ -314,7 +315,7 @@ void edittextures(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
     if (keyboard[SCAN_LFT_BRACKET] && !prevkeyboard[SCAN_LFT_BRACKET])
@@ -422,7 +423,7 @@ void edittextures(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 			}
 			if (menuitem[1].active)

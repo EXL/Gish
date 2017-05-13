@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/menu.h"
 #include "../sdl/event.h"
 #include "../video/text.h"
+#include "../sdl/video.h"
 
 void postgamemenu(void)
   {
@@ -135,7 +136,7 @@ void postgamemenu(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
     simcount=0;
@@ -261,7 +262,7 @@ void pregamemenu(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
     if (menuitem[1].active)// || startdelay>=150)
@@ -483,7 +484,7 @@ void gameovermenu(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
     }
 
@@ -599,7 +600,7 @@ void endingmenu(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
     }
 
@@ -635,7 +636,7 @@ void endingmenu(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
     }
 

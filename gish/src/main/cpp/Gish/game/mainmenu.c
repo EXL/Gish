@@ -52,6 +52,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../sdl/event.h"
 #include "../video/text.h"
 #include "../video/texture.h"
+#include "../sdl/video.h"
 
 void mainmenu(void)
   {
@@ -82,7 +83,7 @@ void mainmenu(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
   for (count=0;count<64;count++)
@@ -327,7 +328,7 @@ void mainmenu(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
 #if !defined(USE_GLES)
@@ -481,7 +482,7 @@ void versusmenu(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
     for (count=1;count<=7;count++)
@@ -545,7 +546,7 @@ void storyscreen(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
     simcount=0;
@@ -761,7 +762,7 @@ void introscreen(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
     simcount=0;

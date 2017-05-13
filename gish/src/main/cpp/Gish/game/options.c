@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../sdl/video.h"
 #include "../video/text.h"
 #include "../video/texture.h"
+#include "../sdl/video.h"
 
 _option option;
 _control control[CONTROLS_LENGTH];
@@ -515,7 +516,7 @@ void optionsmenu(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
     for (count=0;count<KEYALIAS_LENGTH;count++)
@@ -756,7 +757,7 @@ void videooptionsmenu(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
     }
 
@@ -801,15 +802,19 @@ void videooptionsmenu(void)
       screen = SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_SWSURFACE);
 #else
     if (windowinfo.fullscreen)
-      screen = SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_OPENGL|SDL_FULLSCREEN);
+      globalwindow = SDL_CreateWindow("Gish", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowinfo.resolutionx, windowinfo.resolutiony, SDL_WINDOW_OPENGL|SDL_WINDOW_FULLSCREEN);
+      // screen = SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_OPENGL|SDL_FULLSCREEN);
     else
-      screen = SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_OPENGL);
+      globalwindow = SDL_CreateWindow("Gish", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowinfo.resolutionx, windowinfo.resolutiony, SDL_WINDOW_OPENGL);
+      // screen = SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_OPENGL);
 #endif
 
-    if(screen == NULL)
+    if(globalwindow == NULL)
     {
         printf( "No SDL screen\n" );
     }
+
+    glcontext = SDL_GL_CreateContext(globalwindow);
 
     for (count=0;count<2048;count++)
       if (texture[count].sizex!=0)
@@ -1480,7 +1485,7 @@ void optionsmenu2(void)
 #if defined(USE_GLES)
     EGL_SwapBuffers();
 #else
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(globalwindow);
 #endif
 
     for (count=0;count<KEYALIAS_LENGTH;count++)
