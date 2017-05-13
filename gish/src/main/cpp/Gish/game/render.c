@@ -82,7 +82,7 @@ void renderlevelback(void)
     if (blocknum!=0)
       {
       glBindTexture(GL_TEXTURE_2D,texture[blocknum].glname);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     glColor4f(level.ambient[0][0],level.ambient[0][1],level.ambient[0][2],1.0f);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -178,7 +178,7 @@ void renderlevelback(void)
         glActiveTextureARB(GL_TEXTURE1_ARB);
         glEnable(GL_TEXTURE_2D);
     
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         glColor4f(frame.light[lightcount].color[0],frame.light[lightcount].color[1],frame.light[lightcount].color[2],1.0f);
         GLfloat quad[] = {  (float)count2,(float)count+1.0f,
                             (float)count2+1.0f,(float)count+1.0f,
@@ -293,7 +293,7 @@ void renderlevel(void)
       {
       glBindTexture(GL_TEXTURE_2D,texture[blocknum].glname);
 
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     glColor4f(level.ambient[1][0],level.ambient[1][1],level.ambient[1][2],1.0f);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -437,7 +437,7 @@ void renderlevel(void)
           normal[2]=0.0f;
           normalizevector(normal,normal);
   
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
@@ -464,7 +464,7 @@ void renderlevel(void)
           normalizevector(vec3,vec2);
           scale=frame.light[lightcount].intensity*dotproduct(vec3,normal)/(vec2[0]*vec2[0]+vec2[1]*vec2[1]);
           scalevector(vec2,frame.light[lightcount].color,scale);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         color[0] = vec2[0]; color[1] = vec2[1]; color[2] = vec2[2];
 #else
           glColor3fv(vec2);
@@ -478,7 +478,7 @@ void renderlevel(void)
           normalizevector(vec3,vec2);
           scale=frame.light[lightcount].intensity*dotproduct(vec3,normal)/(vec2[0]*vec2[0]+vec2[1]*vec2[1]);
           scalevector(vec2,frame.light[lightcount].color,scale);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         color[4] = vec2[0]; color[5] = vec2[1]; color[6] = vec2[2];
 #else
           glColor3fv(vec2);
@@ -486,7 +486,7 @@ void renderlevel(void)
           glVertex3f(vec[0],vec[1],0.0f);
 #endif
   
-#if !defined(USE_GLES)
+#if !defined(PC_GLES)
           vec[0]=(float)count2+block[blocknum].line[count3][2]-normal[0]*0.125f;
           vec[1]=(float)count+block[blocknum].line[count3][3]-normal[1]*0.125f;
           glColor3f(0.0f,0.0f,0.0f);
@@ -500,7 +500,7 @@ void renderlevel(void)
           glVertex3f(vec[0],vec[1],0.0f);
 #endif
   
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         glVertexPointer(2, GL_FLOAT, 0, quad);
         glTexCoordPointer(2, GL_FLOAT, 0, tx);
         glColorPointer(4, GL_FLOAT, 0, color);
@@ -545,7 +545,7 @@ void renderlevelfore(void)
       {
       glBindTexture(GL_TEXTURE_2D,texture[blocknum].glname);
 
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     glColor4f(level.ambient[2][0],level.ambient[2][1],level.ambient[2][2],1.0f);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -600,7 +600,7 @@ void renderbonds(void)
 
   glDisable(GL_TEXTURE_2D);
 
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     int index = -1;
     GLfloat vtxA[numofbonds*6];
 
@@ -613,7 +613,7 @@ void renderbonds(void)
 
   for (count=0;count<numofbonds;count++)
     {
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     vtxA[++index] = particle[bond[count].part1].position[0];
     vtxA[++index] = particle[bond[count].part1].position[1];
     vtxA[++index] = particle[bond[count].part1].position[2];
@@ -634,7 +634,7 @@ void renderbonds(void)
 #endif
     }
 
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         glVertexPointer(3, GL_FLOAT, 0, vtxA);
         glDrawArrays(GL_LINES,0,numofbonds*2);
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -643,7 +643,7 @@ void renderbonds(void)
 
   glColor4f(1.0f,1.0f,0.0f,1.0f);
 
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     index = -1;
     GLfloat vtxB[physicstemp.numofbonds*6];
 
@@ -653,7 +653,7 @@ void renderbonds(void)
     {
     if (physicstemp.bond[count].type==0)
       {
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     vtxB[++index] = particle[physicstemp.bond[count].part1].position[0];
     vtxB[++index] = particle[physicstemp.bond[count].part1].position[1];
     vtxB[++index] = particle[physicstemp.bond[count].part1].position[2];
@@ -668,7 +668,7 @@ void renderbonds(void)
       }
     if (physicstemp.bond[count].type==1)
       {
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     vtxB[++index] = particle[physicstemp.bond[count].part1].position[0];
     vtxB[++index] = particle[physicstemp.bond[count].part1].position[1];
     vtxB[++index] = particle[physicstemp.bond[count].part1].position[2];
@@ -685,7 +685,7 @@ void renderbonds(void)
       {
       scalevector(vec,particle[physicstemp.bond[count].part1].position,physicstemp.bond[count].force[0]);
       scaleaddvectors(vec,vec,particle[physicstemp.bond[count].part2].position,physicstemp.bond[count].force[1]);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     vtxB[++index] = vec[0];
     vtxB[++index] = vec[1];
     vtxB[++index] = vec[2];
@@ -699,7 +699,7 @@ void renderbonds(void)
 #endif
       }
     }
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         glVertexPointer(3, GL_FLOAT, 0, vtxB);
         glDrawArrays(GL_LINES,0,physicstemp.numofbonds*2);
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -744,7 +744,7 @@ void renderobjectinvisible(int objectnum)
 
   glBindTexture(GL_TEXTURE_2D,texture[331].glname);
 
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     int index_vtx = -1;
     int index_tex = -1;
     GLfloat vtx[32*9];
@@ -763,7 +763,7 @@ void renderobjectinvisible(int objectnum)
     {
     subtractvectors(vec2,objectrender[objectnum].vertex[count2],object[objectrender[objectnum].objectnum].position);
     normalizevector(vec2,vec2);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     tex[++index_tex] = 0.5f+vec2[0]*0.3f;
     tex[++index_tex] = 0.5f+vec2[1]*0.3f;
     vtx[++index_vtx] = objectrender[objectnum].vertex[count2][0];
@@ -776,7 +776,7 @@ void renderobjectinvisible(int objectnum)
 
     subtractvectors(vec2,objectrender[objectnum].vertex[((count2+1)&31)],object[objectrender[objectnum].objectnum].position);
     normalizevector(vec2,vec2);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     tex[++index_tex] = 0.5f+vec2[0]*0.3f;
     tex[++index_tex] = 0.5f+vec2[1]*0.3f;
     vtx[++index_vtx] = objectrender[objectnum].vertex[((count2+1)&31)][0];
@@ -797,7 +797,7 @@ void renderobjectinvisible(int objectnum)
 #endif
     }
 
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         glVertexPointer(3, GL_FLOAT, 0, vtx);
         glTexCoordPointer(2, GL_FLOAT, 0, tex);
         glDrawArrays(GL_TRIANGLES,0,32*3);
@@ -873,7 +873,7 @@ void renderparticles(void)
 
     glBindTexture(GL_TEXTURE_2D,texture[particle[count].texturenum].glname);
 
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     glColor4f(1.0f,1.0f,1.0f,alpha);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -936,7 +936,7 @@ void renderparticles2(void)
 
     glBindTexture(GL_TEXTURE_2D,texture[particle[count].texturenum].glname);
 
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     glColor4f(1.0f,1.0f,1.0f,alpha);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -985,7 +985,7 @@ void renderparticles2(void)
 
 void renderobjects(void)
   {
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     int index = -1;
     int index_vtxA = -1;
     int index_vtxB = -1;
@@ -1017,7 +1017,7 @@ void renderobjects(void)
         {
         glDisable(GL_TEXTURE_2D);
   
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     index = -1;
     GLfloat vtx[32*9];
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -1038,7 +1038,7 @@ void renderobjects(void)
   
         for (count2=0;count2<32;count2++)
           {
-#if defined(USE_GLES)
+#if defined(PC_GLES)
             vtx[++index] = objectrender[count].vertex[count2][0];
             vtx[++index] = objectrender[count].vertex[count2][1];
             vtx[++index] = objectrender[count].vertex[count2][2];
@@ -1055,7 +1055,7 @@ void renderobjects(void)
 #endif
           }
   
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         glVertexPointer(3, GL_FLOAT, 0, vtx);
         glDrawArrays(GL_TRIANGLES,0,32*3);
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -1072,7 +1072,7 @@ void renderobjects(void)
 
       glBindTexture(GL_TEXTURE_2D,texture[objectrender[count].texturenum].glname);
 
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     glColor4f(1.0f,1.0f,1.0f,1.0f);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -1148,7 +1148,7 @@ void renderobjects(void)
   
         for (count2=0;count2<32;count2++)
           {
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         glEnableClientState(GL_VERTEX_ARRAY);
         GLfloat vtx[] = {   objectrender[count].vertex[count2][0],objectrender[count].vertex[count2][1],objectrender[count].vertex[count2][2],
                             objectrender[count].vertex[((count2+1)&31)][0],objectrender[count].vertex[((count2+1)&31)][1],objectrender[count].vertex[((count2+1)&31)][2] };
@@ -1161,7 +1161,7 @@ void renderobjects(void)
           else
             glColor4f(0.25f,0.25f,0.25f,0.5f);
   
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         glVertexPointer(3, GL_FLOAT, 0, vtx);
         glDrawArrays(GL_LINES,0,2);
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -1175,7 +1175,7 @@ void renderobjects(void)
         if ((object[objectrender[count].objectnum].button&4)==4)
         for (count2=0;count2<32;count2++)
           {
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         index_vtxA = -1;
         GLfloat vtxA[6];
         glEnableClientState(GL_VERTEX_ARRAY);
@@ -1193,7 +1193,7 @@ void renderobjects(void)
   
           copyvector(vec,objectrender[count].vertex[count2]);
           scaleaddvectors(vec,vec,normal,0.1f);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
             vtxA[++index_vtxA] = vec[0]; vtxA[++index_vtxA] = vec[1]; vtxA[++index_vtxA] = vec[2];
 #else
           glVertex3fv(vec);
@@ -1205,13 +1205,13 @@ void renderobjects(void)
   
           copyvector(vec,objectrender[count].vertex[((count2+1)&31)]);
           scaleaddvectors(vec,vec,normal,0.1f);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
             vtxA[++index_vtxA] = vec[0]; vtxA[++index_vtxA] = vec[1]; vtxA[++index_vtxA] = vec[2];
 #else
           glVertex3fv(vec);
 #endif
   
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         glVertexPointer(3, GL_FLOAT, 0, vtxA);
         glDrawArrays(GL_LINES,0,2);
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -1222,7 +1222,7 @@ void renderobjects(void)
         if ((object[objectrender[count].objectnum].button&1)==1)
         for (count2=0;count2<32;count2++)
           {
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         index_vtxB = -1;
         index_colorB = -1;
         GLfloat vtxB[12];
@@ -1252,7 +1252,7 @@ void renderobjects(void)
   
           copyvector(vec,objectrender[count].vertex[count2]);
           color[3]=1.0f;
-#if defined(USE_GLES)
+#if defined(PC_GLES)
             vtxB[++index_vtxB] = vec[0]; vtxB[++index_vtxB] = vec[1]; vtxB[++index_vtxB] = vec[2];
             colorB[++index_colorB] = color[0]; colorB[++index_colorB] = color[1]; colorB[++index_colorB] = color[2]; colorB[++index_colorB] = color[3];
 #else
@@ -1261,7 +1261,7 @@ void renderobjects(void)
 #endif
           addvectors(vec,vec,normal);
           color[3]=0.0f;
-#if defined(USE_GLES)
+#if defined(PC_GLES)
             vtxB[++index_vtxB] = vec[0]; vtxB[++index_vtxB] = vec[1]; vtxB[++index_vtxB] = vec[2];
             colorB[++index_colorB] = color[0]; colorB[++index_colorB] = color[1]; colorB[++index_colorB] = color[2]; colorB[++index_colorB] = color[3];
 #else
@@ -1271,7 +1271,7 @@ void renderobjects(void)
           scalevector(vec,objectrender[count].vertex[count2],0.5f);
           scaleaddvectors(vec,vec,objectrender[count].vertex[((count2+1)&31)],0.5f);
           color[3]=1.0f;
-#if defined(USE_GLES)
+#if defined(PC_GLES)
             vtxB[++index_vtxB] = vec[0]; vtxB[++index_vtxB] = vec[1]; vtxB[++index_vtxB] = vec[2];
             colorB[++index_colorB] = color[0]; colorB[++index_colorB] = color[1]; colorB[++index_colorB] = color[2]; colorB[++index_colorB] = color[3];
 #else
@@ -1280,14 +1280,14 @@ void renderobjects(void)
 #endif
           addvectors(vec,vec,normal);
           color[3]=0.0f;
-#if defined(USE_GLES)
+#if defined(PC_GLES)
             vtxB[++index_vtxB] = vec[0]; vtxB[++index_vtxB] = vec[1]; vtxB[++index_vtxB] = vec[2];
             colorB[++index_colorB] = color[0]; colorB[++index_colorB] = color[1]; colorB[++index_colorB] = color[2]; colorB[++index_colorB] = color[3];
 #else
           glColor4fv(color);
           glVertex3fv(vec);
 #endif
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         glVertexPointer(3, GL_FLOAT, 0, vtxB);
         glColorPointer(4, GL_FLOAT, 0, colorB);
         glDrawArrays(GL_LINES,0,4);
@@ -1307,7 +1307,7 @@ void renderobjects(void)
       {
       glBindTexture(GL_TEXTURE_2D,texture[objectrender[count].texturenum].glname);
 
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         index_vtxC = -1;
         index_texC = -1;
         GLfloat vtxC[objectrender[count].numoftris*9];
@@ -1321,7 +1321,7 @@ void renderobjects(void)
 
       if (objectrender[count].type==8)
       if (object[objectrender[count].objectnum].lighttype==1) {
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         glColor4f(object[objectrender[count].objectnum].lightcolor[0], object[objectrender[count].objectnum].lightcolor[1], object[objectrender[count].objectnum].lightcolor[2], 1.0f);
 #else
         glColor3fv(object[objectrender[count].objectnum].lightcolor);
@@ -1330,7 +1330,7 @@ void renderobjects(void)
 
       for (count2=0;count2<objectrender[count].numoftris;count2++)
         {
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         texC[++index_texC] = objectrender[count].texcoord[objectrender[count].tri[count2][0]][0]; texC[++index_texC] = objectrender[count].texcoord[objectrender[count].tri[count2][0]][1];
         vtxC[++index_vtxC] = objectrender[count].vertex[objectrender[count].tri[count2][0]][0]; vtxC[++index_vtxC] = objectrender[count].vertex[objectrender[count].tri[count2][0]][1]; vtxC[++index_vtxC] = objectrender[count].vertex[objectrender[count].tri[count2][0]][2];
         texC[++index_texC] = objectrender[count].texcoord[objectrender[count].tri[count2][1]][0]; texC[++index_texC] = objectrender[count].texcoord[objectrender[count].tri[count2][1]][1];
@@ -1346,7 +1346,7 @@ void renderobjects(void)
         glVertex3fv(objectrender[count].vertex[objectrender[count].tri[count2][2]]);
 #endif
         }
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         glVertexPointer(3, GL_FLOAT, 0, vtxC);
         glTexCoordPointer(2, GL_FLOAT, 0, texC);
         glDrawArrays(GL_TRIANGLES,0,objectrender[count].numoftris*3);
@@ -1372,7 +1372,7 @@ void renderobjects(void)
 
         if (objectrender[count].type!=2 && objectrender[count].type!=10)
           {
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         index_vtxD = -1;
         index_texD = -1;
         GLfloat vtxD[objectrender[count].numoftris*9];
@@ -1387,7 +1387,7 @@ void renderobjects(void)
           for (count2=0;count2<objectrender[count].numoftris;count2++)
             {
             setuplighttexcoord(lightcount,objectrender[count].vertex[objectrender[count].tri[count2][0]]);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         texD[++index_texD] = objectrender[count].texcoord[objectrender[count].tri[count2][0]][0]; texD[++index_texD] = objectrender[count].texcoord[objectrender[count].tri[count2][0]][1];
         vtxD[++index_vtxD] = objectrender[count].vertex[objectrender[count].tri[count2][0]][0]; vtxD[++index_vtxD] = objectrender[count].vertex[objectrender[count].tri[count2][0]][1]; vtxD[++index_vtxD] = objectrender[count].vertex[objectrender[count].tri[count2][0]][2];
 #else
@@ -1395,7 +1395,7 @@ void renderobjects(void)
             glVertex3fv(objectrender[count].vertex[objectrender[count].tri[count2][0]]);
 #endif
             setuplighttexcoord(lightcount,objectrender[count].vertex[objectrender[count].tri[count2][1]]);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         texD[++index_texD] = objectrender[count].texcoord[objectrender[count].tri[count2][1]][0]; texD[++index_texD] = objectrender[count].texcoord[objectrender[count].tri[count2][1]][1];
         vtxD[++index_vtxD] = objectrender[count].vertex[objectrender[count].tri[count2][1]][0]; vtxD[++index_vtxD] = objectrender[count].vertex[objectrender[count].tri[count2][1]][1]; vtxD[++index_vtxD] = objectrender[count].vertex[objectrender[count].tri[count2][1]][2];
 #else
@@ -1403,7 +1403,7 @@ void renderobjects(void)
             glVertex3fv(objectrender[count].vertex[objectrender[count].tri[count2][1]]);
 #endif
             setuplighttexcoord(lightcount,objectrender[count].vertex[objectrender[count].tri[count2][2]]);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         texD[++index_texD] = objectrender[count].texcoord[objectrender[count].tri[count2][2]][0]; texD[++index_texD] = objectrender[count].texcoord[objectrender[count].tri[count2][2]][1];
         vtxD[++index_vtxD] = objectrender[count].vertex[objectrender[count].tri[count2][2]][0]; vtxD[++index_vtxD] = objectrender[count].vertex[objectrender[count].tri[count2][2]][1]; vtxD[++index_vtxD] = objectrender[count].vertex[objectrender[count].tri[count2][2]][2];
 #else
@@ -1413,7 +1413,7 @@ void renderobjects(void)
 #endif
             }
   
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         glVertexPointer(3, GL_FLOAT, 0, vtxD);
         glTexCoordPointer(2, GL_FLOAT, 0, texD);
         glDrawArrays(GL_TRIANGLES,0,objectrender[count].numoftris*3);
@@ -1425,7 +1425,7 @@ void renderobjects(void)
           }
         else
           {
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         index_vtxE = -1;
         index_texE = -1;
         index_colorE = -1;
@@ -1442,14 +1442,14 @@ void renderobjects(void)
             {
             subtractvectors(vec2,frame.light[lightcount].position,objectrender[count].edgevertex[count2][0]);
             scalevector(vec,frame.light[lightcount].color,dotproduct(vec2,objectrender[count].edgenormal[count2]));
-#if defined(USE_GLES)
+#if defined(PC_GLES)
             colorE[++index_colorE]=vec[0]; colorE[++index_colorE]=vec[1]; colorE[++index_colorE]=vec[2]; colorE[++index_colorE]=objectrender[count].alpha;
 #else
             glColor4f(vec[0],vec[1],vec[2],objectrender[count].alpha);
 #endif
 
             setuplighttexcoord(lightcount,objectrender[count].edgevertex[count2][0]);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
             texE[++index_texE] = objectrender[count].edgetexcoord[count2][0][0]; texE[++index_texE] = objectrender[count].edgetexcoord[count2][0][1];
             vtxE[++index_vtxE] = objectrender[count].edgevertex[count2][0][0]; vtxE[++index_vtxE] = objectrender[count].edgevertex[count2][0][1]; vtxE[++index_vtxE] = objectrender[count].edgevertex[count2][0][2];
 #else
@@ -1459,14 +1459,14 @@ void renderobjects(void)
 
             subtractvectors(vec2,frame.light[lightcount].position,objectrender[count].edgevertex[count2][1]);
             scalevector(vec,frame.light[lightcount].color,dotproduct(vec2,objectrender[count].edgenormal[count2]));
-#if defined(USE_GLES)
+#if defined(PC_GLES)
             colorE[++index_colorE]=vec[0]; colorE[++index_colorE]=vec[1]; colorE[++index_colorE]=vec[2]; colorE[++index_colorE]=objectrender[count].alpha;
 #else
             glColor4f(vec[0],vec[1],vec[2],objectrender[count].alpha);
 #endif
 
             setuplighttexcoord(lightcount,objectrender[count].edgevertex[count2][1]);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
             texE[++index_texE] = objectrender[count].edgetexcoord[count2][1][0]; texE[++index_texE] = objectrender[count].edgetexcoord[count2][1][1];
             vtxE[++index_vtxE] = objectrender[count].edgevertex[count2][1][0]; vtxE[++index_vtxE] = objectrender[count].edgevertex[count2][1][1]; vtxE[++index_vtxE] = objectrender[count].edgevertex[count2][1][2];
 #else
@@ -1474,14 +1474,14 @@ void renderobjects(void)
             glVertex3fv(objectrender[count].edgevertex[count2][1]);
 #endif
             zerovector(vec);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
             colorE[++index_colorE]=vec[0]; colorE[++index_colorE]=vec[1]; colorE[++index_colorE]=vec[2]; colorE[++index_colorE]=objectrender[count].alpha;
 #else
             glColor4f(vec[0],vec[1],vec[2],objectrender[count].alpha);
 #endif
 
             setuplighttexcoord(lightcount,objectrender[count].edgevertex[count2][2]);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
             texE[++index_texE] = objectrender[count].edgetexcoord[count2][2][0]; texE[++index_texE] = objectrender[count].edgetexcoord[count2][2][1];
             vtxE[++index_vtxE] = objectrender[count].edgevertex[count2][2][0]; vtxE[++index_vtxE] = objectrender[count].edgevertex[count2][2][1]; vtxE[++index_vtxE] = objectrender[count].edgevertex[count2][2][2];
 #else
@@ -1489,14 +1489,14 @@ void renderobjects(void)
             glVertex3fv(objectrender[count].edgevertex[count2][2]);
 #endif
             zerovector(vec);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
             colorE[++index_colorE]=vec[0]; colorE[++index_colorE]=vec[1]; colorE[++index_colorE]=vec[2]; colorE[++index_colorE]=objectrender[count].alpha;
 #else
             glColor4f(vec[0],vec[1],vec[2],objectrender[count].alpha);
 #endif
 
             setuplighttexcoord(lightcount,objectrender[count].edgevertex[count2][3]);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
             texE[++index_texE] = objectrender[count].edgetexcoord[count2][3][0]; texE[++index_texE] = objectrender[count].edgetexcoord[count2][3][1];
             vtxE[++index_vtxE] = objectrender[count].edgevertex[count2][3][0]; vtxE[++index_vtxE] = objectrender[count].edgevertex[count2][3][1]; vtxE[++index_vtxE] = objectrender[count].edgevertex[count2][3][2];
 #else
@@ -1504,7 +1504,7 @@ void renderobjects(void)
             glVertex3fv(objectrender[count].edgevertex[count2][3]);
 #endif
             }
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         glVertexPointer(3, GL_FLOAT, 0, vtxE);
         glTexCoordPointer(2, GL_FLOAT, 0, texE);
         glColorPointer(4, GL_FLOAT, 0, colorE);
@@ -1528,7 +1528,7 @@ void renderobjects(void)
       if (objectrender[count].type==32)
         {
         glDisable(GL_TEXTURE_2D);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     GLfloat vtxF[] = {  particle[rope[objectrender[count].objectnum].part1].position[0], particle[rope[objectrender[count].objectnum].part1].position[1], particle[rope[objectrender[count].objectnum].part1].position[2],
                         particle[rope[objectrender[count].objectnum].part2].position[0], particle[rope[objectrender[count].objectnum].part2].position[1], particle[rope[objectrender[count].objectnum].part2].position[2] };
 

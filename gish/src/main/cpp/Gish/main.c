@@ -46,6 +46,37 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define DATAPATH_STR DATAPATH_STR2(DATAPATH)
 #endif
 
+#ifdef PC_GLES
+EGLDisplay eglDisplay;
+EGLConfig glConfig;
+EGLContext eglContext;
+EGLSurface eglSurface;
+const char *gl_vendor, *gl_renderer, *gl_version, *gl_extensions;
+EGLint attrib_list_fsaa[] = {
+    EGL_RED_SIZE,                           5,
+    EGL_GREEN_SIZE,                         6,
+    EGL_BLUE_SIZE,                          5,
+    EGL_DEPTH_SIZE,                        16,
+    EGL_SURFACE_TYPE,          EGL_WINDOW_BIT,
+    EGL_RENDERABLE_TYPE,    EGL_OPENGL_ES_BIT,
+    EGL_SAMPLE_BUFFERS,                     1,
+    EGL_SAMPLES,                            1,
+    EGL_NONE
+};
+
+EGLint attrib_list[] = {
+    EGL_RED_SIZE,                           5,
+    EGL_GREEN_SIZE,                         6,
+    EGL_BLUE_SIZE,                          5,
+    EGL_DEPTH_SIZE,                        16,
+    EGL_SURFACE_TYPE,          EGL_WINDOW_BIT,
+    EGL_RENDERABLE_TYPE,    EGL_OPENGL_ES_BIT,
+    EGL_SAMPLE_BUFFERS,                     1,
+    EGL_SAMPLES,                            4,
+    EGL_NONE
+};
+#endif
+
 int main (int argc,char *argv[])
   {
   int count;
@@ -108,7 +139,7 @@ int main (int argc,char *argv[])
 
   listvideomodes();
 
-#if !defined(USE_GLES)
+#if !defined(PC_GLES)
   if (windowinfo.bitsperpixel==16)
     {
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE,5);
@@ -130,15 +161,32 @@ int main (int argc,char *argv[])
 
     printf( "Main.c Opening screen %dx%dx%d\n", windowinfo.resolutionx, windowinfo.resolutiony, windowinfo.bitsperpixel );
 
-#if defined(USE_GLES)
-    if (windowinfo.fullscreen)
-      screen = SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_SWSURFACE|SDL_FULLSCREEN);
-    else
-      screen = SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_SWSURFACE);
+#if defined(PC_GLES)
+    EGLint egl_config_attr[] = {
+        EGL_BUFFER_SIZE,                16,
+        EGL_DEPTH_SIZE,                 16,
+        EGL_STENCIL_SIZE,                0,
+        EGL_SURFACE_TYPE,   EGL_WINDOW_BIT,
+        EGL_NONE
+    };
+    EGLint numConfigs, majorVersion, minorVersion;
+    globalwindow = SDL_CreateWindow("Gish", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                                    windowinfo.resolutionx, windowinfo.resolutiony,
+                                    (windowinfo.fullscreen) ? (SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN) : SDL_WINDOW_OPENGL);
+    eglDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+    eglInitialize(eglDisplay, &majorVersion, &minorVersion);
+    eglChooseConfig(eglDisplay, egl_config_attr, &glConfig, 1, &numConfigs);
+    SDL_SysWMinfo sysInfo;
+    SDL_VERSION(&sysInfo.version); // Set SDL version
+    SDL_GetWindowWMInfo(globalwindow, &sysInfo);
+    eglContext = eglCreateContext(eglDisplay, glConfig, EGL_NO_CONTEXT, NULL);
+    eglSurface = eglCreateWindowSurface(eglDisplay, glConfig, (EGLNativeWindowType) sysInfo.info.x11.window, 0);
+    eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext);
+    eglSwapInterval(eglDisplay, 1); // VSYNC
 #else
     globalwindow = SDL_CreateWindow("Gish", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                     windowinfo.resolutionx, windowinfo.resolutiony,
-                                    (windowinfo.fullscreen) ? SDL_WINDOW_OPENGL|SDL_WINDOW_FULLSCREEN : SDL_WINDOW_OPENGL);
+                                    (windowinfo.fullscreen) ? (SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN) : SDL_WINDOW_OPENGL);
     SDL_SetWindowDisplayMode(globalwindow, &mode);
 #endif
 
@@ -153,7 +201,7 @@ int main (int argc,char *argv[])
 
     glcontext = SDL_GL_CreateContext(globalwindow);
 
-#if defined(USE_GLES)
+#if defined(PC_GLES__) // TODO: ????
     EGL_Open( windowinfo.resolutionx, windowinfo.resolutiony );
 #endif
 
@@ -214,7 +262,7 @@ int main (int argc,char *argv[])
   if (config.sound)
     shutdownaudio();
 
-#if defined(USE_GLES)
+#if defined(PC_GLES__) // TODO: ???
     EGL_Close();
 #else
   SDL_MinimizeWindow(globalwindow);

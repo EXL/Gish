@@ -47,7 +47,7 @@ void recordframe(void)
   //int inttemp;
   FILE *fp;
 
-#if !defined(USE_GLES)
+#if !defined(PC_GLES)
   glReadBuffer(GL_BACK);
 #endif
   glReadPixels(0,0,windowinfo.resolutionx,windowinfo.resolutiony,GL_RGBA,GL_UNSIGNED_BYTE,screenshotbuffer);

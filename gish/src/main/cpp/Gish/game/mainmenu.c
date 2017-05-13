@@ -80,8 +80,8 @@ void mainmenu(void)
 
   drawtext(TXT_LOADING,(320|TEXT_CENTER),448,16,1.0f,1.0f,1.0f,1.0f);
 
-#if defined(USE_GLES)
-    EGL_SwapBuffers();
+#if defined(PC_GLES)
+    eglSwapBuffers(eglDisplay, eglSurface);
 #else
     SDL_GL_SwapWindow(globalwindow);
 #endif
@@ -325,13 +325,13 @@ void mainmenu(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-#if defined(USE_GLES)
-    EGL_SwapBuffers();
+#if defined(PC_GLES)
+    eglSwapBuffers(eglDisplay, eglSurface);
 #else
     SDL_GL_SwapWindow(globalwindow);
 #endif
 
-#if !defined(USE_GLES)
+#if !defined(PC_GLES)
     if (menuitem[5].active)
       {
       launchwebpage("www.crypticsea.com");
@@ -479,8 +479,8 @@ void versusmenu(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-#if defined(USE_GLES)
-    EGL_SwapBuffers();
+#if defined(PC_GLES)
+    eglSwapBuffers(eglDisplay, eglSurface);
 #else
     SDL_GL_SwapWindow(globalwindow);
 #endif
@@ -543,8 +543,8 @@ void storyscreen(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-#if defined(USE_GLES)
-    EGL_SwapBuffers();
+#if defined(PC_GLES)
+    eglSwapBuffers(eglDisplay, eglSurface);
 #else
     SDL_GL_SwapWindow(globalwindow);
 #endif
@@ -759,8 +759,8 @@ void introscreen(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-#if defined(USE_GLES)
-    EGL_SwapBuffers();
+#if defined(PC_GLES)
+    eglSwapBuffers(eglDisplay, eglSurface);
 #else
     SDL_GL_SwapWindow(globalwindow);
 #endif

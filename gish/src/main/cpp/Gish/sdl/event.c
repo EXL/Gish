@@ -44,11 +44,12 @@ void checksystemmessages(void)
       {
       if (event.window.event == SDL_WINDOWEVENT_RESTORED)
         {
-#if defined(USE_GLES)
-    if (windowinfo.fullscreen)
-      SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_SWSURFACE|SDL_FULLSCREEN);
-    else
-      SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_SWSURFACE);
+#if defined(PC_GLES)
+// TODO: ???
+//    if (windowinfo.fullscreen)
+//      SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_SWSURFACE|SDL_FULLSCREEN);
+//    else
+//      SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_SWSURFACE);
 #else
           SDL_DisplayMode mode = { (windowinfo.bitsperpixel==32) ? SDL_PIXELFORMAT_RGB888 : SDL_PIXELFORMAT_RGB565, windowinfo.resolutionx, windowinfo.resolutiony, 0, 0 };
           SDL_SetWindowDisplayMode(globalwindow, &mode);

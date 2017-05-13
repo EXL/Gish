@@ -118,7 +118,7 @@ void gameloop(void)
     glStencilMask(0);
 
     setuptextdisplay();
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     glColor4f(level.ambient[3][0], level.ambient[3][1], level.ambient[3][2], 1.0f);
 #else
     glColor3fv(level.ambient[3]);
@@ -431,7 +431,7 @@ void gameloop(void)
       if (game.oldschool==2)
         glBindTexture(GL_TEXTURE_2D,texture[333].glname);
 
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     glColor4f(1.0f,1.0f,1.0f,1.0f);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -475,11 +475,11 @@ void gameloop(void)
       {
       glDisable(GL_TEXTURE_2D);
 
-#if !defined(USE_GLES)
+#if !defined(PC_GLES)
       glBegin(GL_QUADS);
 #endif
       glColor4f(0.0f,0.0f,0.0f,(float)(100-game.exitdelay)*0.01f);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     glEnableClientState(GL_VERTEX_ARRAY);
         GLfloat quad[] = {  -1.0f,0.75f,-1.0f,
                             1.0f,0.75f,-1.0f,
@@ -502,14 +502,14 @@ void gameloop(void)
       {
       glDisable(GL_TEXTURE_2D);
 
-#if !defined(USE_GLES)
+#if !defined(PC_GLES)
       glBegin(GL_QUADS);
 #endif
       if (game.exitdelay>50)
         glColor4f(0.5f,0.0f,0.0f,(float)(100-game.exitdelay)*0.01f);
       else
         glColor4f(1.0f-(float)(100-game.exitdelay)*0.01f,0.0f,0.0f,(float)(100-game.exitdelay)*0.01f);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     glEnableClientState(GL_VERTEX_ARRAY);
         GLfloat quad[] = {  -1.0f,0.75f,-1.0f,
                             1.0f,0.75f,-1.0f,
@@ -552,11 +552,11 @@ void gameloop(void)
     if (game.exitdelay<20)
       {
       glDisable(GL_TEXTURE_2D);
-#if !defined(USE_GLES)
+#if !defined(PC_GLES)
       glBegin(GL_QUADS);
 #endif
       glColor4f(0.0f,0.0f,0.0f,(float)(20-game.exitdelay)*0.05f);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     glEnableClientState(GL_VERTEX_ARRAY);
         GLfloat quad[] = {  -1.0f,0.75f,-1.0f,
                             1.0f,0.75f,-1.0f,
@@ -645,8 +645,8 @@ void gameloop(void)
 
       drawtext(TXT_LOADINGEDITOR,(320|TEXT_CENTER),240,16,1.0f,1.0f,1.0f,1.0f);
 
-#if defined(USE_GLES)
-    EGL_SwapBuffers();
+#if defined(PC_GLES)
+    eglSwapBuffers(eglDisplay, eglSurface);
 #else
     SDL_GL_SwapWindow(globalwindow);
 #endif
@@ -664,8 +664,8 @@ void gameloop(void)
       simtimer=SDL_GetTicks();
       }
 
-#if defined(USE_GLES)
-    EGL_SwapBuffers();
+#if defined(PC_GLES)
+    eglSwapBuffers(eglDisplay, eglSurface);
 #else
     SDL_GL_SwapWindow(globalwindow);
 #endif

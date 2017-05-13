@@ -139,7 +139,7 @@ void editlevelrope(void)
     glStencilMask(0);
 
     setuptextdisplay();
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     glColor4f(level.ambient[3][0], level.ambient[3][1], level.ambient[3][2], 1.0f);
 #else
     glColor3fv(level.ambient[3]);
@@ -185,8 +185,8 @@ void editlevelrope(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-#if defined(USE_GLES)
-    EGL_SwapBuffers();
+#if defined(PC_GLES)
+    eglSwapBuffers(eglDisplay, eglSurface);
 #else
     SDL_GL_SwapWindow(globalwindow);
 #endif
@@ -308,7 +308,7 @@ void renderropeedit(void)
 
   glDisable(GL_TEXTURE_2D);
 
-#if defined(USE_GLES)
+#if defined(PC_GLES)
 #else
   glBegin(GL_LINES);
 

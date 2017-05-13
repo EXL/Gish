@@ -70,7 +70,7 @@ void loadglextentions(void)
 #ifndef WINDOWS
   glext.multitexture=1;
 #endif
-#if !defined(USE_GLES)
+#if !defined(PC_GLES)
   if (strstr(ext,"GL_ARB_texture_env_dot3")!=NULL || (glversion[0]>='2' || glversion[2]>='3'))
     glext.texture_env_dot3=1;
 #else

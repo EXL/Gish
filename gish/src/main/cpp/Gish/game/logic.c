@@ -649,7 +649,7 @@ void gamedisplay(void)
       blue=1.0f;
     drawtext("/i",0,0,0,red,green,blue,1.0f,object[0].hitpoints/10);
     drawtextbitmap(64,12,24,24);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     glColor4f(1.0f,1.0f,1.0f,1.0f);
 #else
     glColor3f(1.0f,1.0f,1.0f);
@@ -1266,7 +1266,7 @@ void gamedisplay(void)
 
     drawtext("/i",0,0,0,red,green,blue,1.0f,object[0].hitpoints/10);
     drawtextbitmap(64,40,16,16);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     glColor4f(1.0f,1.0f,1.0f,1.0f);
 #else
     glColor3f(1.0f,1.0f,1.0f);
@@ -1284,7 +1284,7 @@ void gamedisplay(void)
 
     drawtext("/i",0,0,0,red,green,blue,1.0f,object[1].hitpoints/10);
     drawtextbitmap((576|TEXT_END),40,16,16);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     glColor4f(1.0f,1.0f,1.0f,1.0f);
 #else
     glColor3f(1.0f,1.0f,1.0f);

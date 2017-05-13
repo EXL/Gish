@@ -89,7 +89,7 @@ void edittextures(void)
 
       glBindTexture(GL_TEXTURE_2D,texture[count+textureedit.pagenum*32].glname);
 
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         GLfloat quadA[] = { 0,0,-1.0f,
@@ -106,7 +106,7 @@ void edittextures(void)
       vec[0]=(count&7)*64+4;
       vec[1]=16+4+(count>>3)*64;
       convertscreenvertex(vec,640,480);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         quadA[0] = vec[0];
         quadA[1] = vec[1];
 #else
@@ -116,7 +116,7 @@ void edittextures(void)
       vec[0]=(count&7)*64+60;
       vec[1]=16+4+(count>>3)*64;
       convertscreenvertex(vec,640,480);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         quadA[3] = vec[0];
         quadA[4] = vec[1];
 #else
@@ -126,7 +126,7 @@ void edittextures(void)
       vec[0]=(count&7)*64+60;
       vec[1]=16+60+(count>>3)*64;
       convertscreenvertex(vec,640,480);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         quadA[6] = vec[0];
         quadA[7] = vec[1];
 #else
@@ -136,14 +136,14 @@ void edittextures(void)
       vec[0]=(count&7)*64+4;
       vec[1]=16+60+(count>>3)*64;
       convertscreenvertex(vec,640,480);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         quadA[9] = vec[0];
         quadA[10] = vec[1];
 #else
       glTexCoord2f(0.0f,1.0f);
       glVertex3f(vec[0],vec[1],-1.0f);
 #endif
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         glVertexPointer(3, GL_FLOAT, 0, quadA);
         glTexCoordPointer(2, GL_FLOAT, 0, txA);
         glDrawArrays(GL_TRIANGLE_FAN,0,4);
@@ -172,7 +172,7 @@ void edittextures(void)
       {
       glBindTexture(GL_TEXTURE_2D,texture[1792+count+textureedit.tilepagenum*16].glname);
 
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         GLfloat quadB[] = { 0,0,-1.0f,
@@ -189,7 +189,7 @@ void edittextures(void)
       vec[0]=(count&7)*64+4;
       vec[1]=320+4+(count>>3)*64;
       convertscreenvertex(vec,640,480);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         quadB[0] = vec[0];
         quadB[1] = vec[1];
 #else
@@ -199,7 +199,7 @@ void edittextures(void)
       vec[0]=(count&7)*64+60;
       vec[1]=320+4+(count>>3)*64;
       convertscreenvertex(vec,640,480);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         quadB[3] = vec[0];
         quadB[4] = vec[1];
 #else
@@ -209,7 +209,7 @@ void edittextures(void)
       vec[0]=(count&7)*64+60;
       vec[1]=320+60+(count>>3)*64;
       convertscreenvertex(vec,640,480);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         quadB[6] = vec[0];
         quadB[7] = vec[1];
 #else
@@ -219,14 +219,14 @@ void edittextures(void)
       vec[0]=(count&7)*64+4;
       vec[1]=320+60+(count>>3)*64;
       convertscreenvertex(vec,640,480);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         quadB[9] = vec[0];
         quadB[10] = vec[1];
 #else
       glTexCoord2f(0.0f,1.0f);
       glVertex3f(vec[0],vec[1],-1.0f);
 #endif
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         glVertexPointer(3, GL_FLOAT, 0, quadB);
         glTexCoordPointer(2, GL_FLOAT, 0, txB);
         glDrawArrays(GL_TRIANGLE_FAN,0,4);
@@ -241,7 +241,7 @@ void edittextures(void)
       {
       glBindTexture(GL_TEXTURE_2D,texture[textureedit.texturenum].glname);
 
-#if defined(USE_GLES)
+#if defined(PC_GLES)
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         GLfloat quadC[] = { 0,0,-1.0f,
@@ -258,7 +258,7 @@ void edittextures(void)
       vec[0]=mouse.x-28;
       vec[1]=mouse.y-28;
       convertscreenvertex(vec,640,480);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         quadC[0] = vec[0];
         quadC[1] = vec[1];
 #else
@@ -268,7 +268,7 @@ void edittextures(void)
       vec[0]=mouse.x+28;
       vec[1]=mouse.y-28;
       convertscreenvertex(vec,640,480);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         quadC[3] = vec[0];
         quadC[4] = vec[1];
 #else
@@ -278,7 +278,7 @@ void edittextures(void)
       vec[0]=mouse.x+28;
       vec[1]=mouse.y+28;
       convertscreenvertex(vec,640,480);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         quadC[6] = vec[0];
         quadC[7] = vec[1];
 #else
@@ -288,14 +288,14 @@ void edittextures(void)
       vec[0]=mouse.x-28;
       vec[1]=mouse.y+28;
       convertscreenvertex(vec,640,480);
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         quadC[9] = vec[0];
         quadC[10] = vec[1];
 #else
       glTexCoord2f(0.0f,1.0f);
       glVertex3f(vec[0],vec[1],-1.0f);
 #endif
-#if defined(USE_GLES)
+#if defined(PC_GLES)
         glVertexPointer(3, GL_FLOAT, 0, quadC);
         glTexCoordPointer(2, GL_FLOAT, 0, txC);
         glDrawArrays(GL_TRIANGLE_FAN,0,4);
@@ -312,8 +312,8 @@ void edittextures(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-#if defined(USE_GLES)
-    EGL_SwapBuffers();
+#if defined(PC_GLES)
+    eglSwapBuffers(eglDisplay, eglSurface);
 #else
     SDL_GL_SwapWindow(globalwindow);
 #endif
@@ -420,8 +420,8 @@ void edittextures(void)
 
 				drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-#if defined(USE_GLES)
-    EGL_SwapBuffers();
+#if defined(PC_GLES)
+    eglSwapBuffers(eglDisplay, eglSurface);
 #else
     SDL_GL_SwapWindow(globalwindow);
 #endif
