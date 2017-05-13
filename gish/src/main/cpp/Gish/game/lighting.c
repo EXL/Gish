@@ -341,7 +341,7 @@ void rendershadows(void)
 #if defined(PC_GLES)
         glVertexPointer(3, GL_FLOAT, 0, quad);
         glDrawArrays(GL_TRIANGLE_FAN,0,4);
-    glDisableClientState(GL_VERTEX_ARRAY);
+        glDisableClientState(GL_VERTEX_ARRAY);
 #else
             glEnd();
 #endif

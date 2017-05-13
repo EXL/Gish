@@ -45,7 +45,7 @@ void checksystemmessages(void)
       if (event.window.event == SDL_WINDOWEVENT_RESTORED)
         {
 #if defined(PC_GLES)
-// TODO: ???
+// TODO: Disable on GLES
 //    if (windowinfo.fullscreen)
 //      SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_SWSURFACE|SDL_FULLSCREEN);
 //    else

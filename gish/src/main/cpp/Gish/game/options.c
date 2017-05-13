@@ -796,7 +796,7 @@ void videooptionsmenu(void)
     printf( "options.c Opening screen %dx%dx%d\n", windowinfo.resolutionx, windowinfo.resolutiony, windowinfo.bitsperpixel );
 
 #if defined(PC_GLES)
-// TODO: Test this
+// TODO: Disable on GLES
 //    if (windowinfo.fullscreen)
 //      screen = SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_SWSURFACE|SDL_FULLSCREEN);
 //    else

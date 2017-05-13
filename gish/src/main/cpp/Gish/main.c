@@ -170,7 +170,7 @@ int main (int argc,char *argv[])
         EGL_NONE
     };
     EGLint numConfigs, majorVersion, minorVersion;
-    globalwindow = SDL_CreateWindow("Gish", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+    globalwindow = SDL_CreateWindow("Gish GLES", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                     windowinfo.resolutionx, windowinfo.resolutiony,
                                     (windowinfo.fullscreen) ? (SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN) : SDL_WINDOW_OPENGL);
     eglDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
@@ -200,10 +200,6 @@ int main (int argc,char *argv[])
     SDL_SetWindowIcon(globalwindow, windowicon);
 
     glcontext = SDL_GL_CreateContext(globalwindow);
-
-#if defined(PC_GLES__) // TODO: ????
-    EGL_Open( windowinfo.resolutionx, windowinfo.resolutiony );
-#endif
 
   loadglextentions();
 
@@ -262,10 +258,18 @@ int main (int argc,char *argv[])
   if (config.sound)
     shutdownaudio();
 
-#if defined(PC_GLES__) // TODO: ???
-    EGL_Close();
+#if defined(PC_GLES)
+    eglDestroySurface(eglDisplay, eglSurface);
+    eglDestroyContext(eglDisplay, eglContext);
+    eglTerminate(eglDisplay);
 #else
   SDL_MinimizeWindow(globalwindow);
+  SDL_GL_DeleteContext(glcontext);
+  glcontext = NULL;
+  SDL_DestroyWindow(globalwindow);
+  globalwindow = NULL;
+  SDL_FreeSurface(windowicon);
+  windowicon = NULL;
 #endif
   SDL_Quit();
 
