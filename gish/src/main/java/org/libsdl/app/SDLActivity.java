@@ -30,6 +30,8 @@ import android.media.*;
 import android.hardware.*;
 import android.content.pm.ActivityInfo;
 
+import ru.exlmoto.gish.GishActivity;
+
 /**
     SDL Activity
 */
@@ -1248,10 +1250,16 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
         if (SDLActivity.isDeviceSDLJoystick(event.getDeviceId())) {
             // Note that we process events with specific key codes here
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (GishActivity.convertKeysFilter(keyCode, true)) {
+                    return true;
+                }
                 if (SDLActivity.onNativePadDown(event.getDeviceId(), keyCode) == 0) {
                     return true;
                 }
             } else if (event.getAction() == KeyEvent.ACTION_UP) {
+                if (GishActivity.convertKeysFilter(keyCode, false)) {
+                    return true;
+                }
                 if (SDLActivity.onNativePadUp(event.getDeviceId(), keyCode) == 0) {
                     return true;
                 }
@@ -1260,11 +1268,17 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
 
         if ((event.getSource() & InputDevice.SOURCE_KEYBOARD) != 0) {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (GishActivity.convertKeysFilter(keyCode, true)) {
+                    return true;
+                }
                 //Log.v("SDL", "key down: " + keyCode);
                 SDLActivity.onNativeKeyDown(keyCode);
                 return true;
             }
             else if (event.getAction() == KeyEvent.ACTION_UP) {
+                if (GishActivity.convertKeysFilter(keyCode, false)) {
+                    return true;
+                }
                 //Log.v("SDL", "key up: " + keyCode);
                 SDLActivity.onNativeKeyUp(keyCode);
                 return true;
