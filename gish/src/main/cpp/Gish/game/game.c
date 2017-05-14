@@ -645,7 +645,7 @@ void gameloop(void)
 
       drawtext(TXT_LOADINGEDITOR,(320|TEXT_CENTER),240,16,1.0f,1.0f,1.0f,1.0f);
 
-#if defined(GLES)
+#if defined(PC_GLES)
     eglSwapBuffers(eglDisplay, eglSurface);
 #else
     SDL_GL_SwapWindow(globalwindow);
@@ -664,7 +664,7 @@ void gameloop(void)
       simtimer=SDL_GetTicks();
       }
 
-#if defined(GLES)
+#if defined(PC_GLES)
     eglSwapBuffers(eglDisplay, eglSurface);
 #else
     SDL_GL_SwapWindow(globalwindow);

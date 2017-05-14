@@ -149,7 +149,7 @@ void editlevelobjects(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-#if defined(GLES)
+#if defined(PC_GLES)
     eglSwapBuffers(eglDisplay, eglSurface);
 #else
     SDL_GL_SwapWindow(globalwindow);

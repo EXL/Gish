@@ -5,6 +5,12 @@
  #define LINUX 1
  #ifndef ANDROID_NDK
   #define TO_DEBUG_LOG(...) fprintf(stderr, __VA_ARGS__)
+ #else
+  #include <android/log.h>
+
+  #define LOG_TAG "Gish_jni"
+  #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+  #define TO_DEBUG_LOG(...) LOGI(__VA_ARGS__)
  #endif
 #endif
 

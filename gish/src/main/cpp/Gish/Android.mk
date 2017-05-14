@@ -5,12 +5,21 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := Gish
 
 SDL_PATH := ../SDL2
+PNG_PATH := ../libpng
+OPENAL_PATH := ../OpenAL
+VORBIS_PATH := ../libvorbis
+OGG_PATH := ../libogg
 
-DEFINES := -DSDL2_PORT -DANDROID_NDK
+DEFINES := -DGLES -DANDROID_NDK
 
 LOCAL_CFLAGS += -O3 -ffast-math -fomit-frame-pointer $(DEFINES)
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/include $(LOCAL_PATH)
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/include \
+    $(LOCAL_PATH)/$(PNG_PATH) \
+    $(LOCAL_PATH)/$(OPENAL_PATH)/include \
+    $(LOCAL_PATH)/$(VORBIS_PATH) \
+    $(LOCAL_PATH)/$(OGG_PATH) \
+    $(LOCAL_PATH)
 
 # Add your application source files here...
 LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
@@ -23,7 +32,6 @@ LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
     parser/parser.c \
     math/intersec.c \
     math/vector.c \
-    egl/eglport.c \
     input/mouse.c \
     input/joystick.c \
     input/keyboard.c \
@@ -73,7 +81,8 @@ LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
     game/setup.c \
     game/editor.c
 
-LOCAL_SHARED_LIBRARIES := SDL2
+LOCAL_SHARED_LIBRARIES := SDL2 openal libvorbis
+LOCAL_STATIC_LIBRARIES := libpng
 
 LOCAL_LDLIBS := -lGLESv1_CM -lGLESv2 -llog
 

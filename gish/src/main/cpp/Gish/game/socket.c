@@ -26,7 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
   #include <windows.h>
 #endif
 #ifdef LINUX
+  #ifndef ANDROID_NDK
   #include <SDL2/SDL.h>
+  #else
+  #include <SDL.h>
+  #endif
   #include <stdlib.h>
   #include <string.h>
 #endif
