@@ -180,3 +180,6 @@ build-*
 
 # Gish Assets data
 assets_full/
+
+# Temp ignore rules
+gish/src/main/cpp/SDL2/

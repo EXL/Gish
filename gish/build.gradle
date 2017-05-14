@@ -8,12 +8,47 @@ android {
         applicationId "ru.exlmoto.gish"
         minSdkVersion 9
         targetSdkVersion 14
+
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86"
+        }
+
+        externalNativeBuild {
+            cmake {
+                arguments "-DANDROID_PLATFORM_LEVEL=9", "-DANDROID=ON"
+                cFlags "-O3", "-ffast-math", "-fomit-frame-pointer"
+                cppFlags "-O3", "-frtti", "-ffast-math", "-fomit-frame-pointer"
+            }
+
+            ndkBuild {
+                // arguments "V=1" /* Verbose ndk-build */
+                arguments "NDK_TOOLCHAIN_VERSION=4.9", "APP_PLATFORM=android-9"
+                arguments "-j" + Runtime.runtime.availableProcessors()
+            }
+        }
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            /*************************************************************************************
+             * Use the following command to build a signed APK-package:
+             * $ ./gradlew assembleRelease -Pandroid.injected.signing.store.file=$KEY_FILE \
+                                           -Pandroid.injected.signing.store.password=$STORE_PWD \
+                                           -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
+                                           -Pandroid.injected.signing.key.password=$KEY_PWD
+            *************************************************************************************/
         }
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path 'src/main/cpp/Android.mk'
+        }
+
+        // cmake {
+        //    path 'src/main/cpp/CMakeLists.txt'
+        // }
     }
 }
