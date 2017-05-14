@@ -114,7 +114,7 @@ int main (int argc,char *argv[])
     return 1;
     }
 
-  TO_DEBUG_LOG("SDL_GetDisplayMode(0, 0, &mode):\t\t%i bpp\t%i x %i\n", SDL_BITSPERPIXEL(mode.format), mode.w, mode.h);
+  TO_DEBUG_LOG("SDL_GetDisplayMode(0, 0, &mode): %i bpp %ix%i\n", SDL_BITSPERPIXEL(mode.format), mode.w, mode.h);
 
   if (SDL_BITSPERPIXEL(mode.format)==16)
     config.bitsperpixel=16;

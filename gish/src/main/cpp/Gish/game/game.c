@@ -599,8 +599,12 @@ void gameloop(void)
     if (game.turbomode)
       game.simspeed=15;
 
+#ifndef ANDROID_NDK
     while (SDL_GetTicks()-simtimer<=game.simspeed)
       SDL_Delay(1);
+#else
+    game.simspeed=1;
+#endif
 
     while (SDL_GetTicks()-simtimer>game.simspeed && simcount<3)
       {
