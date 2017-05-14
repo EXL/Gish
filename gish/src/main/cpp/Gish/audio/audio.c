@@ -81,6 +81,29 @@ void setupaudio(void)
 
   changeddir=chdir("sound");
 
+#ifdef ANDROID_NDK
+  loadwav(0,"/storage/sdcard1/Gish/sound/blockbreak.wav");
+  loadwav(1,"/storage/sdcard1/Gish/sound/rockhit.wav");
+  loadwav(2,"/storage/sdcard1/Gish/sound/fleshhit.wav");
+  loadwav(3,"/storage/sdcard1/Gish/sound/ropebreak.wav");
+  loadwav(4,"/storage/sdcard1/Gish/sound/chainbreak.wav");
+  loadwav(5,"/storage/sdcard1/Gish/sound/gishhit.wav");
+  loadwav(6,"/storage/sdcard1/Gish/sound/rockfriction.wav");
+  loadwav(7,"/storage/sdcard1/Gish/sound/squish.wav");
+  loadwav(8,"/storage/sdcard1/Gish/sound/secrets1.wav");
+  loadwav(9,"/storage/sdcard1/Gish/sound/secrets2.wav");
+  loadwav(10,"/storage/sdcard1/Gish/sound/amber.wav");
+  loadwav(11,"/storage/sdcard1/Gish/sound/nibattack.wav");
+  loadwav(12,"/storage/sdcard1/Gish/sound/visattack.wav");
+  loadwav(13,"/storage/sdcard1/Gish/sound/bobattack.wav");
+  loadwav(14,"/storage/sdcard1/Gish/sound/switch.wav");
+  loadwav(15,"/storage/sdcard1/Gish/sound/points.wav");
+  loadwav(16,"/storage/sdcard1/Gish/sound/gishhurt.wav");
+  loadwav(17,"/storage/sdcard1/Gish/sound/splash.wav");
+  loadwav(18,"/storage/sdcard1/Gish/sound/lava.wav");
+  loadwav(19,"/storage/sdcard1/Gish/sound/necksnap.wav");
+  loadwav(20,"/storage/sdcard1/Gish/sound/tarball.wav");
+#else
   loadwav(0,"blockbreak.wav");
   loadwav(1,"rockhit.wav");
   loadwav(2,"fleshhit.wav");
@@ -102,16 +125,22 @@ void setupaudio(void)
   loadwav(18,"lava.wav");
   loadwav(19,"necksnap.wav");
   loadwav(20,"tarball.wav");
-
+#endif
   if (changeddir==0)
     chdir("..");
 
   changeddir=chdir("data");
-
+#ifdef ANDROID_NDK
+  loadwav(21,"/storage/sdcard1/Gish/data/cubemap.dat");
+  loadwav(22,"/storage/sdcard1/Gish/data/specular.dat");
+  loadwav(23,"/storage/sdcard1/Gish/data/stencil.dat");
+  loadwav(24,"/storage/sdcard1/Gish/data/pixel.dat");
+#else
   loadwav(21,"cubemap.dat");
   loadwav(22,"specular.dat");
   loadwav(23,"stencil.dat");
   loadwav(24,"pixel.dat");
+#endif
 
   if (changeddir==0)
     chdir("..");
