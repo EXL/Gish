@@ -124,7 +124,7 @@ void versusmodemenu(int versusnum)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-#if defined(PC_GLES)
+#if defined(GLES)
     eglSwapBuffers(eglDisplay, eglSurface);
 #else
     SDL_GL_SwapWindow(globalwindow);

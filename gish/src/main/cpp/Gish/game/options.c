@@ -513,7 +513,7 @@ void optionsmenu(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-#if defined(PC_GLES)
+#if defined(GLES)
     eglSwapBuffers(eglDisplay, eglSurface);
 #else
     SDL_GL_SwapWindow(globalwindow);
@@ -754,7 +754,7 @@ void videooptionsmenu(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-#if defined(PC_GLES)
+#if defined(GLES)
     eglSwapBuffers(eglDisplay, eglSurface);
 #else
     SDL_GL_SwapWindow(globalwindow);
@@ -776,7 +776,7 @@ void videooptionsmenu(void)
     windowinfo.fullscreen=fullscreen;
     windowinfo.bitsperpixel=bitsperpixel;
   
-#if !defined(PC_GLES)
+#if !defined(GLES)
     if (windowinfo.bitsperpixel==16)
       {
       SDL_GL_SetAttribute(SDL_GL_RED_SIZE,5);
@@ -795,7 +795,7 @@ void videooptionsmenu(void)
   
     printf( "options.c Opening screen %dx%dx%d\n", windowinfo.resolutionx, windowinfo.resolutiony, windowinfo.bitsperpixel );
 
-#if defined(PC_GLES)
+#if defined(GLES)
 // TODO: Disable on GLES
 //    if (windowinfo.fullscreen)
 //      screen = SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_SWSURFACE|SDL_FULLSCREEN);
@@ -822,7 +822,7 @@ void drawsliderbars(void)
 
   glDisable(GL_TEXTURE_2D);
 
-#if defined(PC_GLES)
+#if defined(GLES)
     GLfloat quad[8];
     glEnableClientState(GL_VERTEX_ARRAY);
 #else
@@ -834,7 +834,7 @@ void drawsliderbars(void)
     vec[0]=160.0f;
     vec[1]=40.0f-1.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
-#if defined(PC_GLES)
+#if defined(GLES)
     quad[0] = vec[0];
     quad[1] = vec[1];
 #else
@@ -844,7 +844,7 @@ void drawsliderbars(void)
     vec[0]=160.0f+128.0f;
     vec[1]=40.0f-5.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
-#if defined(PC_GLES)
+#if defined(GLES)
     quad[2] = vec[0];
     quad[3] = vec[1];
 #else
@@ -854,7 +854,7 @@ void drawsliderbars(void)
     vec[0]=160.0f+128.0f;
     vec[1]=40.0f+5.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
-#if defined(PC_GLES)
+#if defined(GLES)
     quad[4] = vec[0];
     quad[5] = vec[1];
 #else
@@ -864,7 +864,7 @@ void drawsliderbars(void)
     vec[0]=160.0f;
     vec[1]=40.0f+1.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
-#if defined(PC_GLES)
+#if defined(GLES)
     quad[6] = vec[0];
     quad[7] = vec[1];
 
@@ -880,7 +880,7 @@ void drawsliderbars(void)
     vec[0]=160.0f+option.soundvolume*128.0f-2.0f;
     vec[1]=40.0f-7.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
-#if defined(PC_GLES)
+#if defined(GLES)
     glEnableClientState(GL_VERTEX_ARRAY);
 
     quad[0] = vec[0];
@@ -892,7 +892,7 @@ void drawsliderbars(void)
     vec[0]=160.0f+option.soundvolume*128.0f+2.0f;
     vec[1]=40.0f-7.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
-#if defined(PC_GLES)
+#if defined(GLES)
     quad[2] = vec[0];
     quad[3] = vec[1];
 #else
@@ -902,7 +902,7 @@ void drawsliderbars(void)
     vec[0]=160.0f+option.soundvolume*128.0f+2.0f;
     vec[1]=40.0f+7.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
-#if defined(PC_GLES)
+#if defined(GLES)
     quad[4] = vec[0];
     quad[5] = vec[1];
 #else
@@ -912,7 +912,7 @@ void drawsliderbars(void)
     vec[0]=160.0f+option.soundvolume*128.0f-2.0f;
     vec[1]=40.0f+7.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
-#if defined(PC_GLES)
+#if defined(GLES)
     quad[6] = vec[0];
     quad[7] = vec[1];
 
@@ -930,7 +930,7 @@ void drawsliderbars(void)
     vec[0]=160.0f;
     vec[1]=56.0f-1.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
-#if defined(PC_GLES)
+#if defined(GLES)
     glEnableClientState(GL_VERTEX_ARRAY);
 
     quad[0] = vec[0];
@@ -942,7 +942,7 @@ void drawsliderbars(void)
     vec[0]=160.0f+128.0f;
     vec[1]=56.0f-5.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
-#if defined(PC_GLES)
+#if defined(GLES)
     quad[2] = vec[0];
     quad[3] = vec[1];
 #else
@@ -952,7 +952,7 @@ void drawsliderbars(void)
     vec[0]=160.0f+128.0f;
     vec[1]=56.0f+5.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
-#if defined(PC_GLES)
+#if defined(GLES)
     quad[4] = vec[0];
     quad[5] = vec[1];
 #else
@@ -962,7 +962,7 @@ void drawsliderbars(void)
     vec[0]=160.0f;
     vec[1]=56.0f+1.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
-#if defined(PC_GLES)
+#if defined(GLES)
     quad[6] = vec[0];
     quad[7] = vec[1];
 
@@ -978,7 +978,7 @@ void drawsliderbars(void)
     vec[0]=160.0f+option.musicvolume*128.0f-2.0f;
     vec[1]=56.0f-7.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
-#if defined(PC_GLES)
+#if defined(GLES)
     glEnableClientState(GL_VERTEX_ARRAY);
 
     quad[0] = vec[0];
@@ -990,7 +990,7 @@ void drawsliderbars(void)
     vec[0]=160.0f+option.musicvolume*128.0f+2.0f;
     vec[1]=56.0f-7.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
-#if defined(PC_GLES)
+#if defined(GLES)
     quad[2] = vec[0];
     quad[3] = vec[1];
 #else
@@ -1000,7 +1000,7 @@ void drawsliderbars(void)
     vec[0]=160.0f+option.musicvolume*128.0f+2.0f;
     vec[1]=56.0f+7.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
-#if defined(PC_GLES)
+#if defined(GLES)
     quad[4] = vec[0];
     quad[5] = vec[1];
 #else
@@ -1010,7 +1010,7 @@ void drawsliderbars(void)
     vec[1]=56.0f+7.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
 
-#if defined(PC_GLES)
+#if defined(GLES)
     quad[6] = vec[0];
     quad[7] = vec[1];
 
@@ -1022,7 +1022,7 @@ void drawsliderbars(void)
 #endif
     }
 
-#if !defined(PC_GLES)
+#if !defined(GLES)
   glEnd();
 #endif
   glEnable(GL_TEXTURE_2D);
@@ -1474,7 +1474,7 @@ void optionsmenu2(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-#if defined(PC_GLES)
+#if defined(GLES)
     eglSwapBuffers(eglDisplay, eglSurface);
 #else
     SDL_GL_SwapWindow(globalwindow);

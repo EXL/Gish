@@ -268,7 +268,7 @@ void drawmenuitems(void)
       */
         glBindTexture(GL_TEXTURE_2D,texture[menuitem[count].texturenum].glname);
 
-#if defined(PC_GLES)
+#if defined(GLES)
     GLfloat quad[12];
     GLfloat tex[] = {   0,0,
                         1,0,
@@ -285,7 +285,7 @@ void drawmenuitems(void)
       convertscreenvertex(vec,font.sizex,font.sizey);
       //glColor4f((float)(menuitem[count].r*(menuitem[count].highlight+1))/4,(float)(menuitem[count].g*(menuitem[count].highlight+1))/4,(float)(menuitem[count].b*(menuitem[count].highlight+1))/4,1.0f);
       glColor4f(1.0f,1.0f,1.0f,1.0f);
-#if defined(PC_GLES)
+#if defined(GLES)
         quad[0] = vec[0];
         quad[1] = vec[1];
         quad[2] = -1.0f;
@@ -296,7 +296,7 @@ void drawmenuitems(void)
       vec[0]=menuitem[count].x+menuitem[count].sizex*menuitem[count].textsize;
       vec[1]=menuitem[count].y;
       convertscreenvertex(vec,font.sizex,font.sizey);
-#if defined(PC_GLES)
+#if defined(GLES)
         quad[3] = vec[0];
         quad[4] = vec[1];
         quad[5] = -1.0f;
@@ -307,7 +307,7 @@ void drawmenuitems(void)
       vec[0]=menuitem[count].x+menuitem[count].sizex*menuitem[count].textsize;
       vec[1]=menuitem[count].y+menuitem[count].sizey*menuitem[count].textsize;
       convertscreenvertex(vec,font.sizex,font.sizey);
-#if defined(PC_GLES)
+#if defined(GLES)
         quad[6] = vec[0];
         quad[7] = vec[1];
         quad[8] = -1.0f;
@@ -318,7 +318,7 @@ void drawmenuitems(void)
       vec[0]=menuitem[count].x;
       vec[1]=menuitem[count].y+menuitem[count].sizey*menuitem[count].textsize;
       convertscreenvertex(vec,font.sizex,font.sizey);
-#if defined(PC_GLES)
+#if defined(GLES)
         quad[9] = vec[0];
         quad[10] = vec[1];
         quad[11] = -1.0f;
@@ -327,7 +327,7 @@ void drawmenuitems(void)
       glVertex3f(vec[0],vec[1],-1.0f);
 #endif
 
-#if defined(PC_GLES)
+#if defined(GLES)
         glVertexPointer(3, GL_FLOAT, 0, quad);
         glTexCoordPointer(2, GL_FLOAT, 0, tex);
         glDrawArrays(GL_TRIANGLE_FAN,0,4);

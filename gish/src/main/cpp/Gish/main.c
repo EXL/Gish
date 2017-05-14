@@ -46,7 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define DATAPATH_STR DATAPATH_STR2(DATAPATH)
 #endif
 
-#ifdef PC_GLES
+#ifdef GLES
 EGLDisplay eglDisplay;
 EGLConfig glConfig;
 EGLContext eglContext;
