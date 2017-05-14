@@ -139,7 +139,7 @@ int main (int argc,char *argv[])
 
   listvideomodes();
 
-#if !defined(PC_GLES)
+#if !defined(PC_GLES) && !defined(ANDROID_NDK)
   if (windowinfo.bitsperpixel==16)
     {
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE,5);
@@ -157,6 +157,24 @@ int main (int argc,char *argv[])
   SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,windowinfo.depthbits);
   SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE,windowinfo.stencilbits);
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
+#endif
+
+#ifdef ANDROID_NDK
+    // EXL: Android OpenGLES 1.1 via SDL2 initialization
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 0);
+    SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE, 0);
+    SDL_GL_SetAttribute(SDL_GL_ACCUM_GREEN_SIZE, 0);
+    SDL_GL_SetAttribute(SDL_GL_ACCUM_BLUE_SIZE, 0);
+    SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE, 0);
+
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1); // TODO: Check this.
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
 #endif
 
     printf( "Main.c Opening screen %dx%dx%d\n", windowinfo.resolutionx, windowinfo.resolutiony, windowinfo.bitsperpixel );
@@ -195,7 +213,11 @@ int main (int argc,char *argv[])
         printf( "No SDL screen\n" );
     }
 
+#ifndef ANDROID_NDK
     windowicon = SDL_LoadBMP("gish.bmp");
+#else
+    windowicon = SDL_LoadBMP("/storage/sdcard1/Gish/gish.bmp");
+#endif
     SDL_SetColorKey(windowicon, SDL_TRUE, SDL_MapRGB(windowicon->format, 255, 255, 255));
     SDL_SetWindowIcon(globalwindow, windowicon);
 

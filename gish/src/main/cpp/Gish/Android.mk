@@ -10,7 +10,7 @@ OPENAL_PATH := ../OpenAL
 VORBIS_PATH := ../libvorbis
 OGG_PATH := ../libogg
 
-DEFINES := -DGLES -DANDROID_NDK
+DEFINES := -DGLES -DANDROID_NDK -DDATAPATH="/storage/sdcard1/Gish"
 
 LOCAL_CFLAGS += -O3 -ffast-math -fomit-frame-pointer $(DEFINES)
 
@@ -81,7 +81,7 @@ LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
     game/setup.c \
     game/editor.c
 
-LOCAL_SHARED_LIBRARIES := SDL2 openal libvorbis
+LOCAL_SHARED_LIBRARIES := SDL2 openal libvorbis libogg
 LOCAL_STATIC_LIBRARIES := libpng
 
 LOCAL_LDLIBS := -lGLESv1_CM -lGLESv2 -llog

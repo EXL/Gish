@@ -72,11 +72,14 @@ public class SDLActivity extends Activity {
     protected String[] getLibraries() {
         return new String[] {
             "SDL2",
+            "openal",
+            "vorbis",
+            "ogg",
             // "SDL2_image",
             // "SDL2_mixer",
             // "SDL2_net",
             // "SDL2_ttf",
-            "main"
+            "Gish"
         };
     }
 

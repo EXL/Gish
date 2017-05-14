@@ -51,6 +51,8 @@ char* userpath(char *result, char *path)
 #ifdef LINUX
 #if defined(PANDORA)
   char *home=getenv("PWD");
+#elif defined(ANDROID_NDK)
+  char *home="/storage/sdcard1/Gish";
 #else
   char *home=getenv("HOME");
 #endif
@@ -91,7 +93,7 @@ void loadconfig(void)
   config.depthbits=16;
 #else
   config.resolutionx=800;
-  config.resolutiony=600;
+  config.resolutiony=480;
   config.bitsperpixel=32;
   config.depthbits=24;
 #endif
