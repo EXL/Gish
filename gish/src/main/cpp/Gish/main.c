@@ -210,6 +210,7 @@ int main (int argc,char *argv[])
     SDL_SetWindowFullscreen(globalwindow, SDL_WINDOW_FULLSCREEN);
     SDL_GetWindowSize(globalwindow, &windowinfo.resolutionx, &windowinfo.resolutiony);
     TO_DEBUG_LOG("Resize SDL window: %dx%d\n", windowinfo.resolutionx, windowinfo.resolutiony);
+    windowinfo.fullscreen = 1;
     saveconfig();
 #endif
 #endif
