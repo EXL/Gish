@@ -626,10 +626,11 @@ void gameloop(void)
       game.simspeed=15;
 
 #ifndef ANDROID_NDK
-    while (SDL_GetTicks()-simtimer<=game.simspeed)
-      SDL_Delay(1);
+// Unlock Maximum FPS
+//    while (SDL_GetTicks()-simtimer<=game.simspeed)
+//      SDL_Delay(1);
 #else
-    game.simspeed=1;
+    game.simspeed=0;
 #endif
 
     while (SDL_GetTicks()-simtimer>game.simspeed && simcount<3)

@@ -35,8 +35,9 @@ void checksystemmessages(void)
   int count;
   SDL_Event event;
 
-  if (windowinfo.minimized)
-    SDL_Delay(20); // TODO: Check this on Android.
+// Unlock Maximum FPS
+//  if (windowinfo.minimized)
+//    SDL_Delay(20); // TODO: Check this on Android.
 
   while (SDL_PollEvent(&event))
     {
