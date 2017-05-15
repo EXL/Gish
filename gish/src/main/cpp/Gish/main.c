@@ -94,6 +94,7 @@ int main (int argc,char *argv[])
 
 #ifdef ANDROID_NDK
   initializeJavaEnviron();
+  chdir(getAssetsPathFromJNI());
 #endif
 
   checkbigendian();

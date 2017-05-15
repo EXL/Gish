@@ -44,6 +44,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../video/text.h"
 #include "../sdl/video.h"
 
+#ifdef ANDROID_NDK
+#include "../android/a_utils.h"
+#endif
+
 _config config;
 
 char* stringconcat(const char *s1, const char *s2)
@@ -58,11 +62,11 @@ char* userpath(char *result, char *path)
   {
 #ifdef LINUX
 #if defined(PANDORA)
-  char *home=getenv("PWD");
+  const char *home=getenv("PWD");
 #elif defined(ANDROID_NDK)
-  char *home=getAssetsPathFromJNI();
+  const char *home=getAssetsPathFromJNI();
 #else
-  char *home=getenv("HOME");
+  const char *home=getenv("HOME");
 #endif
 
   if (!home)

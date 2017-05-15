@@ -10,8 +10,7 @@ OPENAL_PATH := ../OpenAL
 VORBIS_PATH := ../libvorbis
 OGG_PATH := ../libogg
 
-DEFINES := -DGLES -DANDROID_NDK -DDATAPATH="/storage/sdcard1/Gish/"
-
+DEFINES := -DGLES -DANDROID_NDK
 LOCAL_CFLAGS += -O3 -ffast-math -fomit-frame-pointer $(DEFINES)
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/include \
