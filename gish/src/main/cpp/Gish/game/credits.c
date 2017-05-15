@@ -58,11 +58,11 @@ void creditsmenu(void)
     createmenuitem(TXT_BACK,0,0,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_ESC);
 
-		count=sizeof(TXT_GISHUSES+1)*12+64;
-    createmenuitem("SDL",count,400,12,1.0f,1.0f,1.0f,1.0f);
-    createmenuitem("OpenGL",count+5*12,400,12,1.0f,1.0f,1.0f,1.0f);
-    createmenuitem("OpenAL",count+5*12+8*12,400,12,1.0f,1.0f,1.0f,1.0f);
-    createmenuitem("Ogg Vorbis",count+5*12+8*12+8*12,400,12,1.0f,1.0f,1.0f,1.0f);
+    count=sizeof(TXT_GISHUSES+1)*12+90;
+    createmenuitem("SDL",count,412,12,1.0f,1.0f,1.0f,1.0f);
+    createmenuitem("OpenGL",count+5*12,412,12,1.0f,1.0f,1.0f,1.0f);
+    createmenuitem("OpenAL",count+5*12+8*12,412,12,1.0f,1.0f,1.0f,1.0f);
+    createmenuitem("Ogg Vorbis",count+5*12+8*12+8*12,412,12,1.0f,1.0f,1.0f,1.0f);
     createmenuitem("Mendo Mate",64,388,12,1.0f,1.0f,1.0f,1.0f);
 
     checksystemmessages();
@@ -176,7 +176,7 @@ void creditsmenu(void)
     drawtext("Roy Sawyers",64,count,12,1.0f,1.0f,1.0f,1.0f);
     count+=12;
     //drawtext("Mendo Mate",64,count,12,1.0f,1.0f,1.0f,1.0f);
-    count+=12;
+    count+=24;
     drawtext(TXT_GISHUSES"    ,       ,       , ",64,count,12,1.0f,1.0f,1.0f,1.0f);
 
     drawmenuitems();
