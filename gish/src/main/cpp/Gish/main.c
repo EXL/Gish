@@ -39,6 +39,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "video/text.h"
 #include "video/texture.h"
 
+#ifdef ANDROID_NDK
+#include "android/a_utils.h"
+#endif
+
 #ifdef DATAPATH
 #include <unistd.h>
 #define DATAPATH_STR3(X) #X
@@ -85,6 +89,10 @@ int main (int argc,char *argv[])
 
 #ifdef DATAPATH
   chdir(DATAPATH_STR);
+#endif
+
+#ifdef ANDROID_NDK
+  initializeJavaEnviron();
 #endif
 
   checkbigendian();

@@ -319,7 +319,11 @@ void mainmenu(void)
       drawtext(TXT_TURBO_EDITION,(640|TEXT_END),470,10,1.0f,1.0f,1.0f,1.0f);
     drawtext("Version 1.53",0,470,10,1.0f,1.0f,1.0f,1.0f);
 
-    drawtext(TXT_COPYRIGHT,(320|TEXT_CENTER),470,10,0.75f,0.75f,0.75f,1.0f);
+    if (joymenunum == 5) {
+        drawtext(TXT_COPYRIGHT,(320|TEXT_CENTER),470,10,1.0f,1.0f,1.0f,1.0f);
+    } else {
+        drawtext(TXT_COPYRIGHT,(320|TEXT_CENTER),470,10,0.75f,0.75f,0.75f,1.0f);
+    }
 
     drawmenuitems();
 
@@ -331,13 +335,11 @@ void mainmenu(void)
     SDL_GL_SwapWindow(globalwindow);
 #endif
 
-#if !defined(GLES)
     if (menuitem[5].active)
       {
       launchwebpage("www.crypticsea.com");
       menuitem[5].active=0;
       }
-#endif
     if (menuitem[4].active)
       {
       //game.songnum=-1;

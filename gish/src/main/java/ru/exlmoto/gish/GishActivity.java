@@ -1,5 +1,8 @@
 package ru.exlmoto.gish;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
@@ -10,6 +13,8 @@ import org.libsdl.app.SDLActivity;
  */
 
 public class GishActivity extends SDLActivity {
+
+    private static Activity m_GishActivity = null;
 
     // --- SDL Patch Functions
     public static void pressOrReleaseKey(int keyCode, boolean press) {
@@ -38,7 +43,7 @@ public class GishActivity extends SDLActivity {
                 pressOrReleaseKey(KeyEvent.KEYCODE_ENTER, press);
                 return true;
             case KeyEvent.KEYCODE_BACK:
-                pressOrReleaseKey(KeyEvent.KEYCODE_ESCAPE, press);
+                pressOrReleaseKey(KeyEvent.KEYCODE_ESCAPE, press); // TODO: Check This on Motorola Droid 2 (Android 2.3.4)
                 return true;
             default:
                 return false;
@@ -48,5 +53,14 @@ public class GishActivity extends SDLActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        m_GishActivity = this;
+    }
+
+    // JNI-function
+    public static void openUrl(String aUrl) {
+        Uri uriUrl = Uri.parse(aUrl);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uriUrl);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        m_GishActivity.startActivity(intent);
     }
 }

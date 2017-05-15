@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
   #include <SDL2/SDL.h>
   #else
   #include <SDL.h>
+  #include "../android/a_utils.h"
   #endif
   #include <stdlib.h>
   #include <string.h>
@@ -81,9 +82,16 @@ void launchwebpage(char *webpagename)
   */
 #endif
 #ifdef LINUX
+#ifndef ANDROID_NDK
   char command[100] = "xdg-open http://";
   strcat(command, webpagename);
   SDL_MinimizeWindow(globalwindow);
   system((const char*)command);
+#else
+  char command[100] = "http://";
+  strcat(command, webpagename);
+  SDL_MinimizeWindow(globalwindow);
+  openUrlFromJNI((const char*)command);
+#endif // !ANDROID_NDK
 #endif
   }
