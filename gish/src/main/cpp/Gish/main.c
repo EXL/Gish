@@ -133,7 +133,9 @@ int main (int argc,char *argv[])
       option.music=0;
     }
 
+#ifndef ANDROID_NDK
   saveconfig();
+#endif
 
   SDL_ShowCursor(SDL_DISABLE);
 
