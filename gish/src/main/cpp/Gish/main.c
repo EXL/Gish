@@ -305,6 +305,9 @@ int main (int argc,char *argv[])
   windowicon = NULL;
 #endif
   SDL_Quit();
+#ifdef ANDROID_NDK
+  exit(0);
+#endif
 
   return(0);
   }

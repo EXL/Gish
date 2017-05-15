@@ -72,7 +72,7 @@ void listvideomodes(void)
         }
         f = mode.format;
 
-        TO_DEBUG_LOG("Mode %i\tbpp %i\t%s\t%i x %i\n", i,
+        TO_DEBUG_LOG("Mode %i bpp %i %s %ix%i\n", i,
         SDL_BITSPERPIXEL(f), SDL_GetPixelFormatName(f), mode.w, mode.h);
 
         // if (SDL_VideoModeOK(sdlmode[count]->w,sdlmode[count]->h,32,SDL_OPENGL|SDL_FULLSCREEN)) {
