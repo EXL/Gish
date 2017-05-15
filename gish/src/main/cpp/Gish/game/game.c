@@ -70,6 +70,8 @@ _game game;
 
 int fps, fps_cache = 0, fps_renew = 0, fps_mean;
 int fps_enabled = 1;
+int lighting_enabled = 1;
+int shadow_enabled = 1;
 
 void gameloop(void)
   {
@@ -383,6 +385,12 @@ void gameloop(void)
 
     if (keyboard[SCAN_F] && !prevkeyboard[SCAN_F] && game.exit==GAMEEXIT_NONE)
         fps_enabled^=1;
+    if (keyboard[SCAN_G] && !prevkeyboard[SCAN_G] && game.exit==GAMEEXIT_NONE)
+        game.godmode^=1;
+    if (keyboard[SCAN_N] && !prevkeyboard[SCAN_N] && game.exit==GAMEEXIT_NONE)
+        lighting_enabled^=1;
+    if (keyboard[SCAN_M] && !prevkeyboard[SCAN_M] && game.exit==GAMEEXIT_NONE)
+        shadow_enabled^=1;
 
     if (keyboard[SCAN_9] || keyboard[SCAN_MINUS] || keyboard[SCAN_NUMMINUS])
         view.zoom*=1.01f;
@@ -408,11 +416,13 @@ void gameloop(void)
 
     soundsimulation(view.position,view.orientation);
 
-    setupframelighting();
+    if (lighting_enabled)
+        setupframelighting();
 
     setuprenderobjects();
 
-    rendershadows();
+    if (shadow_enabled)
+        rendershadows();
 
     renderlevelback();
 
@@ -625,13 +635,9 @@ void gameloop(void)
     if (game.turbomode)
       game.simspeed=15;
 
-#ifndef ANDROID_NDK
 // Unlock Maximum FPS
 //    while (SDL_GetTicks()-simtimer<=game.simspeed)
 //      SDL_Delay(1);
-#else
-    game.simspeed=0;
-#endif
 
     while (SDL_GetTicks()-simtimer>game.simspeed && simcount<3)
       {

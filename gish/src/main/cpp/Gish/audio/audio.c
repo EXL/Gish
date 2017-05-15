@@ -32,6 +32,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../game/game.h"
 #include "../game/options.h"
 #include "../sdl/endian.h"
+#include "../game/config.h"
+
+#ifdef ANDROID_NDK
+#include "../android/a_utils.h"
+#endif // ANDROID_NDK
 
 ALCcontext *alcontext;
 ALCdevice *aldevice;
@@ -83,7 +88,7 @@ void setupaudio(void)
 
   // EXL: SDL_LoadWAV() macro doesn't work together with chdir() function
 #ifdef ANDROID_NDK
-  const char *path = stringconcat(getAssetsPathFromJNI(), "sound/blockbreak.wav");
+  char *path = stringconcat(getAssetsPathFromJNI(), "sound/blockbreak.wav");
   loadwav(0,path); free(path);
   path = stringconcat(getAssetsPathFromJNI(), "sound/rockhit.wav");
   loadwav(1,path); free(path);

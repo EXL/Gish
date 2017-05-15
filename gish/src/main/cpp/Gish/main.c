@@ -234,7 +234,7 @@ int main (int argc,char *argv[])
 #ifndef ANDROID_NDK
     windowicon = SDL_LoadBMP("gish.bmp");
 #else
-    const char *iconpath = stringconcat(getAssetsPathFromJNI(), "gish.bmp");
+    char *iconpath = stringconcat(getAssetsPathFromJNI(), "gish.bmp");
     windowicon = SDL_LoadBMP(iconpath);
     free(iconpath);
 #endif
