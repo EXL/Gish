@@ -93,7 +93,7 @@ void loadconfig(void)
   config.depthbits=16;
 #else
   config.resolutionx=800;
-  config.resolutiony=480;
+  config.resolutiony=600;
   config.bitsperpixel=32;
   config.depthbits=24;
 #endif
@@ -101,7 +101,11 @@ void loadconfig(void)
   config.fullscreen=0;
   config.sound=1;
   config.music=1;
+#ifndef ANDROID_NDK
   config.joystick=1;
+#else
+  config.joystick=0;
+#endif
 
   option.sound=1;
   option.music=1;
