@@ -68,12 +68,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 _view view;
 _game game;
 
+int fps, fps_cache = 0, fps_renew = 0, fps_mean;
+int fps_enabled = 1;
+
 void gameloop(void)
   {
   int count,count2;
   unsigned int simtimer;
   int simcount;
-  int frametimer,fps;
+  int frametimer;
   //float vec[3];
   //char filename[13]="text000.tga";
   int scorenum;
@@ -104,6 +107,19 @@ void gameloop(void)
   scorenum=-1;
 
   resetmenuitems();
+
+  view.zoom=10.0f;
+  if (game.oldschool==2)
+    view.zoom=16.0f;
+  if (game.oldschool==3)
+    view.zoom=26.0f;
+
+  if (level.gametype==GAMETYPE_2COLLECTION)
+    view.zoom=24.0f;
+  if (level.gametype==GAMETYPE_2RACING)
+    view.zoom=24.0f;
+  if (level.gametype==GAMETYPE_4FOOTBALL || level.gametype==GAMETYPE_4SUMO)
+    view.zoom=14.0f;
 
   while ((game.exit<GAMEEXIT_EXITGAME || game.exitdelay>0) && !windowinfo.shutdown)
     {
@@ -365,18 +381,17 @@ void gameloop(void)
     //if (keyboard[SCAN_R] && !prevkeyboard[SCAN_R])
     //  movie.record^=1;
 
-    view.zoom=10.0f;
-    if (game.oldschool==2)
-      view.zoom=16.0f;
-    if (game.oldschool==3)
-      view.zoom=26.0f;
+    if (keyboard[SCAN_F] && !prevkeyboard[SCAN_F] && game.exit==GAMEEXIT_NONE)
+        fps_enabled^=1;
 
-    if (level.gametype==GAMETYPE_2COLLECTION)
-      view.zoom=24.0f;
-    if (level.gametype==GAMETYPE_2RACING)
-      view.zoom=24.0f;
-    if (level.gametype==GAMETYPE_4FOOTBALL || level.gametype==GAMETYPE_4SUMO)
-      view.zoom=14.0f;
+    if (keyboard[SCAN_9] || keyboard[SCAN_MINUS] || keyboard[SCAN_NUMMINUS])
+        view.zoom*=1.01f;
+    if (view.zoom > 50.0f)
+        view.zoom=50.0f;
+    if (keyboard[SCAN_0] || keyboard[SCAN_EQUALS] || keyboard[SCAN_NUMPLUS])
+        view.zoom/=1.01f;
+    if (view.zoom < 4.0f)
+        view.zoom=4.0f;
 
     view.zoomx=view.zoom+0.5f;
     view.zoomy=view.zoom*0.75f+0.5f;
@@ -470,6 +485,17 @@ void gameloop(void)
       }
 
     setuptextdisplay();
+
+    if (fps_enabled) {
+        fps_mean += fps;
+        fps_renew--;
+        if (fps_renew <= 0) {
+            fps_cache= (float)fps_mean / 5.0;
+            fps_renew=5;
+            fps_mean = 0;
+        }
+        drawtext("/i",40,64,16,1.0f,1.0f,0.0f,1.0f, fps_cache);
+    }
 
     if (game.exit==GAMEEXIT_WON || game.exit==GAMEXIT_WARPZONE)
       {

@@ -566,7 +566,7 @@ void setupmenuitems(void)
   strcpy(keyboardlabel[SCAN_NUMEND],"End");
   strcpy(keyboardlabel[SCAN_NUMPGDWN],"PgDn");
   strcpy(keyboardlabel[SCAN_NUMPLUS],"Plus");
-  strcpy(keyboardlabel[SCAN_NUM_MINUS],"Minus");
+  strcpy(keyboardlabel[SCAN_NUMMINUS],"Minus");
   strcpy(keyboardlabel[SCAN_NUMINS],"Ins");
   strcpy(keyboardlabel[SCAN_NUMDEL],"Del");
 
