@@ -208,6 +208,8 @@ void loadconfig(void)
 
   windowinfo.resolutionx=config.resolutionx;
   windowinfo.resolutiony=config.resolutiony;
+//  windowinfo.resolutionx=800;
+//  windowinfo.resolutiony=480;
   windowinfo.bitsperpixel=config.bitsperpixel;
   windowinfo.depthbits=config.depthbits;
   windowinfo.stencilbits=config.stencilbits;

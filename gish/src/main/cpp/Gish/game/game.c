@@ -70,7 +70,7 @@ _game game;
 
 int fps, fps_cache = 0, fps_renew = 0, fps_mean;
 int fps_enabled = 1;
-int lighting_enabled = 1;
+int lighting_enabled = 0;
 int shadow_enabled = 1;
 
 void gameloop(void)
@@ -385,10 +385,6 @@ void gameloop(void)
 
     if (keyboard[SCAN_F] && !prevkeyboard[SCAN_F] && game.exit==GAMEEXIT_NONE)
         fps_enabled^=1;
-    if (keyboard[SCAN_G] && !prevkeyboard[SCAN_G] && game.exit==GAMEEXIT_NONE)
-        game.godmode^=1;
-    if (keyboard[SCAN_N] && !prevkeyboard[SCAN_N] && game.exit==GAMEEXIT_NONE)
-        lighting_enabled^=1;
     if (keyboard[SCAN_M] && !prevkeyboard[SCAN_M] && game.exit==GAMEEXIT_NONE)
         shadow_enabled^=1;
 
