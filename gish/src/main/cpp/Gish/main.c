@@ -41,6 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #ifdef ANDROID_NDK
 #include "android/a_utils.h"
+#include <stdlib.h>
 #endif
 
 #ifdef DATAPATH
@@ -233,7 +234,9 @@ int main (int argc,char *argv[])
 #ifndef ANDROID_NDK
     windowicon = SDL_LoadBMP("gish.bmp");
 #else
-    windowicon = SDL_LoadBMP("/storage/sdcard1/Gish/gish.bmp");
+    const char *iconpath = stringconcat(getAssetsPathFromJNI(), "gish.bmp");
+    windowicon = SDL_LoadBMP(iconpath);
+    free(iconpath);
 #endif
     SDL_SetColorKey(windowicon, SDL_TRUE, SDL_MapRGB(windowicon->format, 255, 255, 255));
     SDL_SetWindowIcon(globalwindow, windowicon);

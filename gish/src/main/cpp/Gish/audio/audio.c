@@ -81,28 +81,50 @@ void setupaudio(void)
 
   changeddir=chdir("sound");
 
+  // EXL: SDL_LoadWAV() macro doesn't work together with chdir() function
 #ifdef ANDROID_NDK
-  loadwav(0,"/storage/sdcard1/Gish/sound/blockbreak.wav");
-  loadwav(1,"/storage/sdcard1/Gish/sound/rockhit.wav");
-  loadwav(2,"/storage/sdcard1/Gish/sound/fleshhit.wav");
-  loadwav(3,"/storage/sdcard1/Gish/sound/ropebreak.wav");
-  loadwav(4,"/storage/sdcard1/Gish/sound/chainbreak.wav");
-  loadwav(5,"/storage/sdcard1/Gish/sound/gishhit.wav");
-  loadwav(6,"/storage/sdcard1/Gish/sound/rockfriction.wav");
-  loadwav(7,"/storage/sdcard1/Gish/sound/squish.wav");
-  loadwav(8,"/storage/sdcard1/Gish/sound/secrets1.wav");
-  loadwav(9,"/storage/sdcard1/Gish/sound/secrets2.wav");
-  loadwav(10,"/storage/sdcard1/Gish/sound/amber.wav");
-  loadwav(11,"/storage/sdcard1/Gish/sound/nibattack.wav");
-  loadwav(12,"/storage/sdcard1/Gish/sound/visattack.wav");
-  loadwav(13,"/storage/sdcard1/Gish/sound/bobattack.wav");
-  loadwav(14,"/storage/sdcard1/Gish/sound/switch.wav");
-  loadwav(15,"/storage/sdcard1/Gish/sound/points.wav");
-  loadwav(16,"/storage/sdcard1/Gish/sound/gishhurt.wav");
-  loadwav(17,"/storage/sdcard1/Gish/sound/splash.wav");
-  loadwav(18,"/storage/sdcard1/Gish/sound/lava.wav");
-  loadwav(19,"/storage/sdcard1/Gish/sound/necksnap.wav");
-  loadwav(20,"/storage/sdcard1/Gish/sound/tarball.wav");
+  const char *path = stringconcat(getAssetsPathFromJNI(), "sound/blockbreak.wav");
+  loadwav(0,path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "sound/rockhit.wav");
+  loadwav(1,path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "sound/fleshhit.wav");
+  loadwav(2,path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "sound/ropebreak.wav");
+  loadwav(3,path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "sound/chainbreak.wav");
+  loadwav(4,path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "sound/gishhit.wav");
+  loadwav(5,path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "sound/rockfriction.wav");
+  loadwav(6,path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "sound/squish.wav");
+  loadwav(7,path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "sound/secrets1.wav");
+  loadwav(8,path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "sound/secrets2.wav");
+  loadwav(9,path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "sound/amber.wav");
+  loadwav(10,path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "sound/nibattack.wav");
+  loadwav(11,path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "sound/visattack.wav");
+  loadwav(12,path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "sound/bobattack.wav");
+  loadwav(13,path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "sound/switch.wav");
+  loadwav(14,path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "sound/points.wav");
+  loadwav(15,path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "sound/gishhurt.wav");
+  loadwav(16,path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "sound/splash.wav");
+  loadwav(17,path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "sound/lava.wav");
+  loadwav(18,path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "sound/necksnap.wav");
+  loadwav(19,path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "sound/tarball.wav");
+  loadwav(20,path); free(path);
 #else
   loadwav(0,"blockbreak.wav");
   loadwav(1,"rockhit.wav");
@@ -131,10 +153,14 @@ void setupaudio(void)
 
   changeddir=chdir("data");
 #ifdef ANDROID_NDK
-  loadwav(21,"/storage/sdcard1/Gish/data/cubemap.dat");
-  loadwav(22,"/storage/sdcard1/Gish/data/specular.dat");
-  loadwav(23,"/storage/sdcard1/Gish/data/stencil.dat");
-  loadwav(24,"/storage/sdcard1/Gish/data/pixel.dat");
+  path = stringconcat(getAssetsPathFromJNI(), "data/cubemap.dat");
+  loadwav(21, path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "data/specular.dat");
+  loadwav(22, path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "data/stencil.dat");
+  loadwav(23, path); free(path);
+  path = stringconcat(getAssetsPathFromJNI(), "data/pixel.dat");
+  loadwav(24, path); free(path);
 #else
   loadwav(21,"cubemap.dat");
   loadwav(22,"specular.dat");

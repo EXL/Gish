@@ -46,13 +46,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 _config config;
 
+const char* stringconcat(const char *s1, const char *s2)
+{
+    char *result = malloc(strlen(s1)+strlen(s2)+1);
+    strcpy(result, s1);
+    strcat(result, s2);
+    return result;
+}
+
 char* userpath(char *result, char *path)
   {
 #ifdef LINUX
 #if defined(PANDORA)
   char *home=getenv("PWD");
 #elif defined(ANDROID_NDK)
-  char *home="/storage/sdcard1/Gish";
+  char *home=getAssetsPathFromJNI();
 #else
   char *home=getenv("HOME");
 #endif

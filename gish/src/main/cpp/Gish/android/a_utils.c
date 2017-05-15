@@ -7,6 +7,11 @@ void initializeJavaEnviron()
     javaEnviron = SDL_AndroidGetJNIEnv();
 }
 
+const char* getAssetsPathFromJNI()
+{
+    return "/storage/sdcard1/Gish/";
+}
+
 void openUrlFromJNI(const char *url)
 {
     if (javaEnviron != NULL) {

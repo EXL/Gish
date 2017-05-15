@@ -5,6 +5,7 @@
 
 extern JNIEnv *javaEnviron;
 extern void initializeJavaEnviron();
+const char* getAssetsPathFromJNI();
 extern void openUrlFromJNI(const char *url);
 
 #endif // A_UTILS_H
