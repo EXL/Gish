@@ -162,6 +162,7 @@ void drawtext(char *textstring,int x,int y,int textsize,float red,float green,fl
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 #else
+      glPushMatrix();
       glBegin(GL_QUADS);
 #endif
       glColor4f(red,green,blue,alpha);
@@ -245,6 +246,7 @@ void drawtext(char *textstring,int x,int y,int textsize,float red,float green,fl
     glDisableClientState(GL_VERTEX_ARRAY);
 #else
       glEnd();
+      glPopMatrix();
 #endif
       }
     else
@@ -255,6 +257,7 @@ void drawtext(char *textstring,int x,int y,int textsize,float red,float green,fl
     GLfloat quad[12];
     glEnableClientState(GL_VERTEX_ARRAY);
 #else
+      glPushMatrix();
       glBegin(GL_QUADS);
 #endif
       glColor4f(red,green,blue,alpha);
@@ -307,6 +310,7 @@ void drawtext(char *textstring,int x,int y,int textsize,float red,float green,fl
     glDisableClientState(GL_VERTEX_ARRAY);
 #else
       glEnd();
+      glPopMatrix();
 #endif
       glEnable(GL_TEXTURE_2D);
       }
@@ -442,6 +446,7 @@ void drawmousecursor(int texturenum,int x,int y,int textsize,float red,float gre
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 #else
+  glPushMatrix();
   glBegin(GL_QUADS);
 #endif
   vec[0]=(float)x-(float)textsize;
@@ -499,6 +504,7 @@ void drawmousecursor(int texturenum,int x,int y,int textsize,float red,float gre
     glDisableClientState(GL_VERTEX_ARRAY);
 #else
   glEnd();
+  glPopMatrix();
 #endif
   }
 
