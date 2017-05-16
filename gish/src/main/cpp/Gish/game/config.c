@@ -110,13 +110,14 @@ void loadconfig(void)
   config.depthbits=24;
 #endif
   config.stencilbits=8;
-  config.fullscreen=0;
   config.sound=1;
   config.music=1;
 #ifndef ANDROID_NDK
   config.joystick=1;
+  config.fullscreen=0;
 #else
   config.joystick=0;
+  config.fullscreen=1;
 #endif
 
   option.sound=1;

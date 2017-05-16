@@ -70,8 +70,8 @@ _game game;
 
 int fps, fps_cache = 0, fps_renew = 0, fps_mean;
 int fps_enabled = 1;
-int lighting_enabled = 1;
-int shadow_enabled = 1;
+int lighting_enabled = 0;
+int shadow_enabled = 0;
 
 void gameloop(void)
   {

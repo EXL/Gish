@@ -127,7 +127,7 @@ void mainmenu(void)
   loadtexturetga(526,"warpimg.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
   loadtexturetga(527,"satantalk.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
 
-  loadtexturetga(528,"crypticsea.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
+  int crypticseatex = loadtexturetga(528,"crypticsea.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
   loadtexturetga(529,"turbo.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
   loadtexturetga(530,"sumo.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
   loadtexturetga(531,"football.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
@@ -293,8 +293,10 @@ void mainmenu(void)
     createmenuitem(TXT_CREDITS,320-temp,380,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_C);
     createmenuitem("Cryptic Sea",0,0,1,1.0f,1.0f,1.0f,1.0f);
-    setmenuitem(MO_IMAGE,528);
-    setmenuitem(MO_RESIZE,16,0,96,48);
+    if (!(crypticseatex == -1)) {
+        setmenuitem(MO_IMAGE,528);
+        setmenuitem(MO_RESIZE,16,0,96,48);
+    }
 
     checksystemmessages();
     checkkeyboard();

@@ -176,7 +176,7 @@ int main (int argc,char *argv[])
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,windowinfo.depthbits);  // TODO: Check this, 24
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,windowinfo.depthbits); // 24
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE,windowinfo.stencilbits);
     SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE, 0);
@@ -185,13 +185,15 @@ int main (int argc,char *argv[])
     SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE, 0);
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1); // TODO: Check this.
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 #ifndef GL4ES
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
 #endif
 #endif
 
-    printf( "Main.c Opening screen %dx%dx%d\n", windowinfo.resolutionx, windowinfo.resolutiony, windowinfo.bitsperpixel );
+    TO_DEBUG_LOG( "Main.c Opening screen %dx%dx%d depth: %d, stencil: %d\n",
+            windowinfo.resolutionx, windowinfo.resolutiony, windowinfo.bitsperpixel,
+            windowinfo.depthbits, windowinfo.stencilbits);
 
 #if defined(PC_GLES)
     EGLint egl_config_attr[] = {
