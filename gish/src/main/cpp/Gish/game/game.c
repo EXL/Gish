@@ -69,8 +69,8 @@ _view view;
 _game game;
 
 int fps_enabled = 1;
-int lighting_enabled = 1;
-int shadow_enabled = 1;
+int lighting_enabled = 0;
+int shadow_enabled = 0;
 int touchcontrols = 1;
 // zoom
 
