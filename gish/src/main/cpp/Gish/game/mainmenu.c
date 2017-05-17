@@ -533,13 +533,13 @@ void storyscreen(void)
     checkjoystick();
     checkmenuitems();
 
-// Disable music in story on Android
-// #ifndef ANDROID_NDK
+// Disable buggy music in story on Android
+#ifndef ANDROID_NDK
     updateogg();
     checkmusic();
     game.songnum=8;
     soundsimulation(view.position,view.orientation);
-//#endif
+#endif
 
     setuptextdisplay();
 

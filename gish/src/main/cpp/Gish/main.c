@@ -246,7 +246,7 @@ int main (int argc,char *argv[])
     SDL_SetColorKey(windowicon, SDL_TRUE, SDL_MapRGB(windowicon->format, 255, 255, 255));
     SDL_SetWindowIcon(globalwindow, windowicon);
 
-    SDL_WarpMouseInWindow(globalwindow, windowinfo.resolutionx - 100, windowinfo.resolutiony - 100);
+    SDL_WarpMouseInWindow(globalwindow, windowinfo.resolutionx - 100, 100);
 
     glcontext = SDL_GL_CreateContext(globalwindow);
 
