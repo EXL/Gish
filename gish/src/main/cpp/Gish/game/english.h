@@ -264,7 +264,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //game.c
 #define TXT_REPLAY											"Replay"
 #define TXT_PAUSED											"Paused"
+#ifndef ANDROID_NDK
 #define TXT_PRESS_P											"Press P to continue"
+#else
+#define TXT_PRESS_P											"Press A to continue"
+#endif
 #define TXT_LOADINGEDITOR								"Loading Editor"
 #define TXT_RETURN_TO_GAME							"Return To Game"
 #define TXT_RESETLEVEL_MINUSONE					"Restart Level (-1 Life)"

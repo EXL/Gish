@@ -381,8 +381,13 @@ void gameloop(void)
       setuplevel();
       setupgame();
       }
+#ifndef ANDROID_NDK
     if (keyboard[SCAN_P] && !prevkeyboard[SCAN_P] && game.exit==GAMEEXIT_NONE)
       game.pause^=1;
+#else
+    if (keyboard[SCAN_A] && !prevkeyboard[SCAN_A] && game.exit==GAMEEXIT_NONE)
+      game.pause=0;
+#endif
     //if (keyboard[SCAN_R] && !prevkeyboard[SCAN_R])
     //  movie.record^=1;
 
