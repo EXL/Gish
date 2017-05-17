@@ -612,6 +612,9 @@ void gamelogic(void)
 
 void gamedisplay(void)
   {
+#ifndef GLES
+    glPushMatrix();
+#endif
   int count;
   int keyhighlight;
   int keyhighlight2;
@@ -1492,6 +1495,9 @@ void gamedisplay(void)
     drawkeybitmap2((count|TEXT_CENTER),(424|TEXT_CENTER),12,12,control[0].key[KEYALIAS_HEAVY],keyhighlight);
     count+=96;
     }
+#ifndef GLES
+  glPopMatrix();
+#endif
   }
 
 void drawtextbitmap(int x,int y,int sizex,int sizey)
