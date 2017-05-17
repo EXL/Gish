@@ -68,10 +68,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 _view view;
 _game game;
 
-int fps, fps_cache = 0, fps_renew = 0, fps_mean;
 int fps_enabled = 1;
-int lighting_enabled = 0;
-int shadow_enabled = 0;
+int lighting_enabled = 1;
+int shadow_enabled = 1;
+int touchcontrols = 1;
+// zoom
+
+int fps, fps_cache = 0, fps_renew = 0, fps_mean;
 
 void gameloop(void)
   {

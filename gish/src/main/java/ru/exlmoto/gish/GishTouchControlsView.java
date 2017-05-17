@@ -51,10 +51,10 @@ public class GishTouchControlsView extends View {
 	private static int[] pid = new int[16];
 
 	private Bitmap button_a = null;
-	private Bitmap button_b = null;
-	private Bitmap button_x = null;
-	private Bitmap button_y = null;
+	private Bitmap button_space = null;
+	private Bitmap button_d = null;
 	private Bitmap button_s = null;
+	private Bitmap button_ok = null;
 
 	private int b_wh = 0;
 
@@ -95,10 +95,10 @@ public class GishTouchControlsView extends View {
 		super(context);
 
 		button_a = BitmapFactory.decodeResource(context.getResources(), R.drawable.button_a);
-		button_b = BitmapFactory.decodeResource(context.getResources(), R.drawable.button_b);
-		button_x = BitmapFactory.decodeResource(context.getResources(), R.drawable.button_x);
-		button_y = BitmapFactory.decodeResource(context.getResources(), R.drawable.button_y);
+		button_space = BitmapFactory.decodeResource(context.getResources(), R.drawable.button_space);
+		button_d = BitmapFactory.decodeResource(context.getResources(), R.drawable.button_d);
 		button_s = BitmapFactory.decodeResource(context.getResources(), R.drawable.button_s);
+		button_ok = BitmapFactory.decodeResource(context.getResources(), R.drawable.button_ok);
 
 		b_wh = button_a.getWidth();
 
@@ -131,15 +131,15 @@ public class GishTouchControlsView extends View {
 
 		// Buttons
 		paint.setARGB(pid[KC_GAME_X] < 0 ? 64 : 160, 255, 255, 255);
-		canvas.drawBitmap(button_x, col1_w, row1_h, paint);
+		canvas.drawBitmap(button_d, col1_w, row1_h, paint);
 		paint.setARGB(pid[KC_GAME_A] < 0 ? 64 : 160, 255, 255, 255);
 		canvas.drawBitmap(button_a, col1_w, row3_h, paint);
 		paint.setARGB(pid[KC_GAME_B] < 0 ? 64 : 160, 255, 255, 255);
-		canvas.drawBitmap(button_b, col2_w, row1_h, paint);
+		canvas.drawBitmap(button_space, col2_w, row1_h, paint);
 		paint.setARGB(pid[KC_GAME_Y] < 0 ? 64 : 160, 255, 255, 255);
-		canvas.drawBitmap(button_y, col1_w, row2_h, paint);
+		canvas.drawBitmap(button_s, col1_w, row2_h, paint);
 		paint.setARGB(pid[KC_GAME_S] < 0 ? 64 : 160, 255, 255, 255);
-		canvas.drawBitmap(button_s, col2_w, row2_h, paint);
+		canvas.drawBitmap(button_ok, col2_w, row2_h, paint);
 
 		invalidate();
 

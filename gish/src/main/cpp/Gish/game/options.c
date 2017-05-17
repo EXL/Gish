@@ -34,21 +34,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../video/text.h"
 #include "../video/texture.h"
 #include "../sdl/video.h"
+#include "../game/game.h"
+#include "../game/config.h"
 
 _option option;
 _control control[CONTROLS_LENGTH];
 
 void optionsmenu(void)
-  {
-  int count,count2,count3;
+{
+  if (touchcontrols) {
+    pleasedisabletouchcontrols();
+  } else {
+    int count,count2,count3;
 
-  count=0;
+    count=0;
 
-  joystickmenu=0;
+    joystickmenu=0;
 
-  resetmenuitems();
+    resetmenuitems();
 
-  while (!menuitem[0].active && !windowinfo.shutdown)
+    while (!menuitem[0].active && !windowinfo.shutdown)
     {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -513,11 +518,11 @@ void optionsmenu(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-#if defined(PC_GLES)
+    #if defined(PC_GLES)
     eglSwapBuffers(eglDisplay, eglSurface);
-#else
+    #else
     SDL_GL_SwapWindow(globalwindow);
-#endif
+    #endif
 
     for (count=0;count<KEYALIAS_LENGTH;count++)
     if (menuitem[count+1].active)
@@ -646,11 +651,11 @@ void optionsmenu(void)
       }
     }
 
-  resetmenuitems();
+    resetmenuitems();
 
-  joystickmenu=1;
+    joystickmenu=1;
   }
-
+}
 
 void videooptionsmenu(void)
   {

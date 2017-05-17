@@ -83,4 +83,6 @@ typedef struct
 extern _view view;
 extern _game game;
 
+extern int touchcontrols;
+
 #endif /* GISH_GAME_GAME_H */

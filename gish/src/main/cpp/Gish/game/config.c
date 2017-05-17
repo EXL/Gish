@@ -281,6 +281,48 @@ void saveconfig(void)
   fclose(fp);
   }
 
+void pleasedisabletouchcontrols(void)
+{
+    int count = 0;
+    resetmenuitems();
+    while (!menuitem[0].active && !windowinfo.shutdown) {
+        glClearColor(0.0f,0.0f,0.0f,0.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        numofmenuitems=0;
+        createmenuitem("Exit",8,8,16,1.0f,1.0f,1.0f,1.0f);
+        setmenuitem(MO_HOTKEY,SCAN_ESC);
+
+        checksystemmessages();
+        checkkeyboard();
+        checkmouse();
+        checkmenuitems();
+
+        setuptextdisplay();
+
+        count=224;
+        drawtext("Touch Controls Enabled",(320|TEXT_CENTER),count,16,1.0f,1.0f,1.0f,1.0f);
+        count+=16;
+        count+=16;
+        drawtext("Please disable touch controls",(320|TEXT_CENTER),count,16,1.0f,1.0f,1.0f,1.0f);
+        count+=16;
+        drawtext("mode in game laucher to",(320|TEXT_CENTER),count,16,1.0f,1.0f,1.0f,1.0f);
+        count+=16;
+        drawtext("setup the Gish options.",(320|TEXT_CENTER),count,16,1.0f,1.0f,1.0f,1.0f);
+        count+=16;
+
+        drawmenuitems();
+
+#if defined(PC_GLES)
+        eglSwapBuffers(eglDisplay, eglSurface);
+#else
+        SDL_GL_SwapWindow(globalwindow);
+#endif
+    }
+
+    resetmenuitems();
+}
+
 void notsupportedmenu(void)
   {
   int count;

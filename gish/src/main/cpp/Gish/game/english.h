@@ -385,7 +385,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	TXT_NEW_PLAYER									"/i-New Player"																
 #define TXT_CHOOSE_PLAYER								"Choose Player"
 #define TXT_ENTER_NAME									"Enter Name"
-#define TXT_DELETE_Y_N									"Delete /s? (Y//N)"
+#define TXT_DELETE_Y_N									"Delete /s? (Y(A)//N)"
 #define TXT_COLLECTION_GAME							"Collection Game"
 #define TXT_NEW_GAME										"New Game"
 #define TXT_PRACTICE                    "Practice"

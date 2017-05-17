@@ -27,6 +27,7 @@ char* userpath(char *result, char *path);
 void loadconfig(void);
 void saveconfig(void);
 void notsupportedmenu(void);
+void pleasedisabletouchcontrols(void);
 void optionreadint(int *ptr,char *str);
 void optionwriteint(FILE *fp, int *ptr,char *str);
 char* stringconcat(const char *s1, const char *s2);

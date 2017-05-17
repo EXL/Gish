@@ -577,6 +577,11 @@ void menutextbox(void)
   {
   int /*count,*/count2,count3;
 
+#ifdef ANDROID_NDK
+  // Android TextBox hack
+  menuitem[currentmenuitem].prevactive = 1;
+  strcpy(menuinput, "Android");
+#endif
   if (!menuitem[currentmenuitem].prevactive)
     {
     memset(menuinput,0,256);

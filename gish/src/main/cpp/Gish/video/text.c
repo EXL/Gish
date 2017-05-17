@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../video/text.h"
 #include "../video/texture.h"
 #include "../sdl/event.h"
+#include "../game/game.h"
 
 char textstring2[1024];
 char textstring3[1024];
@@ -433,78 +434,80 @@ void drawbackground(int texturenum,int x,int y,int sizex,int sizey,int resolutio
 
 void drawmousecursor(int texturenum,int x,int y,int textsize,float red,float green,float blue,float alpha)
   {
-  float vec[3];
+    if (!touchcontrols) {
+        float vec[3];
 
-  glBindTexture(GL_TEXTURE_2D,texture[texturenum].glname);
+        glBindTexture(GL_TEXTURE_2D,texture[texturenum].glname);
 
 #if defined(GLES)
-    GLfloat quad[12];
-    GLfloat tex[] = {   0,0,
-                        1,0,
-                        1,1,
-                        0,1 };
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        GLfloat quad[12];
+        GLfloat tex[] = {   0,0,
+                            1,0,
+                            1,1,
+                            0,1 };
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 #else
-  glPushMatrix();
-  glBegin(GL_QUADS);
+        glPushMatrix();
+        glBegin(GL_QUADS);
 #endif
-  vec[0]=(float)x-(float)textsize;
-  vec[1]=(float)y-(float)textsize;
-  convertscreenvertex(vec,font.sizex,font.sizey);
+        vec[0]=(float)x-(float)textsize;
+        vec[1]=(float)y-(float)textsize;
+        convertscreenvertex(vec,font.sizex,font.sizey);
 
-  glColor4f(red,green,blue,alpha);
+        glColor4f(red,green,blue,alpha);
 #if defined(GLES)
         quad[0] = vec[0];
         quad[1] = vec[1];
         quad[2] = vec[2];
 #else
-  glTexCoord2f(0.0f,0.0f);
-  glVertex3fv(vec);
+        glTexCoord2f(0.0f,0.0f);
+        glVertex3fv(vec);
 #endif
-  vec[0]=(float)x+(float)textsize;
-  vec[1]=(float)y-(float)textsize;
-  convertscreenvertex(vec,font.sizex,font.sizey);
+        vec[0]=(float)x+(float)textsize;
+        vec[1]=(float)y-(float)textsize;
+        convertscreenvertex(vec,font.sizex,font.sizey);
 #if defined(GLES)
         quad[3] = vec[0];
         quad[4] = vec[1];
         quad[5] = vec[2];
 #else
-  glTexCoord2f(1.0f,0.0f);
-  glVertex3fv(vec);
+        glTexCoord2f(1.0f,0.0f);
+        glVertex3fv(vec);
 #endif
-  vec[0]=(float)x+(float)textsize;
-  vec[1]=(float)y+(float)textsize;
-  convertscreenvertex(vec,font.sizex,font.sizey);
+        vec[0]=(float)x+(float)textsize;
+        vec[1]=(float)y+(float)textsize;
+        convertscreenvertex(vec,font.sizex,font.sizey);
 #if defined(GLES)
         quad[6] = vec[0];
         quad[7] = vec[1];
         quad[8] = vec[2];
 #else
-  glTexCoord2f(1.0f,1.0f);
-  glVertex3fv(vec);
+        glTexCoord2f(1.0f,1.0f);
+        glVertex3fv(vec);
 #endif
-  vec[0]=(float)x-(float)textsize;
-  vec[1]=(float)y+(float)textsize;
-  convertscreenvertex(vec,font.sizex,font.sizey);
+        vec[0]=(float)x-(float)textsize;
+        vec[1]=(float)y+(float)textsize;
+        convertscreenvertex(vec,font.sizex,font.sizey);
 #if defined(GLES)
         quad[9] = vec[0];
         quad[10] = vec[1];
         quad[11] = vec[2];
 #else
-  glTexCoord2f(0.0f,1.0f);
-  glVertex3fv(vec);
+        glTexCoord2f(0.0f,1.0f);
+        glVertex3fv(vec);
 #endif
 
 #if defined(GLES)
         glVertexPointer(3, GL_FLOAT, 0, quad);
         glTexCoordPointer(2, GL_FLOAT, 0, tex);
         glDrawArrays(GL_TRIANGLE_FAN,0,4);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    glDisableClientState(GL_VERTEX_ARRAY);
+        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+        glDisableClientState(GL_VERTEX_ARRAY);
 #else
-  glEnd();
-  glPopMatrix();
+        glEnd();
+        glPopMatrix();
 #endif
-  }
+    }
+}
 

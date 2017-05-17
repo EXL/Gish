@@ -77,12 +77,14 @@ void custommenu(void)
     createmenuitem(TXT_LOAD_LEVEL,48,count,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_L);
     count+=16;
-    createmenuitem(TXT_LEVEL_EDITOR,48,count,16,1.0f,1.0f,1.0f,1.0f);
-    setmenuitem(MO_HOTKEY,SCAN_E);
-    count+=16;
-    createmenuitem(TXT_CAMPAIGN_EDITOR,48,count,16,1.0f,1.0f,1.0f,1.0f);
-    setmenuitem(MO_HOTKEY,SCAN_A);
-    count+=16;
+    if (!touchcontrols) { // Disable editors on touch mode
+        createmenuitem(TXT_LEVEL_EDITOR,48,count,16,1.0f,1.0f,1.0f,1.0f);
+        setmenuitem(MO_HOTKEY,SCAN_E);
+        count+=16;
+        createmenuitem(TXT_CAMPAIGN_EDITOR,48,count,16,1.0f,1.0f,1.0f,1.0f);
+        setmenuitem(MO_HOTKEY,SCAN_A);
+        count+=16;
+    }
 
     checksystemmessages();
     checkkeyboard();

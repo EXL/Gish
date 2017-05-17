@@ -207,9 +207,9 @@ void playermenu(void)
       else
         {
 #ifdef GERMAN
-        if (keyboard[SCAN_J])
+        if (keyboard[SCAN_J] || keyboard[SCAN_A])
 #else
-        if (keyboard[SCAN_Y])
+        if (keyboard[SCAN_Y] || keyboard[SCAN_A])
 #endif
           {
           memset(&player[playernum],0,sizeof(player[playernum]));
