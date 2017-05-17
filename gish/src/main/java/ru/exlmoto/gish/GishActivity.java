@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.widget.LinearLayout;
 
 import org.libsdl.app.SDLActivity;
 
@@ -14,7 +16,9 @@ import org.libsdl.app.SDLActivity;
 
 public class GishActivity extends SDLActivity {
 
+    private static final String APP_TAG = "Gish_app";
     private static Activity m_GishActivity = null;
+    private GishTouchControlsView gishTouchControlsView = null;
 
     // --- SDL Patch Functions
     public static void pressOrReleaseKey(int keyCode, boolean press) {
@@ -50,10 +54,20 @@ public class GishActivity extends SDLActivity {
         }
     }
 
+    public static void toDebugLog(String message) {
+        Log.d(APP_TAG, message);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         m_GishActivity = this;
+
+        gishTouchControlsView = new GishTouchControlsView(this);
+        addContentView(gishTouchControlsView,
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT));
     }
 
     // JNI-function
