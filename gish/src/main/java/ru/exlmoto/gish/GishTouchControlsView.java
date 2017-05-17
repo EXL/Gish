@@ -78,18 +78,18 @@ public class GishTouchControlsView extends View {
 	private static final int KC_GAME_DOWNLEFT = 5;
 	private static final int KC_GAME_DOWNRIGHT = 7;
 	// Buttons
-	private static final int KC_GAME_X = 8;
+	private static final int KC_GAME_D = 8;
 	private static final int KC_GAME_A = 9;
-	private static final int KC_GAME_S = 10;
-	private static final int KC_GAME_B = 11;
-	private static final int KC_GAME_Y = 13;
+	private static final int KC_GAME_ENTER = 10;
+	private static final int KC_GAME_SPACE = 11;
+	private static final int KC_GAME_S = 13;
 
 	// Buttons
-	private static final int KC_SDL_X = KeyEvent.KEYCODE_D;          // D
+	private static final int KC_SDL_D = KeyEvent.KEYCODE_D;          // D
 	private static final int KC_SDL_A = KeyEvent.KEYCODE_A;          // A
-	private static final int KC_SDL_B = KeyEvent.KEYCODE_SPACE;      // Space
-	private static final int KC_SDL_Y = KeyEvent.KEYCODE_S;          // S
-	private static final int KC_SDL_S = KeyEvent.KEYCODE_ENTER;      // Enter
+	private static final int KC_SDL_SPACE = KeyEvent.KEYCODE_SPACE;  // Space
+	private static final int KC_SDL_S = KeyEvent.KEYCODE_S;          // S
+	private static final int KC_SDL_ENTER = KeyEvent.KEYCODE_ENTER;  // Enter
 
 	public GishTouchControlsView(Context context) {
 		super(context);
@@ -130,15 +130,15 @@ public class GishTouchControlsView extends View {
 		}
 
 		// Buttons
-		paint.setARGB(pid[KC_GAME_X] < 0 ? 64 : 160, 255, 255, 255);
-		canvas.drawBitmap(button_d, col1_w, row1_h, paint);
+		paint.setARGB(pid[KC_GAME_D] < 0 ? 64 : 160, 255, 255, 255);
+		canvas.drawBitmap(button_d, col2_w, row1_h, paint);
 		paint.setARGB(pid[KC_GAME_A] < 0 ? 64 : 160, 255, 255, 255);
 		canvas.drawBitmap(button_a, col1_w, row3_h, paint);
-		paint.setARGB(pid[KC_GAME_B] < 0 ? 64 : 160, 255, 255, 255);
-		canvas.drawBitmap(button_space, col2_w, row1_h, paint);
-		paint.setARGB(pid[KC_GAME_Y] < 0 ? 64 : 160, 255, 255, 255);
-		canvas.drawBitmap(button_s, col1_w, row2_h, paint);
+		paint.setARGB(pid[KC_GAME_SPACE] < 0 ? 64 : 160, 255, 255, 255);
+		canvas.drawBitmap(button_space, col1_w, row1_h, paint);
 		paint.setARGB(pid[KC_GAME_S] < 0 ? 64 : 160, 255, 255, 255);
+		canvas.drawBitmap(button_s, col1_w, row2_h, paint);
+		paint.setARGB(pid[KC_GAME_ENTER] < 0 ? 64 : 160, 255, 255, 255);
 		canvas.drawBitmap(button_ok, col2_w, row2_h, paint);
 
 		invalidate();
@@ -293,20 +293,20 @@ public class GishTouchControlsView extends View {
 	public void pressKey(int keyCode) {
 		// AAAAActivity.toDebugLog(keyCode + " pushed!");
 		switch (keyCode) {
-		case KC_GAME_X:
-			SDLActivity.onNativeKeyDown(KC_SDL_X);
+		case KC_GAME_D:
+			SDLActivity.onNativeKeyDown(KC_SDL_D);
 			break;
 		case KC_GAME_A:
 			SDLActivity.onNativeKeyDown(KC_SDL_A);
 			break;
-		case KC_GAME_B:
-			SDLActivity.onNativeKeyDown(KC_SDL_B);
-			break;
-		case KC_GAME_Y:
-			SDLActivity.onNativeKeyDown(KC_SDL_Y);
+		case KC_GAME_SPACE:
+			SDLActivity.onNativeKeyDown(KC_SDL_SPACE);
 			break;
 		case KC_GAME_S:
 			SDLActivity.onNativeKeyDown(KC_SDL_S);
+			break;
+		case KC_GAME_ENTER:
+			SDLActivity.onNativeKeyDown(KC_SDL_ENTER);
 			break;
 		case KC_GAME_UP:
 			SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_DPAD_UP);
@@ -344,20 +344,20 @@ public class GishTouchControlsView extends View {
 	public void releaseKey(int keyCode) {
 		// AAAAActivity.toDebugLog(keyCode + " released!");
 		switch (keyCode) {
-		case KC_GAME_X:
-			SDLActivity.onNativeKeyUp(KC_SDL_X);
+		case KC_GAME_D:
+			SDLActivity.onNativeKeyUp(KC_SDL_D);
 			break;
 		case KC_GAME_A:
 			SDLActivity.onNativeKeyUp(KC_SDL_A);
 			break;
-		case KC_GAME_B:
-			SDLActivity.onNativeKeyUp(KC_SDL_B);
-			break;
-		case KC_GAME_Y:
-			SDLActivity.onNativeKeyUp(KC_SDL_Y);
+		case KC_GAME_SPACE:
+			SDLActivity.onNativeKeyUp(KC_SDL_SPACE);
 			break;
 		case KC_GAME_S:
 			SDLActivity.onNativeKeyUp(KC_SDL_S);
+			break;
+		case KC_GAME_ENTER:
+			SDLActivity.onNativeKeyUp(KC_SDL_ENTER);
 			break;
 		case KC_GAME_UP:
 			SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_DPAD_UP);
@@ -431,18 +431,18 @@ public class GishTouchControlsView extends View {
 		int b = -1;
 		if (x > width - b_wh * 1.8) {
 			if (y > (height / 3) * 2) { // Down
-				b = KC_GAME_X;
+				b = KC_GAME_SPACE;
 			} else if (y < (height / 3)) { // Up
-				b = KC_GAME_Y; // b = KC_GAME_L;
+				b = KC_GAME_S; // b = KC_GAME_L;
 			} else { // Center
 				b = KC_GAME_A;
 			}
 		} else {
 			// AAAAActivity.toDebugLog("Second Buttons Column:" + x + "x" + y);
 			if (y > (height / 3) * 2) { // Down
-				b = KC_GAME_B;
+				b = KC_GAME_D;
 			} else if (y < (height / 3)) { // Up
-				b = KC_GAME_S; // b = KC_GAME_Y;
+				b = KC_GAME_ENTER; // b = KC_GAME_S;
 			} else { // Center
 				b = -1; // b = KC_GAME_SELECT;
 			}
