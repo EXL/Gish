@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/label_margin"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/fileIcon"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:contentDescription="@string/icon" >
+    </ImageView>
+
+    <TextView
+        android:id="@+id/fileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/fileIcon"
+        android:layout_marginTop="@dimen/label_margin"
+        android:layout_marginLeft="@dimen/label_margin" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/fileItems"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/fileIcon"
+        android:layout_below="@+id/fileName"
+        android:layout_marginLeft="@dimen/layout_margin" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/fileDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fileName"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="@dimen/label_margin" >
+    </TextView>
+</RelativeLayout>
