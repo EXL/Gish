@@ -82,6 +82,8 @@ EGLint attrib_list[] = {
 };
 #endif
 
+const char* gishDataPath;
+
 int main (int argc,char *argv[])
   {
   int count;
@@ -94,7 +96,8 @@ int main (int argc,char *argv[])
 
 #ifdef ANDROID_NDK
   initializeJavaEnviron();
-  chdir(getAssetsPathFromJNI());
+  gishDataPath = getAssetsPathFromJNI();
+  chdir(gishDataPath);
 #endif
 
   checkbigendian();
@@ -239,7 +242,7 @@ int main (int argc,char *argv[])
 #ifndef ANDROID_NDK
     windowicon = SDL_LoadBMP("gish.bmp");
 #else
-    char *iconpath = stringconcat(getAssetsPathFromJNI(), "gish.bmp");
+    char *iconpath = stringconcat(gishDataPath, "gish.bmp");
     windowicon = SDL_LoadBMP(iconpath);
     free(iconpath);
 #endif
@@ -322,6 +325,7 @@ int main (int argc,char *argv[])
 #endif
   SDL_Quit();
 #ifdef ANDROID_NDK
+  free(gishDataPath);
   exit(0);
 #endif
   return(0);

@@ -9,7 +9,39 @@ void initializeJavaEnviron()
 
 const char* getAssetsPathFromJNI()
 {
-    return "/storage/sdcard1/Gish/";
+    if (javaEnviron != NULL) {
+        jclass clazz = (*javaEnviron)->FindClass(javaEnviron, "ru/exlmoto/gish/GishLauncherActivity$GishSettings");
+        if (clazz == 0) {
+            TO_DEBUG_LOG("Error JNI: Class ru/exlmoto/gish/GishLauncherActivity$GishSettings not found!");
+            return NULL;
+        }
+
+        // Get Field ID
+        jfieldID fieldID = (*javaEnviron)->GetStaticFieldID(javaEnviron, clazz, "gishDataSavedPath", "Ljava/lang/String;");
+        if (fieldID == 0) {
+            TO_DEBUG_LOG("Error JNI: fieldID is 0, field String gishDataSavedPath not found!");
+            return NULL;
+        }
+
+        // Get String from Java and convert to char*
+        jstring javaString = (*javaEnviron)->GetStaticObjectField(javaEnviron, clazz, fieldID);
+        if (javaString == 0) {
+            return NULL;
+        }
+        const char *nativeString = (*javaEnviron)->GetStringUTFChars(javaEnviron, javaString, 0);
+        char *stringToGishEngine = strdup(nativeString);
+
+        // Destroy string
+        (*javaEnviron)->ReleaseStringUTFChars(javaEnviron, javaString, nativeString);
+
+        // Delete Ref
+        (*javaEnviron)->DeleteLocalRef(javaEnviron, clazz);
+
+        // Return copy of string to Engine
+        return stringToGishEngine;
+    } else {
+        return "/storage/sdcard0/Gish/";
+    }
 }
 
 void openUrlFromJNI(const char *url)

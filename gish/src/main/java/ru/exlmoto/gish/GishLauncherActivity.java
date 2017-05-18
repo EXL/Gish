@@ -77,7 +77,7 @@ public class GishLauncherActivity extends Activity {
 		public static boolean touchVibration = true;
 		public static boolean gameVibration = true;
 		public static int vibroScale = 30;
-		public static String gishDataSavedPath = "";
+		public static String gishDataSavedPath = ""; // Access from JNI
 	}
 
 	private boolean firstRun = false;

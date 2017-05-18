@@ -68,10 +68,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 _view view;
 _game game;
 
-int fps_enabled = 1;
-int lighting_enabled = 0;
-int shadow_enabled = 0;
-int touchcontrols = 1;
+int fps_enabled = 0;
+int lighting_enabled = 1;
+int shadow_enabled = 1;
+int touchcontrols = 0;
 int cache_fix = 0;
 // zoom
 
