@@ -277,6 +277,7 @@ void drawmenuitems(void)
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 #else
+      glPushMatrix();
       glBegin(GL_QUADS);
 #endif
 
@@ -335,6 +336,7 @@ void drawmenuitems(void)
     glDisableClientState(GL_VERTEX_ARRAY);
 #else
       glEnd();
+      glPopMatrix();
 #endif
       }
     }
