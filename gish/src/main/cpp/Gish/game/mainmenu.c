@@ -133,7 +133,10 @@ void mainmenu(void)
   loadtexturetga(531,"football.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
 
   loadtexturetga(532,"greed.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-  loadtexturetga(533,"duel.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
+  if (cache_fix)
+    loadtexturetga(533,"duel.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
+  else
+    loadtexturetga(533,"pitfight.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
   loadtexturetga(534,"dragster.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
   loadtexturetga(535,"collect.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
 
@@ -444,15 +447,20 @@ void versusmenu(void)
     setmenuitem(MO_HOTKEY,SCAN_S);
     createmenuitem(TXT_FOOTBALL,(320|TEXT_CENTER),304,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_F);
-    createmenuitem(TXT_GREED,(512|TEXT_CENTER),304,16,1.0f,1.0f,1.0f,1.0f);
+    createmenuitem(TXT_GREED,(500|TEXT_CENTER),304,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_G);
-    createmenuitem(TXT_DUEL,(152|TEXT_CENTER),444,16,1.0f,1.0f,1.0f,1.0f);
-    setmenuitem(MO_HOTKEY,SCAN_U);
+    if (cache_fix) {
+        createmenuitem(TXT_DUEL,(152|TEXT_CENTER),444,16,1.0f,1.0f,1.0f,1.0f);
+        setmenuitem(MO_HOTKEY,SCAN_U);
+    } else {
+        createmenuitem(TXT_PITFIGHT,(152|TEXT_CENTER),444,16,1.0f,1.0f,1.0f,1.0f);
+        setmenuitem(MO_HOTKEY,SCAN_P);
+    }
     createmenuitem(TXT_DRAGSTER,(320|TEXT_CENTER),444,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_D);
     if (unlocked)
       {
-      createmenuitem(TXT_COLLECTION,(512|TEXT_CENTER),444,16,1.0f,1.0f,1.0f,1.0f);
+      createmenuitem(TXT_COLLECTION,(500|TEXT_CENTER),444,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_HOTKEY,SCAN_C);
       }
 

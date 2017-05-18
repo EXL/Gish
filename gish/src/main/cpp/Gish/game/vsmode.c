@@ -136,25 +136,38 @@ void versusmodemenu(int versusnum)
 
 	is4Player = menuitem[5].active || menuitem[6].active;
 	gametypeName = NULL;
-	switch (versusnum)
-	{
-	case 0: gametypeName = is4Player ? "4sumo" : "2sumo"; break;
-	case 1: gametypeName = is4Player ? "4football" : "2football"; break;
-	case 2: gametypeName = "2greed"; break;
-	case 3: gametypeName = "2duel"; break;
-	case 4: gametypeName = "2dragster"; break;
-	case 5: gametypeName = "2collection"; break;
-	case 6: gametypeName = "2racing"; break;
-	}
+    if (!cache_fix) {
+        switch (versusnum)
+        {
+        case 0: gametypeName = is4Player ? "4bath" : "bathhouse"; break;
+        case 1: gametypeName = is4Player ? "4field" : "field"; break;
+        case 2: gametypeName = "amber"; break;
+        case 3: gametypeName = "fight"; break;
+        case 4: gametypeName = "dragster"; break;
+        case 5: gametypeName = "colvs"; break;
+        case 6: gametypeName = "racing"; break;
+        }
+    } else {
+        switch (versusnum)
+        {
+        case 0: gametypeName = is4Player ? "4sumo" : "2sumo"; break;
+        case 1: gametypeName = is4Player ? "4football" : "2football"; break;
+        case 2: gametypeName = "2greed"; break;
+        case 3: gametypeName = "2duel"; break;
+        case 4: gametypeName = "2dragster"; break;
+        case 5: gametypeName = "2collection"; break;
+        case 6: gametypeName = "2racing"; break;
+        }
+    }
 	strcpy(filename, gametypeName);
 
 	// 2 player.
-	if (menuitem[1].active)      strcat(filename, "1");
+    if (menuitem[1].active) if (cache_fix) strcat(filename, "1"); else ;
 	else if (menuitem[2].active) strcat(filename, "2");
 	else if (menuitem[3].active) strcat(filename, "3");
 	else if (menuitem[4].active) strcat(filename, "4");
 	// 4 player.
-	else if (menuitem[5].active) strcat(filename, "1");
+    else if (menuitem[5].active) if (cache_fix) strcat(filename, "1"); else ;
 	else if (menuitem[6].active) strcat(filename, "2");
 	strcat(filename, ".lvl");
 
