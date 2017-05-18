@@ -44,4 +44,5 @@
     <string name="wrong_body_general">Excess values are unacceptable.</string>
     <string name="question_title_general">Are you sure?</string>
     <string name="question_reset_body">Are you sure want to reset all settings to default values and delete Gish config and profile?</string>
+    <string name="gish_data">Please choose Gish folder:</string>
 </resources>
