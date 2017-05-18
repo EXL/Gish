@@ -31,6 +31,7 @@ import android.hardware.*;
 import android.content.pm.ActivityInfo;
 
 import ru.exlmoto.gish.GishActivity;
+import ru.exlmoto.gish.GishLauncherActivity.GishSettings;
 
 /**
     SDL Activity
@@ -79,7 +80,7 @@ public class SDLActivity extends Activity {
             // "SDL2_mixer",
             // "SDL2_net",
             // "SDL2_ttf",
-            GishActivity.GishGLES ? "GishGLES" : "Gish"
+            GishSettings.openGles ? "GishGLES" : "Gish"
         };
     }
 

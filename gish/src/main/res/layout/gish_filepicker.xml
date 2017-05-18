@@ -12,12 +12,25 @@
         android:layout_weight="1" >
     </ListView>
 
-    <Button
-        android:id="@+id/buttonCancel"
-        android:layout_width="@dimen/big_button_width"
+    <TableRow
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/layout_margin"
-        android:text="@string/button_cancel" >
-    </Button>
+        android:layout_gravity="center_horizontal" >
+
+        <Button
+            android:id="@+id/buttonOk"
+            android:layout_width="@dimen/big_button_width"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_margin"
+            android:text="@string/button_ok" >
+        </Button>
+
+        <Button
+            android:id="@+id/buttonCancel"
+            android:layout_width="@dimen/big_button_width"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_margin"
+            android:text="@string/button_cancel" >
+        </Button>
+    </TableRow>
 </LinearLayout>

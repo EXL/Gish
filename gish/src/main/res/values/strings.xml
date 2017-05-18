@@ -5,6 +5,7 @@
     <string name="icon_string">Gish icon</string>
     <string name="about_string">Gish about</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_ok">OK</string>
     <string name="icon">Icon</string>
     <string name="cover_string">Gish Cover Art</string>
     <string name="button_run">Run Gish!</string>
@@ -34,4 +35,13 @@
     <string name="vibro_in_game">In game</string>
     <string name="button_about">About Gish...</string>
     <string name="reset_settings">Reset Game...</string>
+    <string name="no_items">No items</string>
+    <string name="item">item</string>
+    <string name="items">items</string>
+    <string name="parent_dir">Parent Directory</string>
+    <string name="wrong_haptic_title">Wrong Haptics Parameter!</string>
+    <string name="wrong_haptic_body">Please check the Haptics parameter.</string>
+    <string name="wrong_body_general">Excess values are unacceptable.</string>
+    <string name="question_title_general">Are you sure?</string>
+    <string name="question_reset_body">Are you sure want to reset all settings to default values and delete Gish config and profile?</string>
 </resources>

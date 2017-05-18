@@ -20,8 +20,6 @@ public class GishActivity extends SDLActivity {
     private static Activity m_GishActivity = null;
     private GishTouchControlsView gishTouchControlsView = null;
 
-    public static boolean GishGLES = false;
-
     // --- SDL Patch Functions
     public static void pressOrReleaseKey(int keyCode, boolean press) {
         if (press) {

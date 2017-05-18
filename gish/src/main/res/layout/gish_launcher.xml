@@ -30,7 +30,7 @@
                 android:text="@string/button_run" />
 
             <Button
-                android:id="@+id/buttonObbBrowse"
+                android:id="@+id/buttonBrowse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/button_browse" />
@@ -45,7 +45,7 @@
             android:text="@string/label_path" />
 
         <EditText
-            android:id="@+id/editTextObbPath"
+            android:id="@+id/editTextDataPath"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/layout_margin"
