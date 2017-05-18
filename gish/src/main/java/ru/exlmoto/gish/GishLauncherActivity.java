@@ -82,9 +82,6 @@ public class GishLauncherActivity extends Activity {
 
 	private boolean firstRun = false;
 
-	// JNI-access
-	private String gishDataPathName = "";
-
 	private EditText editTextDataPath = null;
 	private EditText editTextHaptics = null;
 	private CheckBox checkBoxSound = null;
@@ -254,7 +251,7 @@ public class GishLauncherActivity extends Activity {
 					writeSettings();
 
 					// Attempt to read the random data file
-					File readMeFile = new File(gishDataPathName + "gish.bmp");
+					File readMeFile = new File(GishSettings.gishDataSavedPath + "gish.bmp");
 					if (readMeFile.exists() && readMeFile.isFile()) {
 						Intent intent = new Intent(gishLauncherActivity, GishActivity.class);
 						startActivity(intent);

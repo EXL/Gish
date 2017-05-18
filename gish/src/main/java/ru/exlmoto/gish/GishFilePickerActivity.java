@@ -92,7 +92,7 @@ public class GishFilePickerActivity extends Activity {
 
 	public void onOkButtonClick(View v) {
 		Intent intent = new Intent();
-		intent.putExtra("GishPath", currentPath.toString());
+		intent.putExtra("GishPath", currentPath.toString() + "/");
 		setResult(RESULT_OK, intent);
 		finish();
 	}
