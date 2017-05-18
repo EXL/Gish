@@ -333,6 +333,20 @@ void loadlevel(char *filename)
       fread2(level.ambient,4,12,fp);
       fread2(&level.numofobjects,4,1,fp);
 
+      // EXL: Patch for lights off
+      if (!lighting_enabled) {
+          if ((strcmp(filename, "cave6.lvl")==0) ||
+                  (strcmp(filename, "twilight5.lvl")==0)) {
+              float ambient[4][3] = {
+                  { 0.150000, 0.250000, 0.150000},
+                  { 0.600000, 0.700000, 0.600000},
+                  { 0.600000, 0.700000, 0.600000},
+                  { 0.200000, 0.600000, 0.200000}
+              };
+              memcpy(level.ambient, ambient, sizeof(ambient));
+          }
+      }
+
       if (level.numofobjects<0 || level.numofobjects>=256)
         {
         fclose(fp);
@@ -449,6 +463,20 @@ void loadlevel(char *filename)
       fread2(level.ambient,4,12,fp);
       fread2(&level.numofobjects,4,1,fp);
 
+      // EXL: Patch for lights off
+      if (!lighting_enabled) {
+          if ((strcmp(filename, "cave6.lvl")==0) ||
+                  (strcmp(filename, "twilight5.lvl")==0)) {
+              float ambient[4][3] = {
+                  { 0.150000, 0.250000, 0.150000},
+                  { 0.600000, 0.700000, 0.600000},
+                  { 0.600000, 0.700000, 0.600000},
+                  { 0.200000, 0.600000, 0.200000}
+              };
+              memcpy(level.ambient, ambient, sizeof(ambient));
+          }
+      }
+
       if (level.numofobjects<0 || level.numofobjects>=256)
         {
         fclose(fp);
@@ -561,6 +589,20 @@ void loadlevel(char *filename)
 		  fread2(level.startposition,4,3,fp);
 		  fread2(level.ambient,4,12,fp);
 		  fread2(&level.numofobjects,4,1,fp);
+
+          // EXL: Patch for lights off
+          if (!lighting_enabled) {
+              if ((strcmp(filename, "cave6.lvl")==0) ||
+                      (strcmp(filename, "twilight5.lvl")==0)) {
+                  float ambient[4][3] = {
+                      { 0.150000, 0.250000, 0.150000},
+                      { 0.600000, 0.700000, 0.600000},
+                      { 0.600000, 0.700000, 0.600000},
+                      { 0.200000, 0.600000, 0.200000}
+                  };
+                  memcpy(level.ambient, ambient, sizeof(ambient));
+              }
+          }
 
 		  if (level.numofobjects<0 || level.numofobjects>=256)
 		  {

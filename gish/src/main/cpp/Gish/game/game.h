@@ -84,5 +84,6 @@ extern _view view;
 extern _game game;
 
 extern int touchcontrols;
+extern int lighting_enabled;
 
 #endif /* GISH_GAME_GAME_H */
