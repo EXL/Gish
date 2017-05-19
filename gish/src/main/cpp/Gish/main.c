@@ -247,8 +247,10 @@ int main (int argc,char *argv[])
     windowicon = SDL_LoadBMP(iconpath);
     free(iconpath);
 #endif
-    SDL_SetColorKey(windowicon, SDL_TRUE, SDL_MapRGB(windowicon->format, 255, 255, 255));
-    SDL_SetWindowIcon(globalwindow, windowicon);
+    if (windowicon) {
+        SDL_SetColorKey(windowicon, SDL_TRUE, SDL_MapRGB(windowicon->format, 255, 255, 255));
+        SDL_SetWindowIcon(globalwindow, windowicon);
+    }
 
     SDL_WarpMouseInWindow(globalwindow, windowinfo.resolutionx - 100, 100);
 
@@ -321,8 +323,10 @@ int main (int argc,char *argv[])
   glcontext = NULL;
   SDL_DestroyWindow(globalwindow);
   globalwindow = NULL;
-  SDL_FreeSurface(windowicon);
-  windowicon = NULL;
+  if (windowicon) {
+    SDL_FreeSurface(windowicon);
+    windowicon = NULL;
+  }
 #endif
   SDL_Quit();
 #ifdef ANDROID_NDK

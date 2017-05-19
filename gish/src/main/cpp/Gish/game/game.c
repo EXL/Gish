@@ -73,7 +73,7 @@ int lighting_enabled = 1;
 int shadow_enabled = 1;
 int touchcontrols = 0;
 int cache_fix = 0;
-float z_zoom = 7.0f;
+float z_zoom = 10.0f;
 
 int fps, fps_cache = 0, fps_renew = 0, fps_mean;
 

@@ -254,7 +254,7 @@ public class GishLauncherActivity extends Activity {
 					writeSettings();
 
 					// Attempt to read the random data file
-					File readMeFile = new File(GishSettings.gishDataSavedPath + "gish.bmp");
+					File readMeFile = new File(GishSettings.gishDataSavedPath + "texture/face.tga");
 					if (readMeFile.exists() && readMeFile.isFile()) {
 						Intent intent = new Intent(gishLauncherActivity, GishActivity.class);
 						startActivity(intent);
