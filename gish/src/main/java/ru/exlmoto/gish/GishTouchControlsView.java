@@ -233,7 +233,7 @@ public class GishTouchControlsView extends View {
 					b = getButton(x, y);
 					if (b >= 0) {
 						npid[b] = id;
-						//AAAAActivity.doVibrate(50 - VIBRO_OFFSET, 0);
+						GishActivity.doVibrate(50 - VIBRO_OFFSET, 0);
 					}
 				}
 				break;
@@ -263,7 +263,7 @@ public class GishTouchControlsView extends View {
 					b = getButton(x, y);
 					if (b >= 0) {
 						npid[b] = id;
-						//AAAAActivity.doVibrate(50 - VIBRO_OFFSET, 0);
+						GishActivity.doVibrate(50 - VIBRO_OFFSET, 0);
 					}
 				}
 				break;
@@ -291,7 +291,7 @@ public class GishTouchControlsView extends View {
 	}
 
 	public void pressKey(int keyCode) {
-		// AAAAActivity.toDebugLog(keyCode + " pushed!");
+		// GishActivity.toDebugLog(keyCode + " pushed!");
 		switch (keyCode) {
 		case KC_GAME_D:
 			SDLActivity.onNativeKeyDown(KC_SDL_D);
@@ -342,7 +342,7 @@ public class GishTouchControlsView extends View {
 	}
 
 	public void releaseKey(int keyCode) {
-		// AAAAActivity.toDebugLog(keyCode + " released!");
+		// GishActivity.toDebugLog(keyCode + " released!");
 		switch (keyCode) {
 		case KC_GAME_D:
 			SDLActivity.onNativeKeyUp(KC_SDL_D);
@@ -438,7 +438,7 @@ public class GishTouchControlsView extends View {
 				b = KC_GAME_A;
 			}
 		} else {
-			// AAAAActivity.toDebugLog("Second Buttons Column:" + x + "x" + y);
+			// GishActivity.toDebugLog("Second Buttons Column:" + x + "x" + y);
 			if (y > (height / 3) * 2) { // Down
 				b = KC_GAME_D;
 			} else if (y < (height / 3)) { // Up

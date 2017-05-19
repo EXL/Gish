@@ -9,6 +9,29 @@ void initializeJavaEnviron()
     javaEnviron = SDL_AndroidGetJNIEnv();
 }
 
+void doVibrateFromJNI(int duration)
+{
+    if (javaEnviron != NULL) {
+        jclass clazz = (*javaEnviron)->FindClass(javaEnviron, "ru/exlmoto/aaaa/GishActivity");
+        if (clazz == 0) {
+            TO_DEBUG_LOG("Error JNI: Class ru/exlmoto/aaaa/GishActivity not found!");
+            return;
+        }
+
+        jmethodID methodId = (*javaEnviron)->GetStaticMethodID(javaEnviron, clazz, "doVibrate", "(II)V");
+        if (methodId == 0) {
+            TO_DEBUG_LOG("Error JNI: methodId is 0, method doVibrate (II)V not found!");
+            return;
+        }
+
+        // Call Java-method
+        (*javaEnviron)->CallStaticVoidMethod(javaEnviron, clazz, methodId, (jint)duration, 1);
+
+        // Delete Ref
+        (*javaEnviron)->DeleteLocalRef(javaEnviron, clazz);
+    }
+}
+
 void updateGameConfigFromJNI()
 {
     if (javaEnviron != NULL) {

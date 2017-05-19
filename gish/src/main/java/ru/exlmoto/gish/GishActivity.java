@@ -1,14 +1,18 @@
 package ru.exlmoto.gish;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.LinearLayout;
 
 import org.libsdl.app.SDLActivity;
+
+import ru.exlmoto.gish.GishLauncherActivity.GishSettings;
 
 /**
  * Created by exl on 5/14/17.
@@ -17,8 +21,11 @@ import org.libsdl.app.SDLActivity;
 public class GishActivity extends SDLActivity {
 
     private static final String APP_TAG = "Gish_app";
+
     private static Activity m_GishActivity = null;
     private GishTouchControlsView gishTouchControlsView = null;
+
+    private static Vibrator m_vibrator = null;
 
     // --- SDL Patch Functions
     public static void pressOrReleaseKey(int keyCode, boolean press) {
@@ -63,11 +70,31 @@ public class GishActivity extends SDLActivity {
         super.onCreate(savedInstanceState);
         m_GishActivity = this;
 
-        gishTouchControlsView = new GishTouchControlsView(this);
-        addContentView(gishTouchControlsView,
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT));
+        m_vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+
+        if (GishSettings.touchControls == GishSettings.MODERN_TOUCH_CONTROLS) {
+            gishTouchControlsView = new GishTouchControlsView(this);
+            addContentView(gishTouchControlsView,
+                    new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.MATCH_PARENT));
+        } else if (GishSettings.touchControls == GishSettings.OLD_TOUCH_CONTROLS) {
+
+        }
+    }
+
+    // JNI-method
+    public static void doVibrate(int duration, int fromJNI) {
+        // From JNI: 1 -- yes, 0 -- no
+        // AAAASettings.configuration[10] is vibro haptics in game config
+        // 30 is default scale for vibration
+        if ((fromJNI == 1) && (GishSettings.gameVibration)) {
+            m_vibrator.vibrate(duration + (GishSettings.vibroScale - 30));
+        }
+
+        if ((fromJNI == 0) && (GishSettings.touchVibration)) {
+            m_vibrator.vibrate(duration + (GishSettings.vibroScale - 30));
+        }
     }
 
     // JNI-function
