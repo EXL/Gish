@@ -185,6 +185,28 @@
                 android:text="@string/shadows" />
         </TableRow>
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textViewZoom"
+                android:layout_marginLeft="@dimen/label_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/zoom"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/editTextZoom"
+                android:layout_width="@dimen/edit_text_number"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/label_margin"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:text="@string/zoom_default" />
+        </TableRow>
+
         <TextView
             android:id="@+id/otherSettings"
             style="?android:attr/listSeparatorTextViewStyle"

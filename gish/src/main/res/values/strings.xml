@@ -41,8 +41,12 @@
     <string name="parent_dir">Parent Directory</string>
     <string name="wrong_haptic_title">Wrong Haptics Parameter!</string>
     <string name="wrong_haptic_body">Please check the Haptics parameter.</string>
+    <string name="wrong_zoom_title">Wrong Zoom Parameter!</string>
+    <string name="wrong_zoom_body">Please check the Zoom parameter.</string>
     <string name="wrong_body_general">Excess values are unacceptable.</string>
     <string name="question_title_general">Are you sure?</string>
     <string name="question_reset_body">Are you sure want to reset all settings to default values and delete Gish config and profile?</string>
     <string name="gish_data">Please choose Gish folder:</string>
+    <string name="zoom">Zoom:</string>
+    <string name="zoom_default">10.0</string>
 </resources>

@@ -56,6 +56,7 @@ public class GishLauncherActivity extends Activity {
 	private static final int AC_FILE_PICKER_CODE = 1;
 
 	private static final int DIALOG_WRONG_HAPTIC = 0;
+	private static final int DIALOG_WRONG_ZOOM = 1;
 	private static final int DIALOG_QUESTION_RESET_SETTINGS = 2;
 
 	public static class GishSettings {
@@ -85,6 +86,7 @@ public class GishLauncherActivity extends Activity {
 
 	private EditText editTextDataPath = null;
 	private EditText editTextHaptics = null;
+	private EditText editTextZoom = null;
 	private CheckBox checkBoxSound = null;
 	private CheckBox checkBoxMusic = null;
 	private CheckBox checkBoxJoyAccel = null;
@@ -309,6 +311,11 @@ public class GishLauncherActivity extends Activity {
 			showDialog(DIALOG_WRONG_HAPTIC);
 			return false;
 		}
+		float zoom = Float.parseFloat(editTextZoom.getEditableText().toString());
+		if (zoom < 4.0f || zoom > 50.0f) {
+			showDialog(DIALOG_WRONG_ZOOM);
+			return false;
+		}
 		return true;
 	}
 
@@ -328,6 +335,7 @@ public class GishLauncherActivity extends Activity {
 		GishSettings.gameVibration = true;
 		GishSettings.vibroScale = 30;
 		GishSettings.gishDataSavedPath = "";
+		GishSettings.zoom = 10.0f;
 
 		fillWidgetsBySettings();
 
@@ -388,6 +396,21 @@ public class GishLauncherActivity extends Activity {
 				public void onClick(DialogInterface dialog, int id) {
 					GishSettings.vibroScale = 30;
 					editTextHaptics.setText(String.valueOf(GishSettings.vibroScale));
+					dialog.cancel();
+				}
+			});
+			break;
+		case DIALOG_WRONG_ZOOM:
+			builder.setTitle(getString(R.string.wrong_zoom_title));
+			builder.setMessage(getString(R.string.wrong_zoom_body) +
+					"\nMin: " + 4.0f + "\nMax: " + 50.0f + "\n" +
+					getString(R.string.wrong_body_general));
+			builder.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int id) {
+					GishSettings.zoom = 10.0f;
+					editTextZoom.setText(String.valueOf(GishSettings.zoom));
 					dialog.cancel();
 				}
 			});
@@ -456,6 +479,7 @@ public class GishLauncherActivity extends Activity {
 		GishSettings.gameVibration = checkBoxVibrationInGame.isChecked();
 		GishSettings.vibroScale = Integer.parseInt(editTextHaptics.getEditableText().toString());
 		GishSettings.gishDataSavedPath = editTextDataPath.getEditableText().toString();
+		GishSettings.zoom = Float.parseFloat(editTextZoom.getEditableText().toString());
 		if (radioButtonModernTouchControls.isChecked()) {
 			GishSettings.touchControls = GishSettings.MODERN_TOUCH_CONTROLS;
 		} else if (radioButtonSimpleTouchControls.isChecked()) {
@@ -474,6 +498,7 @@ public class GishLauncherActivity extends Activity {
 		GishActivity.toDebugLog("FWBS!");
 		editTextDataPath.setText(GishSettings.gishDataSavedPath);
 		editTextHaptics.setText(String.valueOf(GishSettings.vibroScale));
+		editTextZoom.setText(String.valueOf(GishSettings.zoom));
 		checkBoxSound.setChecked(GishSettings.sound);
 		checkBoxMusic.setChecked(GishSettings.music);
 		checkBoxJoyAccel.setChecked(GishSettings.joyAccel);
@@ -509,6 +534,7 @@ public class GishLauncherActivity extends Activity {
 	private void initWidgets() {
 		editTextDataPath = (EditText) findViewById(R.id.editTextDataPath);
 		editTextHaptics = (EditText) findViewById(R.id.editTextVibroScale);
+		editTextZoom = (EditText) findViewById(R.id.editTextZoom);
 		checkBoxSound = (CheckBox) findViewById(R.id.checkBoxSound);
 		checkBoxMusic = (CheckBox) findViewById(R.id.checkBoxMusic);
 		checkBoxJoyAccel = (CheckBox) findViewById(R.id.checkBoxJoyAccel);
@@ -542,6 +568,7 @@ public class GishLauncherActivity extends Activity {
 		editor.putBoolean("touchVibration", GishSettings.touchVibration);
 		editor.putBoolean("gameVibration", GishSettings.gameVibration);
 		editor.putString("dataSavedPath", GishSettings.gishDataSavedPath);
+		editor.putFloat("zoom", GishSettings.zoom);
 		editor.commit();
 	}
 
@@ -561,5 +588,6 @@ public class GishLauncherActivity extends Activity {
 		GishSettings.touchVibration = mSharedPreferences.getBoolean("touchVibration", true);
 		GishSettings.gameVibration = mSharedPreferences.getBoolean("gameVibration", true);
 		GishSettings.gishDataSavedPath = mSharedPreferences.getString("dataSavedPath", "");
+		GishSettings.zoom = mSharedPreferences.getFloat("zoom", 10.0f);
 	}
 }
