@@ -12,9 +12,9 @@ void initializeJavaEnviron()
 void doVibrateFromJNI(int duration)
 {
     if (javaEnviron != NULL) {
-        jclass clazz = (*javaEnviron)->FindClass(javaEnviron, "ru/exlmoto/aaaa/GishActivity");
+        jclass clazz = (*javaEnviron)->FindClass(javaEnviron, "ru/exlmoto/gish/GishActivity");
         if (clazz == 0) {
-            TO_DEBUG_LOG("Error JNI: Class ru/exlmoto/aaaa/GishActivity not found!");
+            TO_DEBUG_LOG("Error JNI: Class ru/exlmoto/gish/GishActivity not found!");
             return;
         }
 
