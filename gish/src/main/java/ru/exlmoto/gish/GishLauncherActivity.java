@@ -78,6 +78,7 @@ public class GishLauncherActivity extends Activity {
 		public static boolean gameVibration = true;
 		public static int vibroScale = 30;
 		public static String gishDataSavedPath = ""; // Access from JNI
+		public static float zoom = 10.0f;
 	}
 
 	private boolean firstRun = false;

@@ -83,8 +83,11 @@ typedef struct
 extern _view view;
 extern _game game;
 
+extern int fps_enabled;
 extern int touchcontrols;
 extern int lighting_enabled;
+extern int shadow_enabled;
 extern int cache_fix;
+extern float z_zoom;
 
 #endif /* GISH_GAME_GAME_H */

@@ -73,7 +73,7 @@ int lighting_enabled = 1;
 int shadow_enabled = 1;
 int touchcontrols = 0;
 int cache_fix = 0;
-// zoom
+float z_zoom = 10.0f;
 
 int fps, fps_cache = 0, fps_renew = 0, fps_mean;
 
@@ -114,7 +114,7 @@ void gameloop(void)
 
   resetmenuitems();
 
-  view.zoom=10.0f;
+  view.zoom=z_zoom;
   if (game.oldschool==2)
     view.zoom=16.0f;
   if (game.oldschool==3)

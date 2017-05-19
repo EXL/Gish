@@ -1,10 +1,107 @@
 #include "../android/a_utils.h"
+#include "../game/config.h"
+#include "../game/game.h"
 
 JNIEnv *javaEnviron = NULL;
 
 void initializeJavaEnviron()
 {
     javaEnviron = SDL_AndroidGetJNIEnv();
+}
+
+void updateGameConfigFromJNI()
+{
+    if (javaEnviron != NULL) {
+        jclass clazz = (*javaEnviron)->FindClass(javaEnviron, "ru/exlmoto/gish/GishLauncherActivity$GishSettings");
+        if (clazz == 0) {
+            TO_DEBUG_LOG("Error JNI: Class ru/exlmoto/gish/GishLauncherActivity$GishSettings not found!");
+            return;
+        }
+
+        // Get sound Field ID
+        jfieldID fieldID = (*javaEnviron)->GetStaticFieldID(javaEnviron, clazz, "sound", "Z");
+        if (fieldID == 0) {
+            TO_DEBUG_LOG("Error JNI: fieldID is 0, field boolean sound not found!");
+            return;
+        }
+        jboolean sound = (*javaEnviron)->GetStaticBooleanField(javaEnviron, clazz, fieldID);
+        config.sound = (int)sound;
+
+        // Get music Field ID
+        fieldID = (*javaEnviron)->GetStaticFieldID(javaEnviron, clazz, "music", "Z");
+        if (fieldID == 0) {
+            TO_DEBUG_LOG("Error JNI: fieldID is 0, field boolean music not found!");
+            return;
+        }
+        jboolean music = (*javaEnviron)->GetStaticBooleanField(javaEnviron, clazz, fieldID);
+        config.music = (int)music;
+
+        // Get showFps Field ID
+        fieldID = (*javaEnviron)->GetStaticFieldID(javaEnviron, clazz, "showFps", "Z");
+        if (fieldID == 0) {
+            TO_DEBUG_LOG("Error JNI: fieldID is 0, field boolean showFps not found!");
+            return;
+        }
+        jboolean showFps = (*javaEnviron)->GetStaticBooleanField(javaEnviron, clazz, fieldID);
+        fps_enabled = (int)showFps;
+
+        // Get fixCache Field ID
+        fieldID = (*javaEnviron)->GetStaticFieldID(javaEnviron, clazz, "fixCache", "Z");
+        if (fieldID == 0) {
+            TO_DEBUG_LOG("Error JNI: fieldID is 0, field boolean fixCache not found!");
+            return;
+        }
+        jboolean fixCache = (*javaEnviron)->GetStaticBooleanField(javaEnviron, clazz, fieldID);
+        cache_fix = (int)fixCache;
+
+        // Get joyAccel Field ID
+        fieldID = (*javaEnviron)->GetStaticFieldID(javaEnviron, clazz, "joyAccel", "Z");
+        if (fieldID == 0) {
+            TO_DEBUG_LOG("Error JNI: fieldID is 0, field boolean joyAccel not found!");
+            return;
+        }
+        jboolean joyAccel = (*javaEnviron)->GetStaticBooleanField(javaEnviron, clazz, fieldID);
+        config.joystick = (int)joyAccel;
+
+        // Get lights Field ID
+        fieldID = (*javaEnviron)->GetStaticFieldID(javaEnviron, clazz, "lights", "Z");
+        if (fieldID == 0) {
+            TO_DEBUG_LOG("Error JNI: fieldID is 0, field boolean lights not found!");
+            return;
+        }
+        jboolean lights = (*javaEnviron)->GetStaticBooleanField(javaEnviron, clazz, fieldID);
+        lighting_enabled = (int)lights;
+
+        // Get shadows Field ID
+        fieldID = (*javaEnviron)->GetStaticFieldID(javaEnviron, clazz, "shadows", "Z");
+        if (fieldID == 0) {
+            TO_DEBUG_LOG("Error JNI: fieldID is 0, field boolean shadows not found!");
+            return;
+        }
+        jboolean shadows = (*javaEnviron)->GetStaticBooleanField(javaEnviron, clazz, fieldID);
+        shadow_enabled = (int)shadows;
+
+        // Get touchControls Field ID
+        fieldID = (*javaEnviron)->GetStaticFieldID(javaEnviron, clazz, "touchControls", "I");
+        if (fieldID == 0) {
+            TO_DEBUG_LOG("Error JNI: fieldID is 0, field int touchControls not found!");
+            return;
+        }
+        jint touch_Controls = (*javaEnviron)->GetStaticIntField(javaEnviron, clazz, fieldID);
+        touchcontrols = (int)touch_Controls;
+
+        // Get zoom Field ID
+        fieldID = (*javaEnviron)->GetStaticFieldID(javaEnviron, clazz, "zoom", "F");
+        if (fieldID == 0) {
+            TO_DEBUG_LOG("Error JNI: fieldID is 0, field float zoom not found!");
+            return;
+        }
+        jfloat zoom = (*javaEnviron)->GetStaticFloatField(javaEnviron, clazz, fieldID);
+        z_zoom = (float)zoom;
+
+        // Delete Ref
+        (*javaEnviron)->DeleteLocalRef(javaEnviron, clazz);
+    }
 }
 
 const char* getAssetsPathFromJNI()

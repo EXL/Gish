@@ -231,6 +231,7 @@ int main (int argc,char *argv[])
     TO_DEBUG_LOG("Resize SDL window: %dx%d\n", windowinfo.resolutionx, windowinfo.resolutiony);
     windowinfo.fullscreen = 1;
     saveconfig();
+    updateGameConfigFromJNI();
 #endif
 #endif
 
