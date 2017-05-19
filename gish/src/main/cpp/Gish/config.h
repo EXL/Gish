@@ -4,6 +4,7 @@
 #ifdef __linux__
  #define LINUX 1
  #ifndef ANDROID_NDK
+  #include <stdio.h>
   #define TO_DEBUG_LOG(...) fprintf(stderr, __VA_ARGS__)
  #else
   #include <android/log.h>

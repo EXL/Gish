@@ -853,6 +853,9 @@ void simulation(void)
         object[count].frame=12;
         object[count].framedelay=0.0f;
         playsound(16,object[count].position,NULL,0.5f,0,1.0f,count,2);
+#ifdef ANDROID_NDK
+        doVibrateFromJNI(10);
+#endif
         }
       }
     }
