@@ -33,161 +33,161 @@ import android.view.KeyEvent;
 
 public class GishTouchOverlayView {
 
-	private List<GishButton> initializedButtons = null;
+   private List<GishButton> initializedButtons = null;
 
-	private class GishButton {
+   private class GishButton {
 
-		private final int VIBRO_OFFSET = 20;
+      private final int VIBRO_OFFSET = 20;
 
-		private float m_x0;
-		private float m_y0;
-		private float m_x1;
-		private float m_y1;
+      private float m_x0;
+      private float m_y0;
+      private float m_x1;
+      private float m_y1;
 
-		private int m_buttonCode;
-		private boolean m_buttonPushed = false;
+      private int m_buttonCode;
+      private boolean m_buttonPushed = false;
 
-		// -1 for no touches on button
-		private int m_buttonTouchId = -1;
+      // -1 for no touches on button
+      private int m_buttonTouchId = -1;
 
-		// Useful for DEBUG
-		private String m_buttonName;
+      // Useful for DEBUG
+      private String m_buttonName;
 
-		public GishButton(String buttonName,
-						  float x, float y, float width, float height,
-						  int keyCode) {
-			m_buttonName = buttonName;
-			m_x0 = x;
-			m_y0 = y;
-			m_x1 = x + width;
-			m_y1 = y + height;
-			m_buttonCode = keyCode;
-		}
+      public GishButton(String buttonName,
+                    float x, float y, float width, float height,
+                    int keyCode) {
+         m_buttonName = buttonName;
+         m_x0 = x;
+         m_y0 = y;
+         m_x1 = x + width;
+         m_y1 = y + height;
+         m_buttonCode = keyCode;
+      }
 
-		public boolean checkButtonRect(float touchX, float touchY) {
-			return (touchX > m_x0 &&
-					touchX < m_x1 &&
-					touchY > m_y0 &&
-					touchY < m_y1);
-		}
+      public boolean checkButtonRect(float touchX, float touchY) {
+         return (touchX > m_x0 &&
+               touchX < m_x1 &&
+               touchY > m_y0 &&
+               touchY < m_y1);
+      }
 
-		public void press() {
-			m_buttonPushed = true;
+      public void press() {
+         m_buttonPushed = true;
 
-			if (true) {
-				GishActivity.doVibrate(50 - VIBRO_OFFSET, 0);
-			}
+         if (true) {
+            GishActivity.doVibrate(50 - VIBRO_OFFSET, 0);
+         }
 
-			SDLActivity.onNativeKeyDown(m_buttonCode);
-		}
+         SDLActivity.onNativeKeyDown(m_buttonCode);
+      }
 
-		public void release() {
-			m_buttonPushed = false;
+      public void release() {
+         m_buttonPushed = false;
 
-			m_buttonTouchId = -1;
+         m_buttonTouchId = -1;
 
-			SDLActivity.onNativeKeyUp(m_buttonCode);
-		}
+         SDLActivity.onNativeKeyUp(m_buttonCode);
+      }
 
-		@SuppressWarnings("unused")
-		public String getName() {
-			return m_buttonName;
-		}
+      @SuppressWarnings("unused")
+      public String getName() {
+         return m_buttonName;
+      }
 
-		public void setTouchId(int touchId) {
-			m_buttonTouchId = touchId;
-		}
+      public void setTouchId(int touchId) {
+         m_buttonTouchId = touchId;
+      }
 
-		public int getTouchId() {
-			return m_buttonTouchId;
-		}
+      public int getTouchId() {
+         return m_buttonTouchId;
+      }
 
-		public boolean getState() {
-			return m_buttonPushed;
-		}
-	}
+      public boolean getState() {
+         return m_buttonPushed;
+      }
+   }
 
-	public GishTouchOverlayView() {
-		initButtonsRects();
-	}
+   public GishTouchOverlayView() {
+      initButtonsRects();
+   }
 
-	public void checkTouchButtons(float touchX, float touchY, int touchId) {
-		for (GishButton button : initializedButtons) {
-			if (button.checkButtonRect(touchX, touchY)) {
-				button.setTouchId(touchId);
-			}
-		}
-	}
+   public void checkTouchButtons(float touchX, float touchY, int touchId) {
+      for (GishButton button : initializedButtons) {
+         if (button.checkButtonRect(touchX, touchY)) {
+            button.setTouchId(touchId);
+         }
+      }
+   }
 
-	public void pressSingleTouchButtons() {
-		for (GishButton button : initializedButtons) {
-			if (button.getTouchId() == 0) {
-				button.press();
-			}
-		}
-	}
+   public void pressSingleTouchButtons() {
+      for (GishButton button : initializedButtons) {
+         if (button.getTouchId() == 0) {
+            button.press();
+         }
+      }
+   }
 
-	public void pressMultiTouchButtons() {
-		for (GishButton button : initializedButtons) {
-			if (button.getTouchId() > 0 && !button.getState()) {
-				button.press();
-			}
-		}
-	}
+   public void pressMultiTouchButtons() {
+      for (GishButton button : initializedButtons) {
+         if (button.getTouchId() > 0 && !button.getState()) {
+            button.press();
+         }
+      }
+   }
 
-	public void releaseMultiTouchButtons(int touchId) {
-		for (GishButton button : initializedButtons) {
-			if (button.getTouchId() == touchId) {
-				button.release();
-			}
-		}
-	}
+   public void releaseMultiTouchButtons(int touchId) {
+      for (GishButton button : initializedButtons) {
+         if (button.getTouchId() == touchId) {
+            button.release();
+         }
+      }
+   }
 
-	public void releaseAllButtons() {
-		for (GishButton button : initializedButtons) {
-			button.release();
-			button.setTouchId(-1);
-		}
-	}
+   public void releaseAllButtons() {
+      for (GishButton button : initializedButtons) {
+         button.release();
+         button.setTouchId(-1);
+      }
+   }
 
-	private void initButtonsRects() {
-		/************************************************************************************
-		**     +------------------------------------------------+
-		**     |    overlay (overlay_width x overlay_height)    |
-		**     |                                                |
-		**     |                                                |
-		**     |    btn_x, btn_y =>  +--------+                 |
-		**     |                     | button |                 |
-		**     |                     |        |                 |
-		**     |                     |        |                 |
-		**     |                     +--------+ <= btn_w, btn_h |
-		**     |                                                |
-		**     +------------------------------------------------+
-		**
-		**     btn_x and btn_y is coordinates of start point of button on an overlay
-		**     btn_w and btn_h is coordinates of end point of button on an overlay
-		**
-		**     float x = btn_x / overlay_width;
-		**     float y = btn_y / overlay_height;
-		**     float width = btn_w / overlay_width;
-		**     float height = btn_h / overlay_height;
-		**
-		**     Example for 854x480 overlay:
-		**     float x = 125.0 / 854.0;
-		**     float y = 455.0 / 480.0;
-		**     float width = 200.0 / 854.0;
-		**     float height = 475.0 / 480.0;
-		************************************************************************************/
+   private void initButtonsRects() {
+      /************************************************************************************
+      **     +------------------------------------------------+
+      **     |    overlay (overlay_width x overlay_height)    |
+      **     |                                                |
+      **     |                                                |
+      **     |    btn_x, btn_y =>  +--------+                 |
+      **     |                     | button |                 |
+      **     |                     |        |                 |
+      **     |                     |        |                 |
+      **     |                     +--------+ <= btn_w, btn_h |
+      **     |                                                |
+      **     +------------------------------------------------+
+      **
+      **     btn_x and btn_y is coordinates of start point of button on an overlay
+      **     btn_w and btn_h is coordinates of end point of button on an overlay
+      **
+      **     float x = btn_x / overlay_width;
+      **     float y = btn_y / overlay_height;
+      **     float width = btn_w / overlay_width;
+      **     float height = btn_h / overlay_height;
+      **
+      **     Example for 854x480 overlay:
+      **     float x = 125.0 / 854.0;
+      **     float y = 455.0 / 480.0;
+      **     float width = 200.0 / 854.0;
+      **     float height = 475.0 / 480.0;
+      ************************************************************************************/
 
-		initializedButtons = new ArrayList<GishButton>();
-		initializedButtons.add(new GishButton("Left", 0.0421f, 0.6583f, 0.1569f, 0.2792f, KeyEvent.KEYCODE_DPAD_LEFT));
-		initializedButtons.add(new GishButton("Down", 0.2295f, 0.6583f, 0.1569f, 0.2792f, KeyEvent.KEYCODE_DPAD_DOWN));
-		initializedButtons.add(new GishButton("Right", 0.4180f, 0.6583f, 0.1569f, 0.2792f, KeyEvent.KEYCODE_DPAD_RIGHT));
-		initializedButtons.add(new GishButton("Up", 0.2295f, 0.3250f, 0.1569f, 0.2792f, KeyEvent.KEYCODE_DPAD_UP));
-		initializedButtons.add(new GishButton("A", 0.8079f, 0.3250f, 0.1569f, 0.2792f, KeyEvent.KEYCODE_A));
-		initializedButtons.add(new GishButton("Space", 0.8079f, 0.6604f, 0.1569f, 0.2792f, KeyEvent.KEYCODE_SPACE));
-		initializedButtons.add(new GishButton("Enter", 0.5503f, 0.0333f, 0.1218f, 0.2166f, KeyEvent.KEYCODE_ENTER));
-		initializedButtons.add(new GishButton("S", 0.7025f, 0.0333f, 0.1218f, 0.2166f, KeyEvent.KEYCODE_S));
-		initializedButtons.add(new GishButton("D", 0.8548f, 0.0333f, 0.1218f, 0.2166f, KeyEvent.KEYCODE_D));
-	}
+      initializedButtons = new ArrayList<GishButton>();
+      initializedButtons.add(new GishButton("Left", 0.0421f, 0.6583f, 0.1569f, 0.2792f, KeyEvent.KEYCODE_DPAD_LEFT));
+      initializedButtons.add(new GishButton("Down", 0.2295f, 0.6583f, 0.1569f, 0.2792f, KeyEvent.KEYCODE_DPAD_DOWN));
+      initializedButtons.add(new GishButton("Right", 0.4180f, 0.6583f, 0.1569f, 0.2792f, KeyEvent.KEYCODE_DPAD_RIGHT));
+      initializedButtons.add(new GishButton("Up", 0.2295f, 0.3250f, 0.1569f, 0.2792f, KeyEvent.KEYCODE_DPAD_UP));
+      initializedButtons.add(new GishButton("A", 0.8079f, 0.3250f, 0.1569f, 0.2792f, KeyEvent.KEYCODE_A));
+      initializedButtons.add(new GishButton("Space", 0.8079f, 0.6604f, 0.1569f, 0.2792f, KeyEvent.KEYCODE_SPACE));
+      initializedButtons.add(new GishButton("Enter", 0.5503f, 0.0333f, 0.1218f, 0.2166f, KeyEvent.KEYCODE_ENTER));
+      initializedButtons.add(new GishButton("S", 0.7025f, 0.0333f, 0.1218f, 0.2166f, KeyEvent.KEYCODE_S));
+      initializedButtons.add(new GishButton("D", 0.8548f, 0.0333f, 0.1218f, 0.2166f, KeyEvent.KEYCODE_D));
+   }
 }
