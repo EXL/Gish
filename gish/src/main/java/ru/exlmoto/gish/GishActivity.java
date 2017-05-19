@@ -9,6 +9,7 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 
 import org.libsdl.app.SDLActivity;
 
@@ -65,6 +66,7 @@ public class GishActivity extends SDLActivity {
         Log.d(APP_TAG, message);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +81,11 @@ public class GishActivity extends SDLActivity {
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             LinearLayout.LayoutParams.MATCH_PARENT));
         } else if (GishSettings.touchControls == GishSettings.OLD_TOUCH_CONTROLS) {
-
+            LinearLayout ll = new LinearLayout(this);
+            ll.setBackgroundDrawable(getResources().getDrawable(R.drawable.overlay_controls));
+            addContentView(ll, new LinearLayout.LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.MATCH_PARENT));
         }
     }
 
