@@ -152,7 +152,8 @@ public class GishFilePickerActivity extends Activity {
 					listItemsDirs.add(new FItem(file.getName(), numItems, dateModified,
 							file.getAbsolutePath(),
 							(file.getName().toLowerCase().contains("gish") &&
-									!file.getName().startsWith(".")) ?
+									(!file.getName().equals(".gish")) &&
+									(!file.getName().equals("Gish.app"))) ?
 									R.drawable.ic_launcher : R.drawable.folder));
 				}
 			}

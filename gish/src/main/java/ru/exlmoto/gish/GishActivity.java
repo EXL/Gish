@@ -92,7 +92,6 @@ public class GishActivity extends SDLActivity {
     // JNI-method
     public static void doVibrate(int duration, int fromJNI) {
         // From JNI: 1 -- yes, 0 -- no
-        // AAAASettings.configuration[10] is vibro haptics in game config
         // 30 is default scale for vibration
         if ((fromJNI == 1) && (GishSettings.gameVibration)) {
             m_vibrator.vibrate(duration + (GishSettings.vibroScale - 30));

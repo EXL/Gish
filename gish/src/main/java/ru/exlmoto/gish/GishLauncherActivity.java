@@ -25,7 +25,6 @@
 package ru.exlmoto.gish;
 
 import java.io.File;
-import java.io.IOException;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -33,11 +32,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ObbInfo;
-import android.content.res.ObbScanner;
 import android.os.Bundle;
-import android.os.storage.OnObbStateChangeListener;
-import android.os.storage.StorageManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
