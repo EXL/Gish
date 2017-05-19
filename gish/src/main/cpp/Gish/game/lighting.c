@@ -199,6 +199,38 @@ void setuplightingtextures(void)
   setuptexture(texturenum);
   }
 
+void setupframelighting_fix_cave6_boss(void)
+{
+    int count/*,count2*/;
+    float vec[3];
+
+    frame.numoflights=0;
+    for (count=0;count<numofobjects;count++)
+    if (frame.numoflights<8)
+    if (object[count].lighton)
+      {
+      if (object[count].lighttype>=1 && object[count].lighttype<=3)
+        {
+        //subtractvectors(vec,view.position,object[count].position);
+        //vec[2]=0.0f;
+        if (vectorlength(vec)<view.zoom+2.0f+object[count].lightintensity*0.5f)
+          {
+          //copyvector(frame.light[frame.numoflights].position,object[count].position);
+          /*
+          if (object[count].lighttype==3)
+            {
+            frame.light[frame.numoflights].position[0]+=((float)(rand()&255)/512.0f-0.25f);
+            frame.light[frame.numoflights].position[1]+=((float)(rand()&255)/512.0f-0.25f);
+            }
+          */
+          //copyvector(frame.light[frame.numoflights].color,object[count].lightcolor);
+          //frame.light[frame.numoflights].intensity=object[count].lightintensity;
+          frame.numoflights++;
+          }
+        }
+      }
+}
+
 void setupframelighting(void)
   {
   int count/*,count2*/;

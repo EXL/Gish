@@ -25,5 +25,6 @@ void setuplightingtextures(void);
 void renderobjectspecular(int objectnum);
 void setupframelighting(void);
 void rendershadows(void);
+void setupframelighting_fix_cave6_boss(void);
 
 #endif /* GISH_GAME_LIGHTING_H */

@@ -423,8 +423,11 @@ void gameloop(void)
 
     soundsimulation(view.position,view.orientation);
 
-    if (lighting_enabled)
+    if (lighting_enabled) {
         setupframelighting();
+    } else if (game.levelnum == 13) { // cave6.lvl boss
+        setupframelighting_fix_cave6_boss();
+    }
 
     setuprenderobjects();
 
