@@ -49,4 +49,7 @@
     <string name="gish_data">Please choose Gish folder:</string>
     <string name="zoom">Zoom:</string>
     <string name="zoom_default">10.0</string>
+    <string name="data_path_c">Directory with Gish data files is chosen!</string>
+    <string name="data_path_wrong">Error! Please check the Gish directory!</string>
+    <string name="reset_game">Settings and profile have been reset!</string>
 </resources>

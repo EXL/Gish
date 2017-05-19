@@ -126,7 +126,6 @@ public class GishLauncherActivity extends Activity {
 			// Move to onResume()
 			// readSettings();
 		}
-		// TODO:
 
 		initAboutDialog();
 
@@ -259,8 +258,7 @@ public class GishLauncherActivity extends Activity {
 						Intent intent = new Intent(gishLauncherActivity, GishActivity.class);
 						startActivity(intent);
 					} else {
-						// TODO:
-						// showToast(R.string.obb_files_read_error, Toast.LENGTH_LONG);
+						showToast(R.string.data_path_wrong, Toast.LENGTH_LONG);
 					}
 				}
 			}
@@ -319,8 +317,24 @@ public class GishLauncherActivity extends Activity {
 		return true;
 	}
 
+	// Thanks to teedyay from:
+	// http://stackoverflow.com/a/6425744
+	private void deleteRecursive(File fileOrDirectory) {
+		if (fileOrDirectory.isDirectory()) {
+			for (File child : fileOrDirectory.listFiles()) {
+				deleteRecursive(child);
+			}
+		}
+		fileOrDirectory.delete();
+		GishActivity.toDebugLog("File/Dir: " + fileOrDirectory.getName() + " was deleted");
+	}
+
 	private void resetAllSettingsToDefaultValues() {
-		// TODO: Delete folder here
+		// Delete user profiles and config
+		File dataDir = new File(GishSettings.gishDataSavedPath + ".gish/");
+		if (dataDir.exists() && dataDir.isDirectory()) {
+			deleteRecursive(dataDir);
+		}
 
 		GishSettings.touchControls = GishSettings.MODERN_TOUCH_CONTROLS;
 		GishSettings.sound = true;
@@ -339,8 +353,7 @@ public class GishLauncherActivity extends Activity {
 
 		fillWidgetsBySettings();
 
-		// TODO:
-		//showToast(R.string.reset_all_settings_toast, Toast.LENGTH_SHORT);
+		showToast(R.string.reset_game, Toast.LENGTH_SHORT);
 	}
 
 	private void showToast(int stringId, int length) {
@@ -365,8 +378,7 @@ public class GishLauncherActivity extends Activity {
 				GishSettings.gishDataSavedPath = data.getStringExtra("GishPath");
 				editTextDataPath.setText(GishSettings.gishDataSavedPath);
 				writeSettings();
-				// TODO:
-				//showToast(R.string.obb_file_c, Toast.LENGTH_SHORT);
+				showToast(R.string.data_path_c, Toast.LENGTH_SHORT);
 			}
 			break;
 		default:
