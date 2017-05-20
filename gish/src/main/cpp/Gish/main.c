@@ -107,8 +107,6 @@ int main (int argc,char *argv[])
   loadplayers();
 
   flags=SDL_INIT_VIDEO|SDL_INIT_TIMER;
-  if (config.joystick)
-    flags|=SDL_INIT_JOYSTICK;
 
   SDL_Init(flags);
 
@@ -266,6 +264,7 @@ int main (int argc,char *argv[])
 
   if (config.joystick)
     {
+    SDL_InitSubSystem(SDL_INIT_JOYSTICK);
     numofjoysticks=SDL_NumJoysticks();
     for (count=0;count<numofjoysticks;count++)
       {
