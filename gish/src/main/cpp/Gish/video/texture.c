@@ -30,7 +30,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef NO_PNG
 #include <png.h>
+#endif
 #include <assert.h>
 
 #include "../video/texture.h"
@@ -42,6 +44,7 @@ char lasttextureloaded[32];
 _texture texture[2048];
 _tgaheader tgaheader;
 
+#ifndef NO_PNG
 /*
  * This should handle a variety common PNG formats 
  * most importantly 8bit palletized with alpha channel
@@ -166,6 +169,7 @@ cleanup:
 	if(changeddir == 0) chdir("..");
 	return load_status;
 }
+#endif
 
 int loadtexturetga(int texturenum,char *filename,int mipmap,int wraps,int wrapt,int magfilter,int minfilter)
   {
