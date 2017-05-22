@@ -82,7 +82,7 @@ EGLint attrib_list[] = {
 };
 #endif
 
-const char* gishDataPath;
+char* gishDataPath;
 
 int main (int argc,char *argv[])
   {
@@ -96,7 +96,7 @@ int main (int argc,char *argv[])
 
 #ifdef ANDROID_NDK
   initializeJavaEnviron();
-  gishDataPath = getAssetsPathFromJNI();
+  gishDataPath = (char *) getAssetsPathFromJNI();
   chdir(gishDataPath);
 #endif
 
