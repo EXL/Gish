@@ -1,0 +1,3 @@
+http://repo.or.cz/openal-soft/android.git
+Mon, 6 Feb 2012 04:11:28 +0700 (5 13:11 -0800)
+670b03d2787dd2d94f488d3b3431aaef12760346

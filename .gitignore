@@ -180,8 +180,3 @@ build-*
 
 # Gish Assets data
 assets_full/
-
-# Temp ignore rules
-gish/src/main/cpp/OpenAL/
-gish/src/main/cpp/libpng/
-gish/src/main/cpp/gl4es/

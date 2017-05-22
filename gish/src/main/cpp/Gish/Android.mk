@@ -83,7 +83,7 @@ LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
     game/setup.c \
     game/editor.c
 
-LOCAL_SHARED_LIBRARIES := SDL2 openal
+LOCAL_SHARED_LIBRARIES := SDL2 OpenAL
 LOCAL_STATIC_LIBRARIES := vorbis GL4ES
 
 LOCAL_LDLIBS := -lGLESv1_CM -llog
@@ -171,7 +171,7 @@ LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
     game/setup.c \
     game/editor.c
 
-LOCAL_SHARED_LIBRARIES := SDL2 openal
+LOCAL_SHARED_LIBRARIES := SDL2 OpenAL
 LOCAL_STATIC_LIBRARIES := vorbis
 
 LOCAL_LDLIBS := -lGLESv1_CM -llog

@@ -76,7 +76,7 @@ public class SDLActivity extends Activity {
     protected String[] getLibraries() {
         return new String[] {
             "SDL2",
-            "openal",
+            "OpenAL",
             // "SDL2_image",
             // "SDL2_mixer",
             // "SDL2_net",
