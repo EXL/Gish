@@ -10,7 +10,7 @@ PNG_PATH := ../libpng
 OPENAL_PATH := ../OpenAL
 VORBIS_PATH := ../libvorbis/libvorbisidec
 OGG_PATH := ../libvorbis/libogg
-GL4ES_PATH := ../gl4es
+GL4ES_PATH := ../GL4ES
 
 DEFINES := -DANDROID_NDK -DGL4ES -DNO_PNG
 LOCAL_CFLAGS += -O3 -ffast-math -fomit-frame-pointer $(DEFINES)
@@ -20,10 +20,9 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/include \
     $(LOCAL_PATH)/$(OPENAL_PATH)/include \
     $(LOCAL_PATH)/$(VORBIS_PATH) \
     $(LOCAL_PATH)/$(OGG_PATH) \
-    $(LOCAL_PATH)/$(GL4ES_PATH) \
+    $(LOCAL_PATH)/$(GL4ES_PATH)/include \
     $(LOCAL_PATH)
 
-# Add your application source files here...
 LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
     main.c \
     android/a_utils.c \
@@ -85,7 +84,7 @@ LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
     game/editor.c
 
 LOCAL_SHARED_LIBRARIES := SDL2 openal
-LOCAL_STATIC_LIBRARIES := vorbis GL
+LOCAL_STATIC_LIBRARIES := vorbis GL4ES
 
 LOCAL_LDLIBS := -lGLESv1_CM -llog
 
@@ -112,7 +111,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/include \
     $(LOCAL_PATH)/$(OGG_PATH) \
     $(LOCAL_PATH)
 
-# Add your application source files here...
 LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
     main.c \
     android/a_utils.c \

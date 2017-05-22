@@ -1,0 +1,13 @@
+#include "gl.h"
+#include "matvec.h"
+
+void gl4es_glTexGenfv(GLenum coord, GLenum pname, const GLfloat *params);
+void gl4es_glTexGeni(GLenum coord, GLenum pname, GLint param);
+void gen_tex_coords(GLfloat *verts, GLfloat *norm, GLfloat **coords, GLint count, GLint *needclean, int texture, GLushort* indices, GLuint ilen);
+void gen_tex_clean(GLint cleancode, int texture);
+void gl4es_glGetTexGenfv(GLenum coord,GLenum pname,GLfloat *params);
+
+void gl4es_glLoadTransposeMatrixf(const GLfloat *m);
+void gl4es_glLoadTransposeMatrixd(const GLdouble *m);
+void gl4es_glMultTransposeMatrixd(const GLdouble *m);
+void gl4es_glMultTransposeMatrixf(const GLfloat *m);
