@@ -10,8 +10,7 @@ android {
         targetSdkVersion 14
 
         ndk {
-            //abiFilters "armeabi", "armeabi-v7a", "x86"
-            abiFilters "armeabi-v7a"
+            abiFilters "armeabi-v7a", "x86"
         }
 
         externalNativeBuild {
