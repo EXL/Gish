@@ -1,7 +1,6 @@
 LOCAL_PATH := $(call my-dir)
 
 # Gish OpenGL Renderer
-
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := Gish
@@ -9,8 +8,8 @@ LOCAL_MODULE := Gish
 SDL_PATH := ../SDL2
 PNG_PATH := ../libpng
 OPENAL_PATH := ../OpenAL
-VORBIS_PATH := ../libvorbis
-OGG_PATH := ../libogg
+VORBIS_PATH := ../libvorbis/libvorbisidec
+OGG_PATH := ../libvorbis/libogg
 GL4ES_PATH := ../gl4es
 
 DEFINES := -DANDROID_NDK -DGL4ES
@@ -86,14 +85,13 @@ LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
     game/editor.c
 
 LOCAL_SHARED_LIBRARIES := SDL2 openal
-LOCAL_STATIC_LIBRARIES := png vorbis ogg GL
+LOCAL_STATIC_LIBRARIES := png vorbis GL
 
 LOCAL_LDLIBS := -lGLESv1_CM -llog
 
 include $(BUILD_SHARED_LIBRARY)
 
 # Gish OpenGL ES Renderer
-
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := GishGLES
@@ -101,8 +99,8 @@ LOCAL_MODULE := GishGLES
 SDL_PATH := ../SDL2
 PNG_PATH := ../libpng
 OPENAL_PATH := ../OpenAL
-VORBIS_PATH := ../libvorbis
-OGG_PATH := ../libogg
+VORBIS_PATH := ../libvorbis/libvorbisidec
+OGG_PATH := ../libvorbis/libogg
 
 DEFINES := -DANDROID_NDK -DGLES
 LOCAL_CFLAGS += -O3 -ffast-math -fomit-frame-pointer $(DEFINES)
@@ -176,7 +174,7 @@ LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
     game/editor.c
 
 LOCAL_SHARED_LIBRARIES := SDL2 openal
-LOCAL_STATIC_LIBRARIES := png vorbis ogg
+LOCAL_STATIC_LIBRARIES := png vorbis
 
 LOCAL_LDLIBS := -lGLESv1_CM -llog
 

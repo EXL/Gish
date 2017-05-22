@@ -29,7 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
   #include <AL/alc.h>
 #endif
 
+#ifndef ANDROID_NDK
 #include <vorbis/vorbisfile.h>
+#else
+#include <ivorbiscodec.h>
+#include <ivorbisfile.h>
+#endif
 
 #define OGGBUFFERSIZE 4096*8
 

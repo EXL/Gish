@@ -236,7 +236,11 @@ int streamogg(int buffernum)
   size=0;
   while (size<OGGBUFFERSIZE)
     {
+#ifndef ANDROID_NDK
     result=ov_read(&oggstream[0],oggdata+size,OGGBUFFERSIZE-size,0,2,1,&section);
+#else
+    result=ov_read(&oggstream[0],oggdata+size,OGGBUFFERSIZE-size,&section);
+#endif
 
     if (result>0)
       size+=result;
