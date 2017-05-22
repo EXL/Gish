@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:contentDescription="@string/icon_string"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/icon_about_big" />
 
         <TextView
             android:id="@+id/textViewTitle"

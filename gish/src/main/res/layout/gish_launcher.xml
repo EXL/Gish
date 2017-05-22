@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/layout_margin"
             android:contentDescription="@string/cover_string"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/cover" />
 
         <TableRow
             android:layout_width="match_parent"

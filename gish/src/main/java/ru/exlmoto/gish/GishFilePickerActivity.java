@@ -154,7 +154,7 @@ public class GishFilePickerActivity extends Activity {
                             (file.getName().toLowerCase().contains("gish") &&
                                     (!file.getName().equals(".gish")) &&
                                     (!file.getName().equals("Gish.app"))) ?
-                                    R.drawable.ic_launcher : R.drawable.folder));
+                                    R.drawable.folder_gish : R.drawable.folder));
                 }
             }
 
