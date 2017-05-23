@@ -1,0 +1,17 @@
+MIT:
+	gish/src/main/cpp/GL4ES/
+	gish/src/main/java/ru/exlmoto/gish/
+
+GPL-2.0:
+	gish/src/main/cpp/Gish/
+
+BSD 3-clause:
+	gish/src/main/cpp/libvorbis/libogg/
+	gish/src/main/cpp/libvorbis/libvorbisidec/
+
+LGPL-2.1:
+	gish/src/main/cpp/OpenAL/
+
+Zlib:
+	gish/src/main/cpp/SDL2/
+	gish/src/main/java/org/libsdl/app/
