@@ -179,4 +179,5 @@ build-*
 *.user*
 
 # Gish Assets data
-assets_full/
+assets_full/*
+!assets_full/ReadMe-GishData.md
