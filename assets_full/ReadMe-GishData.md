@@ -36,3 +36,4 @@ drwxr-xr-x  3 exl users 4.0K May 23 14:35 tile06/
 drwxr-xr-x  3 exl users 4.0K May 23 14:35 tile07/
 -rw-r--r--  1 exl users 400K May 23 14:35 wrap_oal.dll
 ```
+Tested with data files from Gish 1.6 (non-steam, MS Windows), Gish 1.53 (non-steam, Linux) and Gish 1.7 (steam version).
