@@ -5,7 +5,7 @@ Gish is a side-scrolling platformer video game with some physics puzzle elements
 
 ![Gish running on Motorola Photon Q](https://raw.github.com/EXL/Gish/master/images/gish_motorola_photon_q.jpg)
 
-This is my port Gish to Android OS with using SDL2, OpenAL and Ogg Vorbis libraries and rendering the videocontext of the game with using [GL4ES by ptitSeb](https://github.com/ptitSeb/gl4es) or OpenGL ES (thanks to [Pickle](https://github.com/Pickle/GishGLES) for OpenGL ES renderer) libraries. I added touch controls developed by [SoD]Thor and some other improvements to the game engine.
+This is my port Gish to Android OS with using SDL2, OpenAL and Ogg Vorbis libraries and rendering the videocontext of the game with using [GL4ES by ptitSeb](https://github.com/ptitSeb/gl4es) or OpenGL ES (thanks to the [Pickle](https://github.com/Pickle/GishGLES) for OpenGL ES renderer) libraries. I added touch controls developed by [SoD]Thor and some other improvements to the game engine.
 
 ![Gish Android Screen 1](https://raw.github.com/EXL/Gish/master/images/gish_android_screen1.jpg)
 
