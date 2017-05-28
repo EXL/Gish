@@ -13,7 +13,7 @@ This is my port Gish to Android OS with using SDL2, OpenAL and Ogg Vorbis librar
 
 ![Gish Android Screen 3](https://raw.github.com/EXL/Gish/master/images/gish_android_screen3.jpg)
 
-[Gish port running on Motorola Photon Q, demonstration on YouTube](https://www.youtube.com/watch?v=8UfZP2pbrOg)
+[Gish port running on Motorola Photon Q, demonstration on YouTube](https://www.youtube.com/watch?v=GyMU2oV2LI4)
 
 ## Build instructions
 
