@@ -326,7 +326,7 @@ public class GishLauncherActivity extends Activity {
 
     private void resetAllSettingsToDefaultValues() {
         // Delete user profiles and config
-        File dataDir = new File(GishSettings.gishDataSavedPath + ".gish/");
+        File dataDir = new File(this.getFilesDir() + "/.gish/");
         if (dataDir.exists() && dataDir.isDirectory()) {
             deleteRecursive(dataDir);
         }

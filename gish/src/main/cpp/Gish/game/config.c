@@ -64,7 +64,7 @@ char* userpath(char *result, char *path)
 #if defined(PANDORA)
   const char *home=getenv("PWD");
 #elif defined(ANDROID_NDK)
-  const char *home=gishDataPath;
+  const char *home = SDL_AndroidGetInternalStoragePath();
 #else
   const char *home=getenv("HOME");
 #endif
