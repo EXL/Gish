@@ -21,6 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../android/a_utils.h"
 #include "../game/config.h"
+#include "../game/options.h"
 #include "../game/game.h"
 
 JNIEnv *javaEnviron = NULL;
@@ -69,7 +70,7 @@ void updateGameConfigFromJNI()
             return;
         }
         jboolean sound = (*javaEnviron)->GetStaticBooleanField(javaEnviron, clazz, fieldID);
-        config.sound = (int)sound;
+        option.sound = (int)sound;
 
         // Get music Field ID
         fieldID = (*javaEnviron)->GetStaticFieldID(javaEnviron, clazz, "music", "Z");
@@ -78,7 +79,7 @@ void updateGameConfigFromJNI()
             return;
         }
         jboolean music = (*javaEnviron)->GetStaticBooleanField(javaEnviron, clazz, fieldID);
-        config.music = (int)music;
+        option.music = (int)music;
 
         // Get showFps Field ID
         fieldID = (*javaEnviron)->GetStaticFieldID(javaEnviron, clazz, "showFps", "Z");

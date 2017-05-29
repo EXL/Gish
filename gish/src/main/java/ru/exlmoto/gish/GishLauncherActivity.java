@@ -136,6 +136,13 @@ public class GishLauncherActivity extends Activity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 GishSettings.sound = isChecked;
+                if (!isChecked) {
+                    GishSettings.music = false;
+                    checkBoxMusic.setChecked(false);
+                    checkBoxMusic.setEnabled(false);
+                } else {
+                    checkBoxMusic.setEnabled(true);
+                }
             }
         });
 
@@ -475,8 +482,6 @@ public class GishLauncherActivity extends Activity {
 
     private void fillSettingsByWidgets() {
         GishActivity.toDebugLog("FSBW!");
-        GishSettings.sound = checkBoxSound.isChecked();
-        GishSettings.music = checkBoxMusic.isChecked();
         GishSettings.showFps = checkBoxShowFps.isChecked();
         GishSettings.fixCache = checkBoxFixCache.isChecked();
         GishSettings.joyAccel = checkBoxJoyAccel.isChecked();
@@ -499,6 +504,12 @@ public class GishLauncherActivity extends Activity {
         } else if (radioGl4es.isChecked()) {
             GishSettings.openGles = false;
         }
+        GishSettings.sound = checkBoxSound.isChecked();
+        if (!GishSettings.sound) {
+            GishSettings.music = false;
+        } else {
+            GishSettings.music = checkBoxMusic.isChecked();
+        }
     }
 
     private void fillWidgetsBySettings() {
@@ -506,8 +517,6 @@ public class GishLauncherActivity extends Activity {
         editTextDataPath.setText(GishSettings.gishDataSavedPath);
         editTextHaptics.setText(String.valueOf(GishSettings.vibroScale));
         editTextZoom.setText(String.valueOf(GishSettings.zoom));
-        checkBoxSound.setChecked(GishSettings.sound);
-        checkBoxMusic.setChecked(GishSettings.music);
         checkBoxJoyAccel.setChecked(GishSettings.joyAccel);
         checkBoxFixCache.setChecked(GishSettings.fixCache);
         checkBoxShowFps.setChecked(GishSettings.showFps);
@@ -535,6 +544,14 @@ public class GishLauncherActivity extends Activity {
         }
         if (!checkBoxVibrationInGame.isChecked() && !checkBoxVibrationOnTouch.isChecked()) {
             editTextHaptics.setEnabled(false);
+        }
+        checkBoxSound.setChecked(GishSettings.sound);
+        if (!GishSettings.sound) {
+            checkBoxMusic.setChecked(false);
+            checkBoxMusic.setEnabled(false);
+        } else {
+            checkBoxMusic.setChecked(GishSettings.music);
+            checkBoxMusic.setEnabled(true);
         }
     }
 
