@@ -61,10 +61,6 @@ void listvideomodes(void)
     }
     TO_DEBUG_LOG("SDL_GetNumDisplayModes: %i\n", display_mode_count);
 
-    if (display_mode_count < 1) {
-
-    }
-
     for (i = 0; i < display_mode_count && display_mode_count < 64; ++i) {
         if (SDL_GetDisplayMode(display_in_use, i, &mode) != 0) {
             TO_DEBUG_LOG("SDL_GetDisplayMode failed: %s\n", SDL_GetError());
