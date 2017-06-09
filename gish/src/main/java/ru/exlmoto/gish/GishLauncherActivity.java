@@ -271,6 +271,7 @@ public class GishLauncherActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                writeSettings();
                 runFilePicker();
             }
         });
@@ -290,6 +291,7 @@ public class GishLauncherActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                writeSettings();
                 showMyDialog(aboutDialog);
             }
         });
