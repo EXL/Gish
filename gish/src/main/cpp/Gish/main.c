@@ -90,6 +90,10 @@ int main (int argc,char *argv[])
   int flags;
   const char *temp;
 
+#ifdef GL4ES
+    initialize_gl4es();
+#endif
+
 #ifdef DATAPATH
   chdir(DATAPATH_STR);
 #endif
