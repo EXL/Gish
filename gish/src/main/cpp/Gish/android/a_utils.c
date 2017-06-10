@@ -108,6 +108,15 @@ void updateGameConfigFromJNI()
         jboolean joyAccel = (*javaEnviron)->GetStaticBooleanField(javaEnviron, clazz, fieldID);
         config.joystick = (int)joyAccel;
 
+        // Get borderOff Field ID
+        fieldID = (*javaEnviron)->GetStaticFieldID(javaEnviron, clazz, "borderOff", "Z");
+        if (fieldID == 0) {
+            TO_DEBUG_LOG("Error JNI: fieldID is 0, field boolean borderOff not found!");
+            return;
+        }
+        jboolean borderOff = (*javaEnviron)->GetStaticBooleanField(javaEnviron, clazz, fieldID);
+        disable_frame = (int)borderOff;
+
         // Get lights Field ID
         fieldID = (*javaEnviron)->GetStaticFieldID(javaEnviron, clazz, "lights", "Z");
         if (fieldID == 0) {

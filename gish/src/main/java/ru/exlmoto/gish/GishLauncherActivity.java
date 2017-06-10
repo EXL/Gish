@@ -62,19 +62,20 @@ public class GishLauncherActivity extends Activity {
 
         // GAME SETTINGS
         public static int touchControls = MODERN_TOUCH_CONTROLS;
-        public static boolean sound = true;     // Access from JNI
-        public static boolean music = true;     // Access from JNI
-        public static boolean showFps = false;  // Access from JNI
-        public static boolean fixCache = false; // Access from JNI
-        public static boolean joyAccel = false; // Access from JNI
+        public static boolean sound = true;          // Access from JNI
+        public static boolean music = true;          // Access from JNI
+        public static boolean showFps = false;       // Access from JNI
+        public static boolean fixCache = false;      // Access from JNI
+        public static boolean joyAccel = false;      // Access from JNI
         public static boolean openGles = true;
-        public static boolean lights = false;   // Access from JNI
-        public static boolean shadows = false;  // Access from JNI
+        public static boolean lights = false;        // Access from JNI
+        public static boolean shadows = false;       // Access from JNI
         public static boolean touchVibration = true;
         public static boolean gameVibration = true;
         public static int vibroScale = 30;
         public static String gishDataSavedPath = ""; // Access from JNI
-        public static float zoom = 10.0f;
+        public static float zoom = 10.0f;            // Access from JNI
+        public static boolean borderOff = false;     // Access from JNI
     }
 
     private boolean firstRun = false;
@@ -91,6 +92,7 @@ public class GishLauncherActivity extends Activity {
     private CheckBox checkBoxShadows = null;
     private CheckBox checkBoxVibrationInGame = null;
     private CheckBox checkBoxVibrationOnTouch = null;
+    private CheckBox checkBoxBorderOff = null;
     private RadioButton radioButtonModernTouchControls = null;
     private RadioButton radioButtonSimpleTouchControls = null;
     private RadioButton radioButtonNoTouchControls = null;
@@ -159,6 +161,14 @@ public class GishLauncherActivity extends Activity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 GishSettings.joyAccel = isChecked;
+            }
+        });
+
+        checkBoxBorderOff.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                GishSettings.borderOff = isChecked;
             }
         });
 
@@ -346,6 +356,7 @@ public class GishLauncherActivity extends Activity {
         GishSettings.showFps = false;
         GishSettings.fixCache = false;
         GishSettings.joyAccel = false;
+        GishSettings.borderOff = false;
         GishSettings.openGles = true;
         GishSettings.lights = false;
         GishSettings.shadows = false;
@@ -487,6 +498,7 @@ public class GishLauncherActivity extends Activity {
         GishSettings.showFps = checkBoxShowFps.isChecked();
         GishSettings.fixCache = checkBoxFixCache.isChecked();
         GishSettings.joyAccel = checkBoxJoyAccel.isChecked();
+        GishSettings.borderOff = checkBoxBorderOff.isChecked();
         GishSettings.lights = checkBoxLights.isChecked();
         GishSettings.shadows = checkBoxShadows.isChecked();
         GishSettings.touchVibration = checkBoxVibrationOnTouch.isChecked();
@@ -520,6 +532,7 @@ public class GishLauncherActivity extends Activity {
         editTextHaptics.setText(String.valueOf(GishSettings.vibroScale));
         editTextZoom.setText(String.valueOf(GishSettings.zoom));
         checkBoxJoyAccel.setChecked(GishSettings.joyAccel);
+        checkBoxBorderOff.setChecked(GishSettings.borderOff);
         checkBoxFixCache.setChecked(GishSettings.fixCache);
         checkBoxShowFps.setChecked(GishSettings.showFps);
         checkBoxLights.setChecked(GishSettings.lights);
@@ -564,6 +577,7 @@ public class GishLauncherActivity extends Activity {
         checkBoxSound = (CheckBox) findViewById(R.id.checkBoxSound);
         checkBoxMusic = (CheckBox) findViewById(R.id.checkBoxMusic);
         checkBoxJoyAccel = (CheckBox) findViewById(R.id.checkBoxJoyAccel);
+        checkBoxBorderOff = (CheckBox) findViewById(R.id.checkBoxBorderOff);
         checkBoxFixCache = (CheckBox) findViewById(R.id.checkBoxFixCache);
         checkBoxShowFps = (CheckBox) findViewById(R.id.checkBoxFps);
         checkBoxLights = (CheckBox) findViewById(R.id.checkBoxLights);
@@ -587,6 +601,7 @@ public class GishLauncherActivity extends Activity {
         editor.putBoolean("music", GishSettings.music);
         editor.putBoolean("showFps", GishSettings.showFps);
         editor.putBoolean("joyAccel", GishSettings.joyAccel);
+        editor.putBoolean("borderOff", GishSettings.borderOff);
         editor.putBoolean("fixCache", GishSettings.fixCache);
         editor.putBoolean("openGles", GishSettings.openGles);
         editor.putBoolean("lights", GishSettings.lights);
@@ -607,6 +622,7 @@ public class GishLauncherActivity extends Activity {
         GishSettings.music = mSharedPreferences.getBoolean("music", true);
         GishSettings.showFps = mSharedPreferences.getBoolean("showFps", false);
         GishSettings.joyAccel = mSharedPreferences.getBoolean("joyAccel", false);
+        GishSettings.borderOff = mSharedPreferences.getBoolean("borderOff", false);
         GishSettings.fixCache = mSharedPreferences.getBoolean("fixCache", false);
         GishSettings.openGles = mSharedPreferences.getBoolean("openGles", true);
         GishSettings.lights = mSharedPreferences.getBoolean("lights", false);

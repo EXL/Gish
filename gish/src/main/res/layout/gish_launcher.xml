@@ -104,6 +104,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/joy_accel" />
+
+            <CheckBox
+                android:id="@+id/checkBoxBorderOff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/off_border" />
         </TableLayout>
 
         <TextView
