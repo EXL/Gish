@@ -68,11 +68,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 _view view;
 _game game;
 
+// EXL: Some Gish settings
 int fps_enabled = 0;
 int lighting_enabled = 1;
 int shadow_enabled = 1;
 int touchcontrols = 0;
 int cache_fix = 0;
+int disable_frame = 0;
 float z_zoom = 10.0f;
 
 int fps, fps_cache = 0, fps_renew = 0, fps_mean;
@@ -580,12 +582,14 @@ void gameloop(void)
 
     glColor4f(1.0f,1.0f,1.0f,1.0f);
 
-    drawbackground(640,0,0,256,256,640,480);
-    drawbackground(641,256,0,256,256,640,480);
-    drawbackground(642,512,0,256,256,640,480);
-    drawbackground(643,0,256,256,256,640,480);
-    drawbackground(644,256,256,256,256,640,480);
-    drawbackground(645,512,256,256,256,640,480);
+    if (!disable_frame) {
+      drawbackground(640,0,0,256,256,640,480);
+      drawbackground(641,256,0,256,256,640,480);
+      drawbackground(642,512,0,256,256,640,480);
+      drawbackground(643,0,256,256,256,640,480);
+      drawbackground(644,256,256,256,256,640,480);
+      drawbackground(645,512,256,256,256,640,480);
+    }
 
     //if (game.turbomode)
     //  drawbackground(529,28,64,64,32,640,480);

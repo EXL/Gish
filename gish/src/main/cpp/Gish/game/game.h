@@ -88,6 +88,7 @@ extern int touchcontrols;
 extern int lighting_enabled;
 extern int shadow_enabled;
 extern int cache_fix;
+extern int disable_frame;
 extern float z_zoom;
 
 #endif /* GISH_GAME_GAME_H */

@@ -42,6 +42,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../physics/particle.h"
 #include "../video/text.h"
 
+// EXL: Some Tutorial Coords
+int YtxtMove = 382;
+int YtxtButtonRow3 = 424;
+int YtxtButtonRow1 = 400;
+int YtxtActionButtons = 406;
+
 void gamelogic(void)
   {
   int count;
@@ -620,6 +626,14 @@ void gamedisplay(void)
   int keyhighlight2;
   float miny,maxy;
   float red,green,blue;
+
+  // EXL: Patch keys coords...
+  if (disable_frame) {
+    YtxtMove = 382 + 35;
+    YtxtButtonRow3 = 424 + 35;
+    YtxtButtonRow1 = 400 + 35;
+    YtxtActionButtons = 406 + 35;
+  }
 
   if (game.over==0)
     {
@@ -1428,71 +1442,73 @@ void gamedisplay(void)
       keyhighlight2=control[0].key[KEYALIAS_UP];
       }
 
-    drawtext(TXT_TUTORIAL_MOVEMENT,(536|TEXT_CENTER),(382|TEXT_CENTER),12,0.75f,0.75f,0.75f,1.0f);
-    drawkeybitmap((512|TEXT_CENTER),(424|TEXT_CENTER),12,12,control[0].key[KEYALIAS_LEFT],keyhighlight,keyhighlight2);
-    drawkeybitmap((536|TEXT_CENTER),(424|TEXT_CENTER),12,12,control[0].key[KEYALIAS_DOWN],keyhighlight,keyhighlight2);
-    drawkeybitmap((560|TEXT_CENTER),(424|TEXT_CENTER),12,12,control[0].key[KEYALIAS_RIGHT],keyhighlight,keyhighlight2);
-    drawkeybitmap((536|TEXT_CENTER),(400|TEXT_CENTER),12,12,control[0].key[KEYALIAS_UP],keyhighlight,keyhighlight2);
+    if (!game.playreplay) {
+      drawtext(TXT_TUTORIAL_MOVEMENT,(536|TEXT_CENTER),(YtxtMove|TEXT_CENTER),12,0.75f,0.75f,0.75f,1.0f);
+      drawkeybitmap((512|TEXT_CENTER),(YtxtButtonRow3|TEXT_CENTER),12,12,control[0].key[KEYALIAS_LEFT],keyhighlight,keyhighlight2);
+      drawkeybitmap((536|TEXT_CENTER),(YtxtButtonRow3|TEXT_CENTER),12,12,control[0].key[KEYALIAS_DOWN],keyhighlight,keyhighlight2);
+      drawkeybitmap((560|TEXT_CENTER),(YtxtButtonRow3|TEXT_CENTER),12,12,control[0].key[KEYALIAS_RIGHT],keyhighlight,keyhighlight2);
+      drawkeybitmap((536|TEXT_CENTER),(YtxtButtonRow1|TEXT_CENTER),12,12,control[0].key[KEYALIAS_UP],keyhighlight,keyhighlight2);
 
-    count=sizeof(TXT_TUTORIAL_STICK)*6+24;
-    drawtext(TXT_TUTORIAL_STICK,(count|TEXT_CENTER),(406|TEXT_CENTER),12,0.75f,0.75f,0.75f,1.0f);
-    drawkeybitmap((count|TEXT_CENTER),(424|TEXT_CENTER),12,12,control[0].key[KEYALIAS_STICK],keyhighlight,keyhighlight2);
-    count+=(((sizeof(TXT_TUTORIAL_STICK)+sizeof(TXT_TUTORIAL_JUMP))/2)+1)*12;  //96;
-    drawtext(TXT_TUTORIAL_JUMP,(count|TEXT_CENTER),(406|TEXT_CENTER),12,0.75f,0.75f,0.75f,1.0f);
-    drawkeybitmap((count|TEXT_CENTER),(424|TEXT_CENTER),12,12,control[0].key[KEYALIAS_JUMP],keyhighlight,keyhighlight2);
-    count+=(((sizeof(TXT_TUTORIAL_SLIDE)+sizeof(TXT_TUTORIAL_JUMP))/2)+1)*12;  //96;
-    drawtext(TXT_TUTORIAL_SLIDE,(count|TEXT_CENTER),(406|TEXT_CENTER),12,0.75f,0.75f,0.75f,1.0f);
-    drawkeybitmap((count|TEXT_CENTER),(424|TEXT_CENTER),12,12,control[0].key[KEYALIAS_SLIDE],keyhighlight,keyhighlight2);
-    count+=(((sizeof(TXT_TUTORIAL_SLIDE)+sizeof(TXT_TUTORIAL_HEAVY))/2)+1)*12; //96;
-    drawtext(TXT_TUTORIAL_HEAVY,(count|TEXT_CENTER),(406|TEXT_CENTER),12,0.75f,0.75f,0.75f,1.0f);
-    drawkeybitmap((count|TEXT_CENTER),(424|TEXT_CENTER),12,12,control[0].key[KEYALIAS_HEAVY],keyhighlight,keyhighlight2);
-    count+=96;
+      count=sizeof(TXT_TUTORIAL_STICK)*6+24;
+      drawtext(TXT_TUTORIAL_STICK,(count|TEXT_CENTER),(YtxtActionButtons|TEXT_CENTER),12,0.75f,0.75f,0.75f,1.0f);
+      drawkeybitmap((count|TEXT_CENTER),(YtxtButtonRow3|TEXT_CENTER),12,12,control[0].key[KEYALIAS_STICK],keyhighlight,keyhighlight2);
+      count+=(((sizeof(TXT_TUTORIAL_STICK)+sizeof(TXT_TUTORIAL_JUMP))/2)+1)*12;  //96;
+      drawtext(TXT_TUTORIAL_JUMP,(count|TEXT_CENTER),(YtxtActionButtons|TEXT_CENTER),12,0.75f,0.75f,0.75f,1.0f);
+      drawkeybitmap((count|TEXT_CENTER),(YtxtButtonRow3|TEXT_CENTER),12,12,control[0].key[KEYALIAS_JUMP],keyhighlight,keyhighlight2);
+      count+=(((sizeof(TXT_TUTORIAL_SLIDE)+sizeof(TXT_TUTORIAL_JUMP))/2)+1)*12;  //96;
+      drawtext(TXT_TUTORIAL_SLIDE,(count|TEXT_CENTER),(YtxtActionButtons|TEXT_CENTER),12,0.75f,0.75f,0.75f,1.0f);
+      drawkeybitmap((count|TEXT_CENTER),(YtxtButtonRow3|TEXT_CENTER),12,12,control[0].key[KEYALIAS_SLIDE],keyhighlight,keyhighlight2);
+      count+=(((sizeof(TXT_TUTORIAL_SLIDE)+sizeof(TXT_TUTORIAL_HEAVY))/2)+1)*12; //96;
+      drawtext(TXT_TUTORIAL_HEAVY,(count|TEXT_CENTER),(YtxtActionButtons|TEXT_CENTER),12,0.75f,0.75f,0.75f,1.0f);
+      drawkeybitmap((count|TEXT_CENTER),(YtxtButtonRow3|TEXT_CENTER),12,12,control[0].key[KEYALIAS_HEAVY],keyhighlight,keyhighlight2);
+      count+=96;
+    }
     }
   if (game.playreplay)
   if (keyboard[SCAN_K])
     {
-    drawtext(TXT_TUTORIAL_MOVEMENT,(536|TEXT_CENTER),(382|TEXT_CENTER),12,0.75f,0.75f,0.75f,1.0f);
+    drawtext(TXT_TUTORIAL_MOVEMENT,(536|TEXT_CENTER),(YtxtMove|TEXT_CENTER),12,0.75f,0.75f,0.75f,1.0f);
     keyhighlight=0;
     if (object[0].axis[0]==-1.0f)
       keyhighlight=1;
-    drawkeybitmap2((512|TEXT_CENTER),(424|TEXT_CENTER),12,12,control[0].key[KEYALIAS_LEFT],keyhighlight);
+    drawkeybitmap2((512|TEXT_CENTER),(YtxtButtonRow3|TEXT_CENTER),12,12,control[0].key[KEYALIAS_LEFT],keyhighlight);
     keyhighlight=0;
     if (object[0].axis[1]==-1.0f)
       keyhighlight=1;
-    drawkeybitmap2((536|TEXT_CENTER),(424|TEXT_CENTER),12,12,control[0].key[KEYALIAS_DOWN],keyhighlight);
+    drawkeybitmap2((536|TEXT_CENTER),(YtxtButtonRow3|TEXT_CENTER),12,12,control[0].key[KEYALIAS_DOWN],keyhighlight);
     keyhighlight=0;
     if (object[0].axis[0]==1.0f)
       keyhighlight=1;
-    drawkeybitmap2((560|TEXT_CENTER),(424|TEXT_CENTER),12,12,control[0].key[KEYALIAS_RIGHT],keyhighlight);
+    drawkeybitmap2((560|TEXT_CENTER),(YtxtButtonRow3|TEXT_CENTER),12,12,control[0].key[KEYALIAS_RIGHT],keyhighlight);
     keyhighlight=0;
     if (object[0].axis[1]==1.0f)
       keyhighlight=1;
-    drawkeybitmap2((536|TEXT_CENTER),(400|TEXT_CENTER),12,12,control[0].key[KEYALIAS_UP],keyhighlight);
+    drawkeybitmap2((536|TEXT_CENTER),(YtxtButtonRow1|TEXT_CENTER),12,12,control[0].key[KEYALIAS_UP],keyhighlight);
 
     count=64;
-    drawtext(TXT_TUTORIAL_STICK,(count|TEXT_CENTER),(406|TEXT_CENTER),12,0.75f,0.75f,0.75f,1.0f);
+    drawtext(TXT_TUTORIAL_STICK,(count|TEXT_CENTER),(YtxtActionButtons|TEXT_CENTER),12,0.75f,0.75f,0.75f,1.0f);
     keyhighlight=0;
     if ((object[0].button&1)==1)
       keyhighlight=1;
-    drawkeybitmap2((count|TEXT_CENTER),(424|TEXT_CENTER),12,12,control[0].key[KEYALIAS_STICK],keyhighlight);
+    drawkeybitmap2((count|TEXT_CENTER),(YtxtButtonRow3|TEXT_CENTER),12,12,control[0].key[KEYALIAS_STICK],keyhighlight);
     count+=96;
-    drawtext(TXT_TUTORIAL_JUMP,(count|TEXT_CENTER),(406|TEXT_CENTER),12,0.75f,0.75f,0.75f,1.0f);
+    drawtext(TXT_TUTORIAL_JUMP,(count|TEXT_CENTER),(YtxtActionButtons|TEXT_CENTER),12,0.75f,0.75f,0.75f,1.0f);
     keyhighlight=0;
     if ((object[0].button&2)==2)
       keyhighlight=1;
-    drawkeybitmap2((count|TEXT_CENTER),(424|TEXT_CENTER),12,12,control[0].key[KEYALIAS_JUMP],keyhighlight);
+    drawkeybitmap2((count|TEXT_CENTER),(YtxtButtonRow3|TEXT_CENTER),12,12,control[0].key[KEYALIAS_JUMP],keyhighlight);
     count+=96;
-    drawtext(TXT_TUTORIAL_SLIDE,(count|TEXT_CENTER),(406|TEXT_CENTER),12,0.75f,0.75f,0.75f,1.0f);
+    drawtext(TXT_TUTORIAL_SLIDE,(count|TEXT_CENTER),(YtxtActionButtons|TEXT_CENTER),12,0.75f,0.75f,0.75f,1.0f);
     keyhighlight=0;
     if ((object[0].button&4)==4)
       keyhighlight=1;
-    drawkeybitmap2((count|TEXT_CENTER),(424|TEXT_CENTER),12,12,control[0].key[KEYALIAS_SLIDE],keyhighlight);
+    drawkeybitmap2((count|TEXT_CENTER),(YtxtButtonRow3|TEXT_CENTER),12,12,control[0].key[KEYALIAS_SLIDE],keyhighlight);
     count+=96;
-    drawtext(TXT_TUTORIAL_HEAVY,(count|TEXT_CENTER),(406|TEXT_CENTER),12,0.75f,0.75f,0.75f,1.0f);
+    drawtext(TXT_TUTORIAL_HEAVY,(count|TEXT_CENTER),(YtxtActionButtons|TEXT_CENTER),12,0.75f,0.75f,0.75f,1.0f);
     keyhighlight=0;
     if ((object[0].button&8)==8)
       keyhighlight=1;
-    drawkeybitmap2((count|TEXT_CENTER),(424|TEXT_CENTER),12,12,control[0].key[KEYALIAS_HEAVY],keyhighlight);
+    drawkeybitmap2((count|TEXT_CENTER),(YtxtButtonRow3|TEXT_CENTER),12,12,control[0].key[KEYALIAS_HEAVY],keyhighlight);
     count+=96;
     }
 #ifndef GLES
