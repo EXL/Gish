@@ -15,6 +15,10 @@ This is my port Gish to Android OS with using SDL2, OpenAL and Ogg Vorbis librar
 
 [Gish port running on Motorola Photon Q, demonstration on YouTube](https://www.youtube.com/watch?v=GyMU2oV2LI4)
 
+## Download
+
+You can download APK-package for Android OS from the [releases](https://github.com/EXL/Gish/releases) section.
+
 ## Build instructions
 
 For example, GNU/Linux:
