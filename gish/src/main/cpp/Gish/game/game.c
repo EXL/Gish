@@ -512,8 +512,8 @@ void gameloop(void)
         fps_mean += fps;
         fps_renew--;
         if (fps_renew <= 0) {
-            fps_cache= (float)fps_mean / 5.0;
-            fps_renew=5;
+            fps_cache= (float)fps_mean / 20.0;
+            fps_renew=20;
             fps_mean = 0;
         }
         drawtext("/i",40,64,16,1.0f,1.0f,0.0f,1.0f, fps_cache);
