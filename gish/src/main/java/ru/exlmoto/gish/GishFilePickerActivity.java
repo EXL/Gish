@@ -122,9 +122,10 @@ public class GishFilePickerActivity extends Activity {
             List<FItem> listItemsFiles = new ArrayList<FItem>();
 
             while (listFiles == null) {
-                s_startPath = new File(s_startPath.getParent());
-                if (s_startPath == null) {
-                    return listItemsDirs;
+                try {
+                    s_startPath = new File(s_startPath.getParent());
+                } catch (NullPointerException e) {
+                    s_startPath = new File(Environment.getExternalStorageDirectory().toString());
                 }
                 listFiles = s_startPath.listFiles();
             }
