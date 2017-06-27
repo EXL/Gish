@@ -15,14 +15,14 @@ android {
 
         externalNativeBuild {
             cmake {
-                arguments "-DANDROID_PLATFORM_LEVEL=9", "-DANDROID=ON"
+                arguments "-DANDROID_PLATFORM_LEVEL=14", "-DANDROID=ON"
                 cFlags "-O3", "-ffast-math", "-fomit-frame-pointer"
                 cppFlags "-O3", "-frtti", "-ffast-math", "-fomit-frame-pointer"
             }
 
             ndkBuild {
                 // arguments "V=1" /* Verbose ndk-build */
-                arguments "NDK_TOOLCHAIN_VERSION=4.9", "APP_PLATFORM=android-9"
+                arguments "NDK_TOOLCHAIN_VERSION=4.9", "APP_PLATFORM=android-14"
                 arguments "-j" + Runtime.runtime.availableProcessors()
             }
         }
