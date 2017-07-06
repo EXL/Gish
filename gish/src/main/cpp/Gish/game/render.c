@@ -52,6 +52,7 @@ void renderlevelback(void)
   int blocknum;
   int lightrange;
   float vec[3];
+  GLuint oldtex = 0;
   //float texcoord[2];
 
   updateogg();
@@ -81,7 +82,11 @@ void renderlevelback(void)
 
     if (blocknum!=0)
       {
-      glBindTexture(GL_TEXTURE_2D,texture[blocknum].glname);
+      // ptitSeb optimizations for Pandora
+      if (oldtex != texture[blocknum].glname) {
+          oldtex = texture[blocknum].glname;
+          glBindTexture(GL_TEXTURE_2D,oldtex/*texture[blocknum].glname*/);
+      }
 #if defined(GLES)
     glColor4f(level.ambient[0][0],level.ambient[0][1],level.ambient[0][2],1.0f);
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -144,6 +149,10 @@ void renderlevelback(void)
     glStencilOp(GL_KEEP,GL_KEEP,GL_KEEP);
     glStencilFunc(GL_NOTEQUAL,(1<<lightcount),(1<<lightcount));
 
+    // ptitSeb optimizations for Pandora
+    glActiveTextureARB(GL_TEXTURE1_ARB);
+    glEnable(GL_TEXTURE_2D);
+
     for (count=view.position[1]-view.zoomy;count<=view.position[1]+view.zoomy;count++)
     if (count>=0 && count<256)
     for (count2=view.position[0]-view.zoomx;count2<=view.position[0]+view.zoomx;count2++)
@@ -173,10 +182,13 @@ void renderlevelback(void)
 
       if (blocknum!=0)
         {
-        glBindTexture(GL_TEXTURE_2D,texture[blocknum].glname);
-    
-        glActiveTextureARB(GL_TEXTURE1_ARB);
-        glEnable(GL_TEXTURE_2D);
+        // ptitSeb optimizations for Pandora
+        if(oldtex != texture[blocknum].glname) {
+            oldtex = texture[blocknum].glname;
+            glActiveTextureARB(GL_TEXTURE0_ARB);
+            glBindTexture(GL_TEXTURE_2D,oldtex/*texture[blocknum].glname*/);
+            glActiveTextureARB(GL_TEXTURE1_ARB);
+        }
     
 #if defined(GLES)
         glColor4f(frame.light[lightcount].color[0],frame.light[lightcount].color[1],frame.light[lightcount].color[2],1.0f);
@@ -243,10 +255,11 @@ void renderlevelback(void)
     
         glEnd();
 #endif
-        glDisable(GL_TEXTURE_2D);
-        glActiveTextureARB(GL_TEXTURE0_ARB);
         }
       }
+      // ptitSeb optimizations for Pandora
+      glDisable(GL_TEXTURE_2D);
+      glActiveTextureARB(GL_TEXTURE0_ARB);
     }
 
   glDisable(GL_STENCIL_TEST);
@@ -263,6 +276,7 @@ void renderlevel(void)
   float vec[3],vec2[3],vec3[3];
   float normal[3];
   float scale;
+  GLuint oldtex = 0;
 
   updateogg();
 
@@ -291,7 +305,11 @@ void renderlevel(void)
 
     if (blocknum!=0)
       {
-      glBindTexture(GL_TEXTURE_2D,texture[blocknum].glname);
+      // ptitSeb optimizations for Pandora
+      if(oldtex != texture[blocknum].glname) {
+          oldtex = texture[blocknum].glname;
+          glBindTexture(GL_TEXTURE_2D,oldtex/*texture[blocknum].glname*/);
+      }
 
 #if defined(GLES)
     glColor4f(level.ambient[1][0],level.ambient[1][1],level.ambient[1][2],1.0f);
@@ -427,8 +445,11 @@ void renderlevel(void)
 
       if (blocknum!=0)
         {
-        glBindTexture(GL_TEXTURE_2D,texture[blocknum].glname);
-  
+        // ptitSeb optimizations for Pandora
+        if(oldtex != texture[blocknum].glname) {
+            oldtex = texture[blocknum].glname;
+            glBindTexture(GL_TEXTURE_2D,oldtex/*texture[blocknum].glname*/);
+        }
         for (count3=0;count3<block[blocknum].numoflines;count3++)
         if (((level.gridflags[count][count2]>>count3)&1)==0)
           {
@@ -527,6 +548,7 @@ void renderlevelfore(void)
   int count,count2;
   int blocknum;
   float vec[3];
+  GLuint oldtex = 0;
 
   updateogg();
 
@@ -543,8 +565,11 @@ void renderlevelfore(void)
 
     if (blocknum!=0)
       {
-      glBindTexture(GL_TEXTURE_2D,texture[blocknum].glname);
-
+      // ptitSeb optimizations for Pandora
+      if(oldtex != texture[blocknum].glname) {
+          oldtex = texture[blocknum].glname;
+          glBindTexture(GL_TEXTURE_2D,oldtex/*texture[blocknum].glname*/);
+      }
 #if defined(GLES)
     glColor4f(level.ambient[2][0],level.ambient[2][1],level.ambient[2][2],1.0f);
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -862,6 +887,7 @@ void renderparticles(void)
   int count;
   float vec[3];
   float alpha;
+  GLuint oldtex=0;
 
   for (count=0;count<numofparticles;count++)
   if (particle[count].type==5)
@@ -870,9 +896,11 @@ void renderparticles(void)
     alpha=1.0f;
     if (particle[count].timetolive<50)
       alpha=(float)particle[count].timetolive/50.0f;
-
-    glBindTexture(GL_TEXTURE_2D,texture[particle[count].texturenum].glname);
-
+    // ptitSeb optimizations for Pandora
+    if(oldtex != texture[particle[count].texturenum].glname) {
+        oldtex = texture[particle[count].texturenum].glname;
+        glBindTexture(GL_TEXTURE_2D,oldtex/*texture[particle[count].texturenum].glname*/);
+    }
 #if defined(GLES)
     glColor4f(1.0f,1.0f,1.0f,alpha);
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -925,6 +953,7 @@ void renderparticles2(void)
   int count;
   float vec[3];
   float alpha;
+  GLuint oldtex=0;
 
   for (count=0;count<numofparticles;count++)
   if (particle[count].type==5)
@@ -933,9 +962,11 @@ void renderparticles2(void)
     alpha=1.0f;
     if (particle[count].timetolive<50)
       alpha=(float)particle[count].timetolive/50.0f;
-
-    glBindTexture(GL_TEXTURE_2D,texture[particle[count].texturenum].glname);
-
+    // ptitSeb optimizations for Pandora
+    if(oldtex != texture[particle[count].texturenum].glname) {
+        oldtex = texture[particle[count].texturenum].glname;
+        glBindTexture(GL_TEXTURE_2D,oldtex/*texture[particle[count].texturenum].glname*/);
+    }
 #if defined(GLES)
     glColor4f(1.0f,1.0f,1.0f,alpha);
     glEnableClientState(GL_VERTEX_ARRAY);
