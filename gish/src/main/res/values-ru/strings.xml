@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Gish</string>
-    <string name="version">v1.1 | 27-JUN-2017</string>
+    <string name="version">v1.1 | 06-JUL-2017</string>
     <string name="icon_string">Иконка Gish</string>
     <string name="about_string">Разработчик:\n• © 2004-2017 Cryptic Sea.\n\nИздатели:\n• © 2004 Chronic Logic;\n• © 2005 Stardock;\n• © 2007 Steam.\n\nКупить Gish (игровые файлы нужны для запуска игры):\nhttp://www.chroniclogic.com/gishorder.htm\nhttp://store.steampowered.com/app/9500\n\nПортирование на Android OS с использованием библиотек SDL2, OpenAL, Ogg Vorbis, GL4ES и OpenGL ES:\n• © 2017 S. \"EXL\" KLS\nemail: exl@bk.ru\nemail: exlmotodev@gmail.com\n\nИсходный код:\nhttps://github.com/EXL/Gish\n\nСтатья о портировании Gish:\nhttp://exlmoto.ru/gish-droid\n\nБлагодарности:\n• [SoD]Thor за сенсорное управление;\n• Pickle за OpenGL ES рендерер;\n• ptitSeb за библиотеку GL4ES;\n• SysLord за некоторы патчи для Gish;\n• blinry за репозиторий с кодом Gish;\n• VatsOfGoo за помощь и Data-файлы;\n• Solexid за файловый диалог;\n• Команде GNOME Adwaita за некоторые иконки;\n• Егору Бухамеру за то, что показал мне Gish;\n• Данилу Медведеву за прохождение игры Gish со мной;\n• MaximuM FaziL за перевод лаунчера на русский язык;\n• J()KER за тестирование APK-пакета;\n• Zorge.R за хостинг, терпение и помощь.\n\nРелиз посвящён 14-летию ресурса http://motofan.ru!</string>
     <string name="button_cancel">Отмена</string>
