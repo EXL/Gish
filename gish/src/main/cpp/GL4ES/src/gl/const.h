@@ -58,6 +58,7 @@
 #define GL_PROXY_TEXTURE_3D         0x8070
 #define GL_TEXTURE_MIN_LOD          0x813A
 #define GL_TEXTURE_MAX_LOD          0x813B
+#define GL_TEXTURE_FILTER_CONTROL   0x8500
 #define GL_TEXTURE_LOD_BIAS         0x8501
 #define GL_TEXTURE_CUBE_MAP         0x8513
 #define GL_TEXTURE_GEN_STR          0x8D60
@@ -238,6 +239,7 @@
 #define GL_COLOR_MATERIAL_FACE  0x0B55
 #define GL_COLOR_MATERIAL_PARAMETER 0x0B56
 #define GL_NORMALIZE            0x0BA1
+#define GL_DRAW_BUFFER          0x0C01
 
 // pixel transfer
 #define GL_MAP_COLOR             0x0D10

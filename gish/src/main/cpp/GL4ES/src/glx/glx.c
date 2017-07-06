@@ -23,6 +23,7 @@
 #include "../glx/streaming.h"
 #include "khash.h"
 #include "hardext.h"
+#include "../gl/debug.h"
 
 #ifndef AliasExport
 #define AliasExport(name)   __attribute__((alias(name))) __attribute__((visibility("default")))
@@ -146,30 +147,9 @@ khash_t(mapdrawable) *MapDrawable = NULL;
 
 int8_t CheckEGLErrors() {
     EGLenum error;
-    char *errortext;
+    const char *errortext = PrintEGLError(1);
     
-    LOAD_EGL(eglGetError);
-
-    error = egl_eglGetError();
-
-    if (error != EGL_SUCCESS && error != 0) {
-        switch (error) {
-            case EGL_NOT_INITIALIZED:     errortext = "EGL_NOT_INITIALIZED"; break;
-            case EGL_BAD_ACCESS:          errortext = "EGL_BAD_ACCESS"; break;
-            case EGL_BAD_ALLOC:           errortext = "EGL_BAD_ALLOC"; break;
-            case EGL_BAD_ATTRIBUTE:       errortext = "EGL_BAD_ATTRIBUTE"; break;
-            case EGL_BAD_CONTEXT:         errortext = "EGL_BAD_CONTEXT"; break;
-            case EGL_BAD_CONFIG:          errortext = "EGL_BAD_CONFIG"; break;
-            case EGL_BAD_CURRENT_SURFACE: errortext = "EGL_BAD_CURRENT_SURFACE"; break;
-            case EGL_BAD_DISPLAY:         errortext = "EGL_BAD_DISPLAY"; break;
-            case EGL_BAD_SURFACE:         errortext = "EGL_BAD_SURFACE"; break;
-            case EGL_BAD_MATCH:           errortext = "EGL_BAD_MATCH"; break;
-            case EGL_BAD_PARAMETER:       errortext = "EGL_BAD_PARAMETER"; break;
-            case EGL_BAD_NATIVE_PIXMAP:   errortext = "EGL_BAD_NATIVE_PIXMAP"; break;
-            case EGL_BAD_NATIVE_WINDOW:   errortext = "EGL_BAD_NATIVE_WINDOW"; break;
-            default:                      errortext = "unknown"; break;
-        }
-
+    if (errortext) {
         LOGE("LIBGL: ERROR: EGL Error detected: %s (0x%X)\n", errortext, error);
         return 1;
     }
@@ -495,6 +475,7 @@ GLXContext gl4es_glXCreateContext(Display *display,
         init_display(display);
         if (eglDisplay == EGL_NO_DISPLAY) {
             DBG(printf(" => %p\n", 0);)
+            CheckEGLErrors();
             LOGE("LIBGL: Unable to create EGL display.\n");
             free(fake);
             return 0;
@@ -507,6 +488,7 @@ GLXContext gl4es_glXCreateContext(Display *display,
         result = egl_eglInitialize(eglDisplay, NULL, NULL);
         if (result != EGL_TRUE) {
             DBG(printf(" => %p\n", 0);)
+            CheckEGLErrors();
             LOGE("LIBGL: Unable to initialize EGL display.\n");
             free(fake);
             return 0;
@@ -603,6 +585,7 @@ GLXContext createPBufferContext(Display *display, GLXContext shareList, GLXFBCon
         egl_eglBindAPI(EGL_OPENGL_ES_API);
         result = egl_eglInitialize(eglDisplay, NULL, NULL);
         if (result != EGL_TRUE) {
+            CheckEGLErrors();
             LOGE("LIBGL: Unable to initialize EGL display.\n");
             return 0;
         }
@@ -723,6 +706,7 @@ GLXContext gl4es_glXCreateContextAttribsARB(Display *display, GLXFBConfig config
             egl_eglBindAPI(EGL_OPENGL_ES_API);
             result = egl_eglInitialize(eglDisplay, NULL, NULL);
             if (result != EGL_TRUE) {
+                CheckEGLErrors();
                 LOGE("LIBGL: Unable to initialize EGL display.\n");
                 return fake;
             }
@@ -799,6 +783,7 @@ void gl4es_glXDestroyContext(Display *display, GLXContext ctx) {
         }
 
         if (result != EGL_TRUE) {
+            CheckEGLErrors();
             LOGE("LIBGL: Failed to destroy EGL context.\n");
         }
         /*if (fbdev >= 0) {
@@ -1057,7 +1042,7 @@ void gl4es_glXSwapBuffers(Display *display,
         BlitEmulatedPixmap();
     } else
         egl_eglSwapBuffers(eglDisplay, surface);
-    CheckEGLErrors();
+    //CheckEGLErrors();     // not sure it's a good thing to call a eglGetError() after all eglSwapBuffers, performance wize (plus result is discarded anyway)
 #ifdef PANDORA
     if (globals4es.showfps || (sock>-1)) {
         // framerate counter
@@ -1371,6 +1356,7 @@ void gl4es_glXSwapInterval(int interval) {
 #else
     LOAD_EGL(eglSwapInterval);
     egl_eglSwapInterval(eglDisplay, swap_interval);
+    CheckEGLErrors();
 #endif
 }
 
@@ -1602,6 +1588,7 @@ void delPBuffer(int j)
     pbuffersize[j].Height = 0;
     pbuffersize[j].gc = 0;
     egl_eglDestroyContext(eglDisplay, pbuffersize[j].Context);
+    CheckEGLErrors();
     // should pack, but I think it's useless for common use 
 }
 
@@ -1617,6 +1604,7 @@ void gl4es_glXDestroyPbuffer(Display * dpy, GLXPbuffer pbuf) {
         // delete de Surface
     EGLSurface surface = (EGLSurface)pbufferlist[j];
     egl_eglDestroySurface(eglDisplay, surface);
+    CheckEGLErrors();
 
     delPBuffer(j);
 }
@@ -1647,6 +1635,7 @@ int createPBuffer(Display * dpy, const EGLint * egl_attribs, EGLSurface* Surface
     if (eglDisplay == NULL || eglDisplay == EGL_NO_DISPLAY) {
         init_display((globals4es.usefb)?g_display:dpy);
         if (eglDisplay == EGL_NO_DISPLAY) {
+            CheckEGLErrors();
             LOGD("LIBGL: Unable to create EGL display.\n");
             return 0;
         }
@@ -1657,6 +1646,7 @@ int createPBuffer(Display * dpy, const EGLint * egl_attribs, EGLSurface* Surface
         egl_eglBindAPI(EGL_OPENGL_ES_API);
         result = egl_eglInitialize(eglDisplay, NULL, NULL);
         if (result != EGL_TRUE) {
+            CheckEGLErrors();
             LOGD("LIBGL: Unable to initialize EGL display.\n");
             return 0;
         }
@@ -1678,10 +1668,12 @@ int createPBuffer(Display * dpy, const EGLint * egl_attribs, EGLSurface* Surface
     (*Surface) = egl_eglCreatePbufferSurface(eglDisplay, pbufConfigs[0], egl_attribs);
 
     if((*Surface)==EGL_NO_SURFACE) {
+        CheckEGLErrors();
         LOGD("LIBGL: Error creating PBuffer\n");
         return 0;
     }
     (*Context) = egl_eglCreateContext(eglDisplay, pbufConfigs[0], EGL_NO_CONTEXT, egl_context_attrib);
+    CheckEGLErrors();
 
     return 1;
 }
@@ -1774,6 +1766,7 @@ void delPixBuffer(int j)
     pbuffersize[j].gc = 0;
     pbuffersize[j].Surface = 0;
     egl_eglDestroyContext(eglDisplay, pbuffersize[j].Context);
+    CheckEGLErrors();
     // should pack, but I think it's useless for common use 
 }
 
@@ -1801,6 +1794,7 @@ int createPixBuffer(Display * dpy, int bpp, const EGLint * egl_attribs, NativePi
     if (eglDisplay == NULL || eglDisplay == EGL_NO_DISPLAY) {
         init_display((globals4es.usefb)?g_display:dpy);
         if (eglDisplay == EGL_NO_DISPLAY) {
+            CheckEGLErrors();
             LOGE("LIBGL: Unable to create EGL display.\n");
             return 0;
         }
@@ -1811,6 +1805,7 @@ int createPixBuffer(Display * dpy, int bpp, const EGLint * egl_attribs, NativePi
         egl_eglBindAPI(EGL_OPENGL_ES_API);
         result = egl_eglInitialize(eglDisplay, NULL, NULL);
         if (result != EGL_TRUE) {
+            CheckEGLErrors();
             LOGE("LIBGL: Unable to initialize EGL display.\n");
             return 0;
         }
@@ -1828,15 +1823,17 @@ int createPixBuffer(Display * dpy, int bpp, const EGLint * egl_attribs, NativePi
         return 0;
     }
 
-	// now, create the PBufferSurface
+	// now, create the PixmapSurface
     (*Surface) = egl_eglCreatePixmapSurface(eglDisplay, pixbufConfigs[0], nativepixmap,egl_attribs);
 
     if((*Surface)==EGL_NO_SURFACE) {
-        LOGE("LIBGL: Error creating PBuffer\n");
+        CheckEGLErrors();
+        LOGE("LIBGL: Error creating PixmapSurface\n");
         return 0;
     }
 
     (*Context) = egl_eglCreateContext(eglDisplay, pixbufConfigs[0], EGL_NO_CONTEXT, egl_context_attrib);
+    CheckEGLErrors();
 
     return 1;
 }
@@ -1902,6 +1899,7 @@ void gl4es_glXDestroyGLXPixmap(Display *display, void *pixmap) {
         // delete de Surface
     EGLSurface surface = pbuffersize[j].Surface;// (EGLSurface)pbufferlist[j];
     egl_eglDestroySurface(eglDisplay, surface);
+    CheckEGLErrors();
 
     delPixBuffer(j);
 }
@@ -1911,6 +1909,45 @@ void gl4es_glXDestroyPixmap(Display *display, void *pixmap) {
     gl4es_glXDestroyGLXPixmap(display, pixmap);
 }
 
+
+void actualBlit(int reverse, int Width, int Height, int Depth, 
+                    Display *dpy, Pixmap drawable, GC gc, XImage* frame,
+                    uintptr_t pix, void* tmp) {
+const int sbuf = Width * Height * (Depth==16?2:4);
+#ifdef PANDORA
+    if (tmp) {
+        if(reverse) {
+            int stride = Width * 2;
+            uintptr_t src_pos = (uintptr_t)tmp;
+            uintptr_t dst_pos = (uintptr_t)pix+sbuf-stride;
+            for (int i = 0; i < Height; i++) {
+                for (int j = 0; j < Width; j++) {
+                    *(GLushort*)dst_pos = ((GLushort)(((char*)src_pos)[0]&0xf8)>>(3)) | ((GLushort)(((char*)src_pos)[1]&0xfc)<<(5-2)) | ((GLushort)(((char*)src_pos)[2]&0xf8)<<(11-3));
+                    src_pos += 4;
+                    dst_pos += 2;
+                }
+                dst_pos -= 2*stride;
+            }
+        } else
+            pixel_convert(tmp, (void**)&pix, Width, Height, GL_BGRA, GL_UNSIGNED_BYTE, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, 0, glstate->texture.unpack_align);
+        free(tmp);
+    } else
+#endif
+        if(reverse) {
+            int stride = Width * 4;
+            uintptr_t end=(uintptr_t)pix+sbuf-stride;
+            uintptr_t beg=(uintptr_t)pix;
+            void* const tmp = (void*)(pix+sbuf);
+            for (; beg < end; beg+=stride, end-=stride) {
+                memcpy(tmp, (void*)end, stride);
+                memcpy((void*)end, (void*)beg, stride);
+                memcpy((void*)beg, tmp, stride);
+            }
+        }
+
+    // blit
+    XPutImage(dpy, drawable, gc, frame, 0, 0, 0, 0, Width, Height);
+}
 
 void BlitEmulatedPixmap() {
     if(!glstate->emulatedPixmap)
@@ -1927,70 +1964,8 @@ void BlitEmulatedPixmap() {
     GC gc = buff->gc;
     // the reverse stuff can probably be better!
     int reverse = buff->Type==4?1:0;
-    int sbuf = Width * Height * (Depth==16?2:4);
-
-    // create things if needed
-    if(!buff->frame) {
-        buff->frame = XCreateImage(dpy, NULL /*visual*/, Depth, ZPixmap, 0, malloc(Width*(Height+reverse)*(Depth==16?2:4)), Width, Height, (Depth==16)?16:32, 0);
-    }
-
+    const int sbuf = Width * Height * (Depth==16?2:4);
     XImage* frame = buff->frame;
-    if (!frame) {
-        return;
-    }
-    uintptr_t pix=(uintptr_t)frame->data;
-
-    // grab framebuffer
-#ifdef PANDORA
-    LOAD_GLES(glReadPixels);
-    if(Depth==16) {
-        void* tmp = malloc(Width*Height*4);
-        gles_glReadPixels(0, 0, Width, Height, GL_BGRA, GL_UNSIGNED_BYTE, tmp);
-        if(reverse) {
-            int stride = Width * 2;
-            uintptr_t src_pos = (uintptr_t)tmp;
-            uintptr_t dst_pos = (uintptr_t)pix+sbuf-stride;
-            for (int i = 0; i < Height; i++) {
-                for (int j = 0; j < Width; j++) {
-                    *(GLushort*)dst_pos = ((GLushort)(((char*)src_pos)[0]&0xf8)>>(3)) | ((GLushort)(((char*)src_pos)[1]&0xfc)<<(5-2)) | ((GLushort)(((char*)src_pos)[2]&0xf8)<<(11-3));
-                    src_pos += 4;
-                    dst_pos += 2;
-                }
-                dst_pos -= 2*stride;
-            }
-        } else
-            pixel_convert(tmp, (void**)&pix, Width, Height, GL_BGRA, GL_UNSIGNED_BYTE, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, 0, glstate->texture.unpack_align);
-        free(tmp);
-    } else {
-        gles_glReadPixels(0, 0, Width, Height, GL_BGRA, GL_UNSIGNED_BYTE, (void*)pix);
-        if(reverse) {
-            int stride = Width * 4;
-            uintptr_t end=pix+sbuf-stride;
-            uintptr_t beg=pix;
-            void* const tmp = (void*)(pix+sbuf);
-            for (; beg < end; beg+=stride, end-=stride) {
-                memcpy(tmp, (void*)end, stride);
-                memcpy((void*)end, (void*)beg, stride);
-                memcpy((void*)beg, tmp, stride);
-            }
-        }
-    }
-#else
-    gl4es_glReadPixels(0, 0, Width, Height, (Depth==16)?GL_RGB:GL_BGRA, (Depth==16)?GL_UNSIGNED_SHORT_5_6_5:GL_UNSIGNED_BYTE, (void*)pix);
-    if(reverse) {
-        int stride = Width * (Depth==16?2:4);
-        uintptr_t end=pix+sbuf-stride;
-        uintptr_t beg=pix;
-        void* const tmp = (void*)(pix+sbuf);
-        for (; beg < end; beg+=stride, end-=stride) {
-            memcpy(tmp, (void*)end, stride);
-            memcpy((void*)end, (void*)beg, stride);
-            memcpy((void*)beg, tmp, stride);
-        }
-    }
-#endif
-    // blit
-    XPutImage(dpy, drawable, gc, frame, 0, 0, 0, 0, Width, Height);
 
     // grab the size of the drawable if it has changed
     if(reverse) {
@@ -2006,7 +1981,7 @@ void BlitEmulatedPixmap() {
             LOAD_EGL(eglChooseConfig);
             // destroy old stuff
             XSync(dpy, False);  // synch seems needed before the DestroyImage...
-            XDestroyImage(frame);
+            if(frame) XDestroyImage(frame);
             buff->frame = 0;
             
 
@@ -2020,8 +1995,8 @@ void BlitEmulatedPixmap() {
             egl_attribs[i++] = EGL_NONE;
 
             EGLint configAttribs[] = {
-                EGL_RED_SIZE, (Depth>16)?8:5,
-                EGL_GREEN_SIZE, (Depth==15)?5:(Depth>16)?8:6,
+                EGL_RED_SIZE, (depth>16)?8:5,
+                EGL_GREEN_SIZE, (depth==15)?5:((depth>16)?8:6),
                 EGL_BLUE_SIZE, (depth>16)?8:5,
                 EGL_ALPHA_SIZE, (depth==32)?8:0,
                 EGL_DEPTH_SIZE, 1,
@@ -2034,18 +2009,49 @@ void BlitEmulatedPixmap() {
             int configsFound;
             static EGLConfig pbufConfigs[1];
             egl_eglChooseConfig(eglDisplay, configAttribs, pbufConfigs, 1, &configsFound);
+            CheckEGLErrors();
 
             EGLSurface Surface = egl_eglCreatePbufferSurface(eglDisplay, pbufConfigs[0], egl_attribs);
+            CheckEGLErrors();
 
-            egl_eglMakeCurrent(eglDisplay, Surface, Surface, eglContext);
+            egl_eglMakeCurrent(eglDisplay, Surface, Surface, buff->Context);
+            CheckEGLErrors();
 
             egl_eglDestroySurface(eglDisplay, buff->Surface);
+            CheckEGLErrors();
             buff->Surface = Surface;
             buff->Width = width;
             buff->Height = height;
             buff->Depth = depth;
+            return;
         }
     }
+
+    // create things if needed
+    if(!buff->frame) {
+        buff->frame = XCreateImage(dpy, NULL /*visual*/, Depth, ZPixmap, 0, malloc(Width*(Height+reverse)*(Depth==16?2:4)), Width, Height, (Depth==16)?16:32, 0);
+    }
+
+    if (!frame) {
+        return;
+    }
+    uintptr_t pix=(uintptr_t)frame->data;
+
+    // grab framebuffer
+    void* tmp = NULL;
+#ifdef PANDORA
+    LOAD_GLES(glReadPixels);
+    if(Depth==16) {
+        tmp = malloc(Width*Height*4);
+        gles_glReadPixels(0, 0, Width, Height, GL_BGRA, GL_UNSIGNED_BYTE, tmp);
+    } else {
+        gles_glReadPixels(0, 0, Width, Height, GL_BGRA, GL_UNSIGNED_BYTE, (void*)pix);
+    }
+#else
+    gl4es_glReadPixels(0, 0, Width, Height, (Depth==16)?GL_RGB:GL_BGRA, (Depth==16)?GL_UNSIGNED_SHORT_5_6_5:GL_UNSIGNED_BYTE, (void*)pix);
+#endif
+    actualBlit(reverse, Width, Height, Depth, dpy, drawable, gc, frame, pix, tmp);
+
 }
 
 #endif //ANDROID

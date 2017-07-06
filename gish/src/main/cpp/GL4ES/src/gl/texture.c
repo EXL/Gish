@@ -10,6 +10,7 @@
 #include "../glx/hardext.h"
 #include "init.h"
 #include "matrix.h"
+#include "blit.h"
 
 #ifndef GL_TEXTURE_STREAM_IMG  
 #define GL_TEXTURE_STREAM_IMG                                   0x8C0D     
@@ -1703,9 +1704,6 @@ void gl4es_glGetTexLevelParameteriv(GLenum target, GLint level, GLenum pname, GL
 }
 
 extern GLuint current_fb;   // from framebuffers.c
-// hacky viewport temporary changes
-void pushViewport(GLint x, GLint y, GLsizei width, GLsizei height);
-void popViewport();
 
 
 void gl4es_glGetTexImage(GLenum target, GLint level, GLenum format, GLenum type, GLvoid * img) {
@@ -1795,113 +1793,14 @@ void gl4es_glGetTexImage(GLenum target, GLint level, GLenum format, GLenum type,
             gl4es_glFramebufferTexture2D(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_TEXTURE_2D, temptex, 0);
             gl4es_glBindTexture(GL_TEXTURE_2D, oldBind);
             // blit the texture
-            // TODO: create a blitTexture function (to be used in raster too)
-            LOAD_GLES(glEnableClientState);
-            LOAD_GLES(glDisableClientState);
-            LOAD_GLES(glVertexPointer);
-            LOAD_GLES(glTexCoordPointer);
-            LOAD_GLES(glDrawArrays);
-            LOAD_GLES(glBindTexture);
-            LOAD_GLES(glActiveTexture);
-            LOAD_GLES(glClientActiveTexture);
-            gl4es_glPushAttrib(GL_TEXTURE_BIT | GL_ENABLE_BIT | GL_TRANSFORM_BIT | GL_COLOR_BUFFER_BIT | GL_CURRENT_BIT);
-            GLfloat old_projection[16], old_modelview[16], old_texture[16];
-
             gl4es_glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
             gl4es_glClear(GL_COLOR_BUFFER_BIT);
-
-            GLuint old_tex = glstate->texture.active;
-            if (old_tex!=0) gles_glActiveTexture(GL_TEXTURE0);
-            GLuint old_cli = glstate->texture.client;
-            if (old_cli!=0) gles_glClientActiveTexture(GL_TEXTURE0);
-            gl4es_glGetFloatv(GL_TEXTURE_MATRIX, old_texture);
-            gl4es_glGetFloatv(GL_PROJECTION_MATRIX, old_projection);
-            gl4es_glGetFloatv(GL_MODELVIEW_MATRIX, old_modelview);
-            gl4es_glMatrixMode(GL_TEXTURE);
-            gl4es_glLoadIdentity();
-            gl4es_glMatrixMode(GL_PROJECTION);
-            gl4es_glLoadIdentity();
-            gl4es_glMatrixMode(GL_MODELVIEW);
-            gl4es_glLoadIdentity();
-
-            pushViewport(0,0,nwidth<<shrink, nheight<<shrink);
-            float w2 = 2.0f / nwidth;
-            float h2 = 2.0f / nheight;
-            float blit_x1=0;
-            float blit_x2=width;
-            float blit_y1=0;
-            float blit_y2=height;
-            GLfloat blit_vert[] = {
-                blit_x1*w2-1.0f, blit_y1*h2-1.0f,
-                blit_x2*w2-1.0f, blit_y1*h2-1.0f,
-                blit_x2*w2-1.0f, blit_y2*h2-1.0f,
-                blit_x1*w2-1.0f, blit_y2*h2-1.0f
-            };
-            GLfloat rw = ((GLfloat)width)/nwidth;
-            GLfloat rh = ((GLfloat)height)/nheight;
-            GLfloat blit_tex[] = {
-                0,  0,
-                rw, 0,
-                rw, rh,
-                0,  rh
-            };
-
-            gl4es_glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT | GL_CLIENT_PIXEL_STORE_BIT);
-
-            gl4es_glDisable(GL_DEPTH_TEST);
-            gl4es_glDisable(GL_LIGHTING);
-            gl4es_glDisable(GL_CULL_FACE);
-            gl4es_glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-
-            gl4es_glEnable(GL_TEXTURE_2D);
-            gles_glBindTexture(GL_TEXTURE_2D, oldBind);
-            gl4es_glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
-            if(!glstate->clientstate.vertex_array) 
-            {
-                gles_glEnableClientState(GL_VERTEX_ARRAY);
-                glstate->clientstate.vertex_array = 1;
-            }
-            gles_glVertexPointer(2, GL_FLOAT, 0, blit_vert);
-            if(!glstate->clientstate.tex_coord_array[0]) 
-            {
-                gles_glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-                glstate->clientstate.tex_coord_array[0] = 1;
-            }
-            gles_glTexCoordPointer(2, GL_FLOAT, 0, blit_tex);
-            for (int a=1; a <MAX_TEX; a++)
-                if(glstate->clientstate.tex_coord_array[a]) {
-                    gles_glClientActiveTexture(GL_TEXTURE0 + a);
-                    gles_glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-                    glstate->clientstate.tex_coord_array[a] = 0;
-                    gles_glClientActiveTexture(GL_TEXTURE0);
-                }
-            if(glstate->clientstate.color_array) {
-                gles_glDisableClientState(GL_COLOR_ARRAY);
-                glstate->clientstate.color_array = 0;
-            }
-            if(glstate->clientstate.normal_array) {
-                gles_glDisableClientState(GL_NORMAL_ARRAY);
-                glstate->clientstate.normal_array = 0;
-            }
-            gles_glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-            // All the previous states are Pushed / Poped anyway...
-            if (old_tex!=0) gles_glActiveTexture(GL_TEXTURE0+old_tex);
-            if (old_cli!=0) gles_glClientActiveTexture(GL_TEXTURE0+old_cli);
-            gl4es_glPopClientAttrib();
-            gl4es_glMatrixMode(GL_TEXTURE);
-            gl4es_glLoadMatrixf(old_texture);
-            gl4es_glMatrixMode(GL_MODELVIEW);
-            gl4es_glLoadMatrixf(old_modelview);
-            gl4es_glMatrixMode(GL_PROJECTION);
-            gl4es_glLoadMatrixf(old_projection);
-            gl4es_glPopAttrib();
+            gl4es_blitTexture(oldBind, width, height, nwidth, nheight, 1.0f, 1.0f, nwidth<<shrink, nheight<<shrink, 0, 0, BLIT_OPAQUE);
             // Read the pixels!
             gl4es_glReadPixels(0, (nheight-height)<<shrink, width<<shrink, height<<shrink, format, type, img);	// using "full" version with conversion of format/type
             gl4es_glBindFramebuffer(GL_FRAMEBUFFER_OES, old_fbo);
             gl4es_glDeleteFramebuffers(1, &fbo);
             gl4es_glDeleteTextures(1, &temptex);
-            popViewport();
             noerrorShim();
         }
 	}
@@ -2440,68 +2339,6 @@ void gl4es_glCompressedTexSubImage3D(GLenum target, GLint level, GLint xoffset, 
 }
 
 
-void gl4es_glTexEnvf(GLenum target, GLenum pname, GLfloat param) {
-    LOAD_GLES(glTexEnvf);
-    PUSH_IF_COMPILING(glTexEnvf);
-
-    if(target==GL_POINT_SPRITE && pname==GL_COORD_REPLACE)
-        glstate->texture.pscoordreplace[glstate->texture.active] = (param!=0.0f)?1:0;
-    // Handling GL_EXT_DOT3, wrapping to standard dot3 (???)
-    if(param==GL_DOT3_RGB_EXT) param=GL_DOT3_RGB;
-    if(param==GL_DOT3_RGBA_EXT) param=GL_DOT3_RGBA;
-    gles_glTexEnvf(target, pname, param);
-}
-void gl4es_glTexEnvi(GLenum target, GLenum pname, GLint param) {
-    LOAD_GLES(glTexEnvi);
-    PUSH_IF_COMPILING(glTexEnvi);
-    if(target==GL_POINT_SPRITE && pname==GL_COORD_REPLACE)
-        glstate->texture.pscoordreplace[glstate->texture.active] = (param!=0)?1:0;
-    // Handling GL_EXT_DOT3, wrapping to standard dot3 (???)
-    if(param==GL_DOT3_RGB_EXT) param=GL_DOT3_RGB;
-    if(param==GL_DOT3_RGBA_EXT) param=GL_DOT3_RGBA;
-    gles_glTexEnvi(target, pname, param);
-}
-void gl4es_glTexEnvfv(GLenum target, GLenum pname, const GLfloat *param) {
-    if ((glstate->list.compiling || glstate->gl_batch) && glstate->list.active) {
-		NewStage(glstate->list.active, STAGE_TEXENV);
-		rlTexEnvfv(glstate->list.active, target, pname, param);
-        noerrorShim();
-		return;
-	}
-    LOAD_GLES(glTexEnvfv);
-    gles_glTexEnvfv(target, pname, param);
-}
-void gl4es_glTexEnviv(GLenum target, GLenum pname, const GLint *param) {
-    if (glstate->list.pending) flush();
-    if ((glstate->list.compiling || glstate->gl_batch) && glstate->list.active) {
-		NewStage(glstate->list.active, STAGE_TEXENV);
-		rlTexEnviv(glstate->list.active, target, pname, param);
-        noerrorShim();
-		return;
-	}
-    LOAD_GLES(glTexEnviv);
-    gles_glTexEnviv(target, pname, param);
-}
-void gl4es_glGetTexEnvfv(GLenum target, GLenum pname, GLfloat * params) {
-    LOAD_GLES(glGetTexEnvfv);
-    if (glstate->list.pending) flush();
-    if (glstate->list.active && (glstate->gl_batch && !glstate->list.compiling)) flush();
-    if(target==GL_POINT_SPRITE && pname==GL_COORD_REPLACE)
-        *params = glstate->texture.pscoordreplace[glstate->texture.active];
-    else
-        gles_glGetTexEnvfv(target, pname, params);
-
-}
-void gl4es_glGetTexEnviv(GLenum target, GLenum pname, GLint * params) {
-    LOAD_GLES(glGetTexEnviv);
-    if (glstate->list.pending) flush();
-    if (glstate->list.active && (glstate->gl_batch && !glstate->list.compiling)) flush();
-    if(target==GL_POINT_SPRITE && pname==GL_COORD_REPLACE)
-        *params = glstate->texture.pscoordreplace[glstate->texture.active];
-    else
-        gles_glGetTexEnviv(target, pname, params);
-}
-
 
 //Direct wrapper
 void glTexImage2D(GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid *data) AliasExport("gl4es_glTexImage2D");
@@ -2537,12 +2374,6 @@ void glActiveTexture( GLenum texture ) AliasExport("gl4es_glActiveTexture");
 void glClientActiveTexture( GLenum texture ) AliasExport("gl4es_glClientActiveTexture");
 GLboolean glIsTexture( GLuint texture ) AliasExport("gl4es_glIsTexture");
 void glPixelStorei(GLenum pname, GLint param) AliasExport("gl4es_glPixelStorei");
-void glTexEnvf(GLenum target, GLenum pname, GLfloat param) AliasExport("gl4es_glTexEnvf");
-void glTexEnvi(GLenum target, GLenum pname, GLint param) AliasExport("gl4es_glTexEnvi");
-void glTexEnvfv(GLenum target, GLenum pname, const GLfloat *param) AliasExport("gl4es_glTexEnvfv");
-void glTexEnviv(GLenum target, GLenum pname, const GLint *param) AliasExport("gl4es_glTexEnviv");
-void glGetTexEnvfv(GLenum target, GLenum pname, GLfloat * params) AliasExport("gl4es_glGetTexEnvfv");
-void glGetTexEnviv(GLenum target, GLenum pname, GLint * params) AliasExport("gl4es_glGetTexEnviv");
 
 //EXT mapper
 void glTexSubImage3DEXT(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset,  GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const GLvoid *data) AliasExport("gl4es_glTexSubImage3D");

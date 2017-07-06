@@ -6,6 +6,7 @@ typedef struct _hardext {
     int maxtex;         // maximum number of texture
     int maxlights;      // maximum number of light
     int maxsize;        // maximum texture size
+    int maxplanes;      // maximum clip planes
     int blendsub;       // GL_OES_blend_subtract
     int blendfunc;      // GL_OES_blend_func_separate
     int blendeq;        // GL_OES_blend_equation_separate
@@ -22,6 +23,7 @@ typedef struct _hardext {
     int bgra8888;       // GL_EXT_texture_format_BGRA8888 (not used yet)
     int depthtex;       // GL_OES_depth_texture
     int cubemap;        // GL_OES_texture_cube_map
+    int drawtex;        // GL_OES_draw_texture
     unsigned int readf; // implementation Read Format
     unsigned int readt; // implementation Read Type
     int srgb;           // EGL_KHR_gl_colorspace

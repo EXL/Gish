@@ -1,6 +1,7 @@
 #include "../gl/gl.h"
 #include "hardext.h"
 #include "../gl/init.h"
+#include "../gl/debug.h"
 
 static int tested = 0;
 
@@ -31,13 +32,14 @@ void GetHardwareExtensions(int notest)
     if(tested) return;
     // put some default values
     memset(&hardext, 0, sizeof(hardext));
-    hardext.maxtex = 1;
+    hardext.maxtex = 2;
     hardext.maxsize = 2048;
     hardext.readf = GL_RGBA;
     hardext.readt = GL_UNSIGNED_BYTE;
 
     if(notest) {
         SHUT(LOGD("LIBGL: Hardware test disabled, nothing activated...\n"));
+        return;
     }
 
     // Create a PBuffer first...
@@ -74,23 +76,23 @@ void GetHardwareExtensions(int notest)
 
     egl_eglBindAPI(EGL_OPENGL_ES_API);
     if (egl_eglInitialize(eglDisplay, NULL, NULL) != EGL_TRUE) {
-        LOGE("LIBGL: Error while gathering supported extension (Init issue), default to none\n");
+        LOGE("LIBGL: Error while gathering supported extension (eglInitialize: %s), default to none\n", PrintEGLError(0));
         return;
     }
 
     egl_eglChooseConfig(eglDisplay, configAttribs, pbufConfigs, 1, &configsFound);
     if(!configsFound) {
-        SHUT(LOGE("LIBGL: Error while gathering supported extension (Config issue), default to none\n"));
+        SHUT(LOGE("LIBGL: Error while gathering supported extension (eglChooseConfig: %s), default to none\n", PrintEGLError(0)));
         return;
     }
     eglContext = egl_eglCreateContext(eglDisplay, pbufConfigs[0], EGL_NO_CONTEXT, egl_context_attrib);
     if(!eglContext) {
-        SHUT(LOGE("LIBGL: Error while gathering supported extension (Context issue), default to none\n"));
+        SHUT(LOGE("LIBGL: Error while gathering supported extension (eglCreateContext: %s), default to none\n", PrintEGLError(0)));
         return;
     }
     eglSurface = egl_eglCreatePbufferSurface(eglDisplay, pbufConfigs[0], egl_attribs);
     if(!eglSurface) {
-        SHUT(LOGE("LIBGL: Error while gathering supported extension (Surface issue), default to none\n"));
+        SHUT(LOGE("LIBGL: Error while gathering supported extension (eglCreatePBufferSurface: %s), default to none\n", PrintEGLError(0)));
         egl_eglDestroyContext(eglDisplay, eglContext);
         return;
     }
@@ -129,15 +131,18 @@ void GetHardwareExtensions(int notest)
     S("GL_EXT_texture_format_BGRA8888", bgra8888, 1);
     S("GL_OES_depth_texture", depthtex, 1);
     S("GL_OES_texture_cube_map", cubemap, 1);
+    S("GL_OES_draw_texture", drawtex, 1);
 
     // Now get some max stuffs
     gles_glGetIntegerv(GL_MAX_TEXTURE_SIZE, &hardext.maxsize);
     SHUT(LOGD("LIBGL: Max texture size: %d\n", hardext.maxsize));
     gles_glGetIntegerv(GL_MAX_TEXTURE_UNITS, &hardext.maxtex);
     gles_glGetIntegerv(GL_MAX_LIGHTS, &hardext.maxlights);
+    gles_glGetIntegerv(GL_MAX_CLIP_PLANES, &hardext.maxplanes);
     if(hardext.maxtex>MAX_TEX) hardext.maxtex=MAX_TEX;      // caping, as there are some fixed-sized array...
     if(hardext.maxlights>MAX_LIGHT) hardext.maxlights=MAX_LIGHT;                // caping lights too
-    SHUT(LOGD("LIBGL: Texture Units: %d, Max lights: %d\n", hardext.maxtex, hardext.maxlights));
+    if(hardext.maxplanes>MAX_CLIP_PLANES) hardext.maxplanes=MAX_CLIP_PLANES;    // caping planes, even 6 should be the max supported anyway
+    SHUT(LOGD("LIBGL: Texture Units: %d, Max lights: %d, Max planes: %d\n", hardext.maxtex, hardext.maxlights, hardext.maxplanes));
 #ifndef PANDORA
 // The IMPLEMENTATION_COLOR_READ is pretty buggy on the Pandora, so disabling it (it's just use to blit PBuffer to Drawable in glx.c)
     gles_glGetIntegerv(GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES, &hardext.readf);
