@@ -113,7 +113,7 @@ void editlevelobjects(void)
       view.zoom=5.0f;
 
     view.zoomx=view.zoom+0.5f;
-    view.zoomy=view.zoom*0.75f+0.5f;
+    view.zoomy=view.zoom*0.80f+0.5f;
 
     setuporthoviewport(0,0,640,480,view.zoom,view.zoom*0.75f,20.0f);
     setupviewpoint(view.position,view.orientation);
