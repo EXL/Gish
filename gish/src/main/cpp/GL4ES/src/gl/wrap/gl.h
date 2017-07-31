@@ -6,12 +6,6 @@
 
 
 // misc naive wrappers
-#ifdef USE_ES2
-void gl4es_glCompileShaderARB(GLuint shader);
-GLuint gl4es_glCreateShaderObjectARB(GLenum shaderType);
-void gl4es_glGetObjectParameterivARB(GLuint shader, GLenum pname, GLint *params);
-void gl4es_glShaderSourceARB(GLuint shader, GLsizei count, const GLchar **string, const GLint *length);
-#endif
 
 void gl4es_glClearDepth(GLdouble depth);
 void gl4es_glClipPlane(GLenum plane, const GLdouble *equation);
@@ -201,11 +195,35 @@ THUNK(us, GLushort)
 #undef THUNK
 
 #define THUNK(suffix, type) \
-    extern void glGet##suffix##v(GLenum pname, type *params);
+void glGet##suffix##v(GLenum pname, type *params);
 
 THUNK(Double, GLdouble)
 THUNK(Integer, GLint)
 THUNK(Float, GLfloat)
 #undef THUNK
+
+#define THUNK(suffix, type) \
+void gl4es_glVertexAttrib1##suffix(GLuint index, type v0); \
+void gl4es_glVertexAttrib2##suffix(GLuint index, type v0, type v1); \
+void gl4es_glVertexAttrib3##suffix(GLuint index, type v0, type v1, type v2); \
+void gl4es_glVertexAttrib4##suffix(GLuint index, type v0, type v1, type v2, type v3); \
+void gl4es_glVertexAttrib1##suffix##v(GLuint index, const type *v); \
+void gl4es_glVertexAttrib2##suffix##v(GLuint index, const type *v); \
+void gl4es_glVertexAttrib3##suffix##v(GLuint index, const type *v);
+THUNK(s, GLshort);
+THUNK(d, GLdouble);
+#undef THUNK
+void gl4es_glVertexAttrib4dv(GLuint index, const GLdouble *v);
+#define THUNK(suffix, type) \
+void gl4es_glVertexAttrib4##suffix##v (GLuint index, const type *v); \
+void gl4es_glVertexAttrib4N##suffix##v (GLuint index, const type *v)
+THUNK(b, GLbyte);
+THUNK(ub, GLubyte);
+THUNK(s, GLshort);
+THUNK(us, GLushort);
+THUNK(i, GLint);
+THUNK(ui, GLuint);
+#undef THUNK
+
 
 #endif

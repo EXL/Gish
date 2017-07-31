@@ -128,6 +128,7 @@
 
 
 // pixel formats
+#define GL_COLOR_INDEX                 0x1900
 #define GL_RED                         0x1903
 #define GL_R3_G3_B2                    0x2A10
 #define GL_RG                          0x8227
@@ -292,6 +293,7 @@
 #define GL_PACK_IMAGE_HEIGHT     0x806C
 #define GL_ZOOM_X                0x0D16
 #define GL_ZOOM_Y                0x0D17
+#define GL_MAX_PIXEL_MAP_TABLE   0x0D34
 #define GL_TEXTURE_BASE_LEVEL    0x813C
 
 // blending
@@ -495,6 +497,7 @@
 #define GL_PIXEL_UNPACK_BUFFER            0x88EC
 #define GL_PIXEL_UNPACK_BUFFER_BINDING	  0x88EF
 #define GL_PIXEL_PACK_BUFFER_BINDING      0x88ED
+#define GL_CURRENT_VERTEX_ATTRIB          0x8626
 
 /* Framebuffers */
 #define GL_INVALID_FRAMEBUFFER_OPERATION  0x0506
@@ -613,3 +616,55 @@
 #define GL_TEXTURE_CUBE_MAP_NEGATIVE_Z    0x851A
 #define GL_PROXY_TEXTURE_CUBE_MAP         0x851B
 #define GL_AX_CUBE_MAP_TEXTURE_SIZE       0x851C
+
+// Shaders
+#define GL_FRAGMENT_SHADER                  0x8B30
+#define GL_VERTEX_SHADER                    0x8B31
+#define GL_MAX_VERTEX_ATTRIBS               0x8869
+#define GL_MAX_VERTEX_UNIFORM_VECTORS       0x8DFB
+#define GL_MAX_VARYING_VECTORS              0x8DFC
+#define GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS 0x8B4D
+#define GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS   0x8B4C
+#define GL_MAX_TEXTURE_IMAGE_UNITS          0x8872
+#define GL_MAX_FRAGMENT_UNIFORM_VECTORS     0x8DFD
+#define GL_SHADER_TYPE                      0x8B4F
+#define GL_DELETE_STATUS                    0x8B80
+#define GL_LINK_STATUS                      0x8B82
+#define GL_VALIDATE_STATUS                  0x8B83
+#define GL_ATTACHED_SHADERS                 0x8B85
+#define GL_ACTIVE_UNIFORMS                  0x8B86
+#define GL_ACTIVE_UNIFORM_MAX_LENGTH        0x8B87
+#define GL_ACTIVE_ATTRIBUTES                0x8B89
+#define GL_ACTIVE_ATTRIBUTE_MAX_LENGTH      0x8B8A
+#define GL_SHADING_LANGUAGE_VERSION         0x8B8C
+#define GL_CURRENT_PROGRAM                  0x8B8D
+// Shaders extensions
+#define GL_PROGRAM_BINARY_LENGTH            0x8741
+#define GL_NUM_PROGRAM_BINARY_FORMATS       0x87FE
+#define GL_PROGRAM_BINARY_FORMATS           0x87FF
+
+// Vertex Arrays
+#define GL_VERTEX_ATTRIB_ARRAY_ENABLED        0x8622
+#define GL_VERTEX_ATTRIB_ARRAY_SIZE           0x8623
+#define GL_VERTEX_ATTRIB_ARRAY_STRIDE         0x8624
+#define GL_VERTEX_ATTRIB_ARRAY_TYPE           0x8625
+#define GL_VERTEX_ATTRIB_ARRAY_NORMALIZED     0x886A
+#define GL_VERTEX_ATTRIB_ARRAY_POINTER        0x8645
+#define GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING 0x889F
+
+// Uniform Types
+#define GL_FLOAT_VEC2                     0x8B50
+#define GL_FLOAT_VEC3                     0x8B51
+#define GL_FLOAT_VEC4                     0x8B52
+#define GL_INT_VEC2                       0x8B53
+#define GL_INT_VEC3                       0x8B54
+#define GL_INT_VEC4                       0x8B55
+#define GL_BOOL                           0x8B56
+#define GL_BOOL_VEC2                      0x8B57
+#define GL_BOOL_VEC3                      0x8B58
+#define GL_BOOL_VEC4                      0x8B59
+#define GL_FLOAT_MAT2                     0x8B5A
+#define GL_FLOAT_MAT3                     0x8B5B
+#define GL_FLOAT_MAT4                     0x8B5C
+#define GL_SAMPLER_2D                     0x8B5E
+#define GL_SAMPLER_CUBE                   0x8B60

@@ -40,10 +40,13 @@ LOCAL_SRC_FILES := \
 	src/gl/queries.c \
 	src/gl/raster.c \
 	src/gl/render.c \
+	src/gl/shader.c \
 	src/gl/stack.c \
 	src/gl/texenv.c \
 	src/gl/texgen.c \
 	src/gl/texture.c \
+	src/gl/uniform.c \
+	src/gl/vertexattrib.c \
 	src/gl/wrap/gl.c \
 	src/gl/wrap/gles.c \
 	src/gl/wrap/glstub.c \

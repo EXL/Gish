@@ -48,7 +48,7 @@ void* NewGLState(void* shared_glstate) {
         k = kh_put(glvao, list, 0, &ret);
         glvao_t *glvao = kh_value(list, k) = malloc(sizeof(glvao_t));
         // new vao is binded to default vbo
-        memset(glvao, 0, sizeof(glvao_t));
+        VaoInit(glvao);
         // just put is number
         glvao->array = 0;
         glstate->defaultvao = glvao;
@@ -71,7 +71,19 @@ void* NewGLState(void* shared_glstate) {
     //raster & viewport
     glstate->raster.raster_zoomx=1.0f;
     glstate->raster.raster_zoomy=1.0f;
-
+    glstate->raster.map_i2i_size=1;
+    glstate->raster.map_i2r_size=1;
+    glstate->raster.map_i2g_size=1;
+    glstate->raster.map_i2b_size=1;
+    glstate->raster.map_i2a_size=1;
+    /*
+    glstate->raster.map_s2s_size=1;
+    glstate->raster.map_r2r_size=1;
+    glstate->raster.map_g2g_size=1;
+    glstate->raster.map_b2b_size=1;
+    glstate->raster.map_a2a_size=1;
+    */
+    
     // pack & unpack alignment
     glstate->texture.pack_align = 4;
     glstate->texture.unpack_align = 4;
@@ -123,6 +135,18 @@ void* NewGLState(void* shared_glstate) {
         glstate->texenv[i].env.rgb_scale = 1.0f;
         glstate->texenv[i].env.alpha_scale = 1.0f;
     }
+    // GLSL stuff
+    {
+        khint_t k;
+        int ret;
+        khash_t(shaderlist) *shaders = glstate->glsl.shaders = kh_init(shaderlist);
+		kh_put(shaderlist, shaders, 1, &ret);
+		kh_del(shaderlist, shaders, 1);
+        khash_t(programlist) *programs = glstate->glsl.programs = kh_init(programlist);
+		kh_put(programlist, programs, 1, &ret);
+		kh_del(programlist, programs, 1);
+    }
+
     // Grab ViewPort
     LOAD_GLES(glGetFloatv);
     gles_glGetFloatv(GL_VIEWPORT, (GLfloat*)&glstate->raster.viewport);
@@ -604,6 +628,13 @@ static inline bool should_intercept_render(GLenum mode) {
     );
 }
 
+GLuint len_indices(GLushort *sindices, GLsizei count) {
+    GLuint len = 0;
+    for (int i=0; i<count; i++)
+        if (len<sindices[i]) len = sindices[i]; // get the len of the arrays
+    return len+1;  // lenght is max(indices) + 1 !
+}
+
 void gl4es_glDrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid *indices) {
     //printf("glDrawElements(%s, %d, %s, %p), vtx=%p map=%p\n", PrintEnum(mode), count, PrintEnum(type), indices, (glstate->vao->vertex)?glstate->vao->vertex->data:NULL, (glstate->vao->elements)?glstate->vao->elements->data:NULL);
     // TODO: split for count > 65535?
@@ -690,9 +721,6 @@ void gl4es_glDrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid 
         LOAD_GLES(glDisableClientState);
         LOAD_GLES(glMultiTexCoord4f);
         GLuint len = 0;
-        for (int i=0; i<count; i++)
-            if (len<sindices[i]) len = sindices[i]; // get the len of the arrays
-        len++;  // lenght is max(indices) + 1 !
 #define client_state(A, B, C) \
             if(glstate->vao->A != glstate->clientstate.A) {           \
                 C                                              \
@@ -739,6 +767,7 @@ void gl4es_glDrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid 
                     }
                     if (glstate->vao->tex_coord_array[aa]) {
                         TEXTURE(aa);
+                        if(!len) len = len_indices(sindices, count);
                         tex_setup_texcoord(len, itarget);
                     } else
                         gles_glMultiTexCoord4f(GL_TEXTURE0+aa, glstate->texcoord[aa][0], glstate->texcoord[aa][1], glstate->texcoord[aa][2], glstate->texcoord[aa][3]);
@@ -919,7 +948,6 @@ void gl4es_glDrawArrays(GLenum mode, GLint first, GLsizei count) {
 #undef client_state
 void glDrawArrays(GLenum mode, GLint first, GLsizei count) AliasExport("gl4es_glDrawArrays");
 
-#ifndef USE_ES2
 #define clone_gl_pointer(t, s)\
     t.size = s; t.type = type; t.stride = stride; t.pointer = pointer + (uintptr_t)((glstate->vao->vertex)?glstate->vao->vertex->data:0)
 void gl4es_glVertexPointer(GLint size, GLenum type,
@@ -964,7 +992,7 @@ void gl4es_glSecondaryColorPointer(GLint size, GLenum type,
 }
 
 #undef clone_gl_pointer
-#endif
+
 void glVertexPointer(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer) AliasExport("gl4es_glVertexPointer");
 void glColorPointer(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer) AliasExport("gl4es_glColorPointer");
 void glNormalPointer(GLenum type, GLsizei stride, const GLvoid *pointer) AliasExport("gl4es_glNormalPointer");
@@ -1136,13 +1164,11 @@ void gl4es_glNormal3f(GLfloat nx, GLfloat ny, GLfloat nz) {
             noerrorShim();
         }
     }
-#ifndef USE_ES2
     else {
         LOAD_GLES(glNormal3f);
         gles_glNormal3f(nx, ny, nz);
         errorGL();
     }
-#endif
     glstate->normal[0] = nx; glstate->normal[1] = ny; glstate->normal[2] = nz;
 }
 void glNormal3f(GLfloat nx, GLfloat ny, GLfloat nz) AliasExport("gl4es_glNormal3f");
@@ -1176,13 +1202,11 @@ void gl4es_glColor4f(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
             noerrorShim();
         }
     }
-#ifndef USE_ES2
     else {
         LOAD_GLES(glColor4f);
         gles_glColor4f(red, green, blue, alpha);
         errorGL();
     }
-#endif
     // change the state last thing
     glstate->color[0] = red; glstate->color[1] = green;
     glstate->color[2] = blue; glstate->color[3] = alpha;

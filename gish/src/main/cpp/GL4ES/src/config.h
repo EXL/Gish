@@ -7,6 +7,8 @@
 #define MAX_STACK_MODELVIEW	64
 #define MAX_STACK_COLOR 16
 #define MAX_CLIP_PLANES 6
+#define MAX_VATTRIB 32
+#define MAX_MAP_SIZE 256
 
 // don't auto-wrap these functions
 #define skip_glColor4ub
@@ -152,6 +154,93 @@
 // this is to avoid a warning. I don't Push those anyway
 #define direct_glMultiDrawArrays
 #define direct_glMultiDrawElements
+
+// buffer.c
+#define skip_glGenBuffers
+#define skip_glBindBuffer
+#define skip_glBufferData
+#define skip_glBufferSubData
+#define skip_glDeleteBuffers
+#define skip_glIsBuffer
+#define skip_glGetBufferParameteriv
+#define skip_glMapBuffer
+#define skip_glUnmapBuffer
+#define skip_glGetBufferPointerv
+#define skip_glGetBufferSubData
+#define skip_glGenVertexArrays
+#define skip_glBindVertexArray
+#define skip_glDeleteVertexArrays
+#define skip_glIsVertexArray
+
+// shader.c
+#define skip_glCreateShader
+#define skip_glDeleteShader
+#define skip_glCompileShader
+#define skip_glShaderSource
+#define skip_glGetShaderSource
+#define skip_glIsShader
+#define skip_glGetShaderInfoLog
+#define skip_glGetShaderiv
+#define skip_glGetShaderPrecisionFormat
+#define skip_glShaderBinary
+#define skip_glReleaseShaderCompiler
+
+// vertexattrib.c
+#define skip_glVertexAttribPointer
+#define skip_glEnableVertexAttribArray
+#define skip_glDisableVertexAttribArray
+#define skip_glVertexAttrib1f
+#define skip_glVertexAttrib2f
+#define skip_glVertexAttrib3f
+#define skip_glVertexAttrib4f
+#define skip_glVertexAttrib1fv
+#define skip_glVertexAttrib2fv
+#define skip_glVertexAttrib3fv
+#define skip_glVertexAttrib4fv
+#define skip_glGetVertexAttribfv
+#define skip_glGetVertexAttribiv
+#define skip_glGetVertexAttribPointerv
+
+// program.c
+#define skip_glAttachShader
+#define skip_glBindAttribLocation
+#define skip_glCreateProgram
+#define skip_glDeleteProgram
+#define skip_glDetachShader
+#define skip_glGetActiveAttrib
+#define skip_glGetActiveUniform
+#define skip_glGetAttachedShaders
+#define skip_glGetAttribLocation
+#define skip_glGetProgramInfoLog
+#define skip_glGetProgramiv
+#define skip_glGetUniformLocation
+#define skip_glIsProgram
+#define skip_glLinkProgram
+#define skip_glUseProgram
+#define skip_glValidateProgram
+
+//uniform.c
+#define skip_glGetUniformfv
+#define skip_glGetUniformiv
+#define skip_glUniform1f
+#define skip_glUniform2f
+#define skip_glUniform3f
+#define skip_glUniform4f
+#define skip_glUniform1i
+#define skip_glUniform2i
+#define skip_glUniform3i
+#define skip_glUniform4i
+#define skip_glUniform1fv
+#define skip_glUniform2fv
+#define skip_glUniform3fv
+#define skip_glUniform4fv
+#define skip_glUniform1iv
+#define skip_glUniform2iv
+#define skip_glUniform3iv
+#define skip_glUniform4iv
+#define skip_glUniformMatrix2fv
+#define skip_glUniformMatrix3fv
+#define skip_glUniformMatrix4fv
 
 // don't compile these into display lists
 #define direct_glColorPointer

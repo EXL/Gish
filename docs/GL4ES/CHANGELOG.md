@@ -1,5 +1,11 @@
 Version history
 ----
+##### Current version
+ * Added ES2 backen infrastructure
+
+##### 1.0.0
+ * Removed old ES2 defines (ES2 will be dynamic later)
+
 ##### 0.9.8
  * Added TravisCI build on github
  * Added some optimisation when to discard call to glBindTexture if useless (same texture) between 2 glBegin/glEnd blocks

@@ -50,11 +50,7 @@ EXPORT void *gl4es_glXGetProcAddress(const char *name) {
     cnt++;
 #endif
     // generated gles wrappers
-#ifdef USE_ES2
-    #include "gles2funcs.inc"
-#else
     #include "glesfuncs.inc"
-#endif
 
 #ifndef ANDROID
     // glX calls
@@ -303,13 +299,6 @@ EXPORT void *gl4es_glXGetProcAddress(const char *name) {
     _EXT(glPointParameterf);
     _EXT(glPointParameterfv);
 
-#ifdef USE_ES2
-    _EX(glCompileShaderARB);
-    _EX(glCreateShaderObjectARB);
-    _EX(glGetObjectParameterivARB);
-    _EX(glShaderSourceARB);
-#endif
-
     // functions we actually define
     _EXT(glActiveTexture);
     _ARB(glActiveTexture);
@@ -389,12 +378,10 @@ EXPORT void *gl4es_glXGetProcAddress(const char *name) {
     _EX(glInitNames);
     _EX(glInterleavedArrays);
     _EX(glIsList);
-#ifndef USE_ES2
     _EX(glLighti);
     _EX(glLightiv);
     _EX(glLightModeli);
     _EX(glLightModeliv);
-#endif
     _EX(glLineStipple);
     _EX(glListBase);
     _EX(glLoadMatrixd);
@@ -493,15 +480,15 @@ EXPORT void *gl4es_glXGetProcAddress(const char *name) {
     STUB(glGetClipPlane);
     _EX(glGetLightiv);
     _EX(glGetMaterialiv);
-    STUB(glGetPixelMapfv);
-    STUB(glGetPixelMapuiv);
-    STUB(glGetPixelMapusv);
+    _EX(glGetPixelMapfv);
+    _EX(glGetPixelMapuiv);
+    _EX(glGetPixelMapusv);
     STUB(glGetPolygonStipple);
     STUB(glGetStringi);
     STUB(glPassThrough);
-    STUB(glPixelMapfv);
-    STUB(glPixelMapuiv);
-    STUB(glPixelMapusv);
+    _EX(glPixelMapfv);
+    _EX(glPixelMapuiv);
+    _EX(glPixelMapusv);
     _EX(glPixelStoref);
     STUB(glPrioritizeTextures);
     STUB(glSelectBuffer);   //TODO
@@ -635,6 +622,27 @@ EXPORT void *gl4es_glXGetProcAddress(const char *name) {
 
     // GL_ARB_multisample
     _ARB(glSampleCoverage);
+
+    // extra shaders stuff
+    #define THUNK(suffix) \
+    _EX(glVertexAttrib1##suffix); \
+    _EX(glVertexAttrib2##suffix); \
+    _EX(glVertexAttrib3##suffix); \
+    _EX(glVertexAttrib4##suffix)
+    THUNK(s);
+    THUNK(d);
+    THUNK(sv);
+    THUNK(dv);
+    #undef THUNK
+    #define THUNK(suffix) \
+    _EX(glVertexAttrib4##suffix##v); \
+    _EX(glVertexAttrib4u##suffix##v); \
+    _EX(glVertexAttrib4N##suffix##v); \
+    _EX(glVertexAttrib4Nu##suffix##v)
+    THUNK(b);
+    THUNK(s);
+    THUNK(i);
+    #undef THUNK
 
     if (!globals4es.silentstub) LOGD("glXGetProcAddress: %s not found.\n", name);
     return NULL;
