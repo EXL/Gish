@@ -20,8 +20,8 @@ android {
             }
 
             ndkBuild {
-                // arguments "V=1" /* Verbose ndk-build */
-                arguments "NDK_TOOLCHAIN_VERSION=4.9", "APP_PLATFORM=android-14"
+                arguments "V=1" /* Verbose ndk-build */
+                arguments "APP_PLATFORM=android-14"
                 arguments "-j" + Runtime.runtime.availableProcessors()
             }
         }
