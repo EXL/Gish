@@ -43,7 +43,7 @@ void checksystemmessages(void)
     {
     if (event.type==SDL_WINDOWEVENT)
       {
-      if (event.window.event == SDL_WINDOWEVENT_RESTORED)
+      if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED)
         {
           SDL_DisplayMode mode = { (windowinfo.bitsperpixel==32) ? SDL_PIXELFORMAT_RGB888 : SDL_PIXELFORMAT_RGB565, windowinfo.resolutionx, windowinfo.resolutiony, 0, 0 };
           SDL_SetWindowDisplayMode(globalwindow, &mode);
@@ -56,10 +56,12 @@ void checksystemmessages(void)
 
           windowinfo.minimized=0;
         }
-      if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED)
+      if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST)
+        {
           if(game.exit==GAMEEXIT_NONE)
             game.pause=1;
           windowinfo.minimized=1;
+        }
       }
     if (event.type==SDL_QUIT)
       windowinfo.shutdown=1;
