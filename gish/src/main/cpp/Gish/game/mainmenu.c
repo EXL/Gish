@@ -483,7 +483,7 @@ void versusmenu(void)
     if (!unlocked)
       {
       drawbackground(256+68,448,328,96,96,640,480);
-      drawtext("?????",(512|TEXT_CENTER),444,16,1.0f,1.0f,1.0f,1.0f);
+      drawtext("?????",(500|TEXT_CENTER),444,16,1.0f,1.0f,1.0f,1.0f);
       }
 
     drawmenuitems();
