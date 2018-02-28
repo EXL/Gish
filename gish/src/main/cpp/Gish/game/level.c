@@ -297,6 +297,7 @@ void loadlevel(char *filename)
   FILE *fp;
 
   x=0x17AF2E03;
+  fix_boss_logic_when_lights_off = 0;
 
   changeddir=chdir("level");
 
@@ -344,6 +345,7 @@ void loadlevel(char *filename)
                   { 0.200000, 0.600000, 0.200000}
               };
               memcpy(level.ambient, ambient, sizeof(ambient));
+              fix_boss_logic_when_lights_off = 1;
           }
       }
 
@@ -474,6 +476,7 @@ void loadlevel(char *filename)
                   { 0.200000, 0.600000, 0.200000}
               };
               memcpy(level.ambient, ambient, sizeof(ambient));
+              fix_boss_logic_when_lights_off = 1;
           }
       }
 
@@ -601,6 +604,7 @@ void loadlevel(char *filename)
                       { 0.200000, 0.600000, 0.200000}
                   };
                   memcpy(level.ambient, ambient, sizeof(ambient));
+                  fix_boss_logic_when_lights_off = 1;
               }
           }
 

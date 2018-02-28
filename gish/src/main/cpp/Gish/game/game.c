@@ -76,6 +76,7 @@ int touchcontrols = 0;
 int cache_fix = 0;
 int disable_frame = 0;
 float z_zoom = 10.0f;
+int fix_boss_logic_when_lights_off = 0;
 
 int fps, fps_cache = 0, fps_renew = 0, fps_mean;
 
@@ -427,7 +428,7 @@ void gameloop(void)
 
     if (lighting_enabled) {
         setupframelighting();
-    } else if (game.levelnum == 13) { // cave6.lvl boss
+    } else if (fix_boss_logic_when_lights_off) { // cave6.lvl boss
         setupframelighting_fix_cave6_boss();
     }
 

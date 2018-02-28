@@ -89,6 +89,7 @@ extern int lighting_enabled;
 extern int shadow_enabled;
 extern int cache_fix;
 extern int disable_frame;
+extern int fix_boss_logic_when_lights_off;
 extern float z_zoom;
 
 #endif /* GISH_GAME_GAME_H */
