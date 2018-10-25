@@ -49,8 +49,8 @@ cd ~/Deploy/GishAndroid/
 
 * Run and enjoy!
 
-You can also open this project in Android Studio IDE and build the APK-package by using this program.
+You can open this project in Android Studio IDE also and build the APK-package by using this program.
 
 ## More information
 
-Please read [Porting Guide (in Russian)](http://exlmoto.ru/gish-droid) for more info about porting Gish to Android OS.
+Please read [Porting Guide (in Russian)](http://exlmoto.ru/gish-droid) for more information about porting Gish to Android OS.
