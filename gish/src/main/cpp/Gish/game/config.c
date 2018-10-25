@@ -31,6 +31,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#ifdef __HAIKU__
+#include <FindDirectory.h>
+#endif
 #endif
 
 #include "../game/config.h"
@@ -58,6 +61,16 @@ char* stringconcat(const char *s1, const char *s2)
     return result;
 }
 
+#ifdef __HAIKU__
+char* getHaikuSettingsPath()
+{
+	char path[PATH_MAX];
+	find_directory(B_USER_SETTINGS_DIRECTORY, -1, false, path, sizeof(path));
+	strcat(path, "/Gish/");
+	return strdup(path);
+}
+#endif
+
 char* userpath(char *result, char *path)
   {
 #ifdef LINUX
@@ -65,6 +78,8 @@ char* userpath(char *result, char *path)
   const char *home=getenv("PWD");
 #elif defined(ANDROID_NDK)
   const char *home = SDL_AndroidGetInternalStoragePath();
+#elif defined(__HAIKU__)
+  const char *home = getHaikuSettingsPath();
 #else
   const char *home=getenv("HOME");
 #endif

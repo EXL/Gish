@@ -44,6 +44,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdlib.h>
 #endif
 
+#ifdef __HAIKU__
+#include <libgen.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <stdlib.h>
+#endif
+
 #ifdef DATAPATH
 #include <unistd.h>
 #define DATAPATH_STR3(X) #X
@@ -96,6 +103,20 @@ int main (int argc,char *argv[])
 
 #ifdef DATAPATH
   chdir(DATAPATH_STR);
+#endif
+
+#ifdef __HAIKU__
+  char *path = getHaikuSettingsPath();
+  mkdir(path, 0755);
+  free(path);
+#ifdef HAIKU_PACKAGE
+  const char* dataPath = getenv("GISH_DATA_DIR");
+  chdir(dataPath);
+#else
+#ifndef DATAPATH
+  chdir(dirname(argv[0]));
+#endif
+#endif
 #endif
 
 #ifdef ANDROID_NDK

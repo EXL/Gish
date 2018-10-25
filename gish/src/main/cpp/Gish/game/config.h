@@ -48,4 +48,8 @@ typedef struct {
 
 extern _config config;
 
+#ifdef __HAIKU__
+char *getHaikuSettingsPath();
+#endif
+
 #endif /* GISH_GAME_CONFIG_H */
