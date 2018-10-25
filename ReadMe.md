@@ -49,7 +49,7 @@ cd ~/Deploy/GishAndroid/
 
 * Run and enjoy!
 
-You can open this project in Android Studio IDE also and build the APK-package by using this program.
+You can also open this project in Android Studio IDE and build the APK-package by using this program.
 
 ## More information
 
