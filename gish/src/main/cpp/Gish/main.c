@@ -117,7 +117,6 @@ int main (int argc,char *argv[])
     chdir(dirname(argv[0]));
 #endif
 #endif
-#endif
 
 #ifdef ANDROID_NDK
   initializeJavaEnviron();
