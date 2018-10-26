@@ -109,12 +109,12 @@ int main (int argc,char *argv[])
   char *path = getHaikuSettingsPath();
   mkdir(path, 0755);
   free(path);
-#ifdef HAIKU_PACKAGE
-  const char* dataPath = getenv("GISH_DATA_DIR");
-  chdir(dataPath);
-#else
 #ifndef DATAPATH
-  chdir(dirname(argv[0]));
+  const char* dataPath = getenv("GISH_DATA_DIR");
+  if (dataPath != NULL)
+    chdir(dataPath);
+  else
+    chdir(dirname(argv[0]));
 #endif
 #endif
 #endif
