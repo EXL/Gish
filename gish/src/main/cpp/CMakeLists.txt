@@ -47,6 +47,8 @@ include_directories(${PROJECT_NAME}
                     ${Vorbis_INCLUDE_DIR}
                     ${PNG_INCLUDE_DIR})
 
+set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} -fcommon)
+
 if(GLES)
     message(STATUS "Build w/ using OpenGLES libraries!")
     set(TARGET_NAME "Gish-gles")
