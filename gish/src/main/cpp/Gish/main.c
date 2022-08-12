@@ -231,7 +231,7 @@ int main (int argc,char *argv[])
     EGLint numConfigs, majorVersion, minorVersion;
     globalwindow = SDL_CreateWindow("Gish GLES", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                     windowinfo.resolutionx, windowinfo.resolutiony,
-                                    (windowinfo.fullscreen) ? (SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN) : SDL_WINDOW_OPENGL);
+                                    (windowinfo.fullscreen) ? (SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN_DESKTOP) : SDL_WINDOW_OPENGL);
     eglDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
     eglInitialize(eglDisplay, &majorVersion, &minorVersion);
     eglChooseConfig(eglDisplay, egl_config_attr, &glConfig, 1, &numConfigs);
