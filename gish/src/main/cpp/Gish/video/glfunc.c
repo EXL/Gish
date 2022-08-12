@@ -57,11 +57,15 @@ void setupperspectiveviewport(int viewportx,int viewporty,int viewportwidth,int 
 
 void setuporthoviewport(int viewportx,int viewporty,int viewportwidth,int viewportheight,float width,float height,float length)
   {
-  viewporty=font.sizey-(viewporty+viewportheight);
-  viewportx=viewportx*windowinfo.resolutionx/font.sizex;
-  viewportwidth=viewportwidth*windowinfo.resolutionx/font.sizex;
-  viewporty=viewporty*windowinfo.resolutiony/font.sizey;
-  viewportheight=viewportheight*windowinfo.resolutiony/font.sizey;
+  float ratio;
+  ratio=(float)font.sizey/(float)font.sizex;
+
+  viewportwidth=windowinfo.resolutionx*ratio;
+  viewportheight=windowinfo.resolutiony;
+
+  viewportx = (windowinfo.resolutionx - viewportwidth) / 2;
+  viewporty = 0;
+
   glViewport(viewportx,viewporty,viewportwidth,viewportheight);
 
   glMatrixMode(GL_PROJECTION);
