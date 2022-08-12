@@ -36,9 +36,17 @@ option(GLES "Enable OpenGL ES instead OpenGL" OFF)
 
 find_package(SDL2 REQUIRED)
 find_package(OpenAL REQUIRED)
-find_package(OpenGL REQUIRED)
 find_package(Vorbis REQUIRED)
 find_package(PNG REQUIRED)
+
+find_package(OpenGL QUIET)
+if(OpenGL_FOUND)
+	message(STATUS "Using OpenGL GLX for OpenGL")
+else(OpenGL_FOUND)
+        # If we couldn't find old GLX package, try to use modern libglvnd libOpenGL.so instead.
+	message(STATUS "Using GLVND for OpenGL")
+        FIND_LIBRARY(OPENGL_LIBRARIES OpenGL)
+endif(OpenGL_FOUND)
 
 include_directories(${PROJECT_NAME}
                     ${SDL2_INCLUDE_DIR}
