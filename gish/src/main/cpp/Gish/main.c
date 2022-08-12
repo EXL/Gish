@@ -246,6 +246,7 @@ int main (int argc,char *argv[])
     globalwindow = SDL_CreateWindow("Gish", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                     windowinfo.resolutionx, windowinfo.resolutiony,
                                     (windowinfo.fullscreen) ? (SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN) : SDL_WINDOW_OPENGL);
+    SDL_GL_SetSwapInterval(1); // VSYNC
     SDL_SetWindowDisplayMode(globalwindow, &mode);
 #ifdef ANDROID_NDK
     SDL_SetWindowFullscreen(globalwindow, SDL_WINDOW_FULLSCREEN);
