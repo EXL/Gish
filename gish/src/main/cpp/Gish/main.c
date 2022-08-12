@@ -247,7 +247,7 @@ int main (int argc,char *argv[])
                                     windowinfo.resolutionx, windowinfo.resolutiony,
                                     (windowinfo.fullscreen) ? (SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN) : SDL_WINDOW_OPENGL);
     SDL_GL_SetSwapInterval(1); // VSYNC
-    SDL_SetWindowDisplayMode(globalwindow, &mode);
+    //SDL_SetWindowDisplayMode(globalwindow, &mode);
 #ifdef ANDROID_NDK
     SDL_SetWindowFullscreen(globalwindow, SDL_WINDOW_FULLSCREEN);
     SDL_GetWindowSize(globalwindow, &windowinfo.resolutionx, &windowinfo.resolutiony);
